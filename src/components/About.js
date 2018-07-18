@@ -9,13 +9,13 @@ export default class About extends React.PureComponent {
         <Header color="teal" as="h3">
           What is Evolve App?
         </Header>
-        Evolve App is a workout application designed for both calishenics and
+        Evolve App is a workout application designed for both calisthenics and
         gym training.
         <br />
         <Header color="teal" as="h3">
           Evolve: Generate
         </Header>
-        Evolve: Generate is the first component of the app and generates
+        Evolve: Generate is the first component of the Evolve App and generates
         workouts by the users chosen preferences.
         <br />
         <Header color="teal" as="h3">

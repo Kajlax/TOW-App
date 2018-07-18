@@ -1,20 +1,20 @@
-import React, { Component } from "react";
+import React from "react";
 import Layout from "./Layout";
 import Filters from "./Filters";
 import GeneratedWorkout from "./GeneratedWorkout";
 import { Button } from "semantic-ui-react";
 
-export default class Frontpage extends Component {
+export default class Frontpage extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      showFilters: true
+      hideFilters: false
     };
   }
 
   toggleFilters() {
     this.setState({
-      showFilters: !this.state.showFilters
+      hideFilters: !this.state.hideFilters
     });
   }
 
@@ -23,14 +23,15 @@ export default class Frontpage extends Component {
       <Layout {...this.props}>
         <Button
           content="Filters"
-          icon="filter"
+          icon="caret down"
           labelPosition="right"
           color="teal"
           size="small"
           onClick={this.toggleFilters.bind(this)}
         />
-        {!this.state.showFilters && <Child />}
+        <Button content="Generate" color="pink" size="small" />
         <br />
+        {!this.state.hideFilters && <Child />}
         <br />
         <GeneratedWorkout />
       </Layout>
