@@ -1,18 +1,14 @@
 import React from "react";
-import { Button, Header } from "semantic-ui-react";
 
 export default class Filters extends React.PureComponent {
   render() {
     return (
       <React.Fragment>
-        <Button
-          content="Filters"
-          icon="filter"
-          labelPosition="right"
-          color="teal"
-        />
-        <br />
-        <br />
+        <br />Calisthenics / Gym / Mixed
+        <br />Core / Upper body / Lower body / Full body
+        <br />HIIT
+        <br />Beginner / Intermediate / Advanced
+        <br />Pull / Push
       </React.Fragment>
     );
   }
