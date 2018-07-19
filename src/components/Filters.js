@@ -1,7 +1,11 @@
-import React from "react";
+import React, { Component } from "react";
 import { Button } from "semantic-ui-react";
 
-export default class Filters extends React.PureComponent {
+export default class Filters extends Component {
+  state = {
+    filterTags: ""
+  };
+
   render() {
     return (
       <React.Fragment>

@@ -8,7 +8,8 @@ export default class Frontpage extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      hideFilters: false
+      hideFilters: false,
+      filterIcon: "caret up"
     };
   }
 
@@ -16,6 +17,9 @@ export default class Frontpage extends React.PureComponent {
     this.setState({
       hideFilters: !this.state.hideFilters
     });
+    this.state.filterIcon === "caret up"
+      ? this.setState({ filterIcon: "caret down" })
+      : this.setState({ filterIcon: "caret up" });
   }
 
   render() {
@@ -23,7 +27,7 @@ export default class Frontpage extends React.PureComponent {
       <Layout {...this.props}>
         <Button
           content="Filters"
-          icon="caret down"
+          icon={this.state.filterIcon}
           labelPosition="right"
           color="teal"
           size="small"
