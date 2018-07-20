@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "semantic-ui-react";
+import { Button, Table } from "semantic-ui-react";
 import JSONdata from "../data/TableData.json";
 
 class GeneratedWorkout extends React.PureComponent {
@@ -9,6 +9,12 @@ class GeneratedWorkout extends React.PureComponent {
         <Table.Row key={item.name}>
           <Table.Cell>{item.name}</Table.Cell>
           <Table.Cell>{item.reps}</Table.Cell>
+          <Table.Cell>
+            <Button.Group compact size="mini">
+              <Button icon="minus" />
+              <Button icon="plus" />
+            </Button.Group>
+          </Table.Cell>
         </Table.Row>
       );
     });
@@ -17,19 +23,12 @@ class GeneratedWorkout extends React.PureComponent {
   render() {
     return (
       <div>
-        <Table
-          color="pink"
-          unstackable
-          selectable
-          striped
-          celled
-          fixed
-          compact="very"
-        >
+        <Table color="pink" unstackable selectable striped celled fixed compact>
           <Table.Header>
-            <Table.Row>
+            <Table.Row textAlign="center">
               <Table.HeaderCell>Exercise</Table.HeaderCell>
               <Table.HeaderCell>Reps</Table.HeaderCell>
+              <Table.HeaderCell>Edit</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>{this.renderRows()}</Table.Body>

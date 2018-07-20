@@ -37,7 +37,7 @@ class Menu extends PureComponent {
         <Dropdown item icon="bars" simple>
           <Dropdown.Menu>{this.renderDropdownItems()}</Dropdown.Menu>
         </Dropdown>
-        <SemanticMenu.Item header>Evolve: Generate</SemanticMenu.Item>
+        <SemanticMenu.Item header>Evolve App</SemanticMenu.Item>
       </SemanticMenu>
     );
   }

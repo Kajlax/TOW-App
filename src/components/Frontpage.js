@@ -3,13 +3,16 @@ import Layout from "./Layout";
 import Filters from "./Filters";
 import GeneratedWorkout from "./GeneratedWorkout";
 import { Button } from "semantic-ui-react";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import "./Animations.css";
 
 export default class Frontpage extends React.PureComponent {
   constructor() {
     super();
     this.state = {
       hideFilters: false,
-      filterIcon: "caret up"
+      filterIcon: "caret up",
+      hideGeneratedWorkout: true
     };
   }
 
@@ -20,6 +23,10 @@ export default class Frontpage extends React.PureComponent {
     this.state.filterIcon === "caret up"
       ? this.setState({ filterIcon: "caret down" })
       : this.setState({ filterIcon: "caret up" });
+  }
+
+  toggleGenerateWorkout() {
+    this.setState({ hideGeneratedWorkout: false });
   }
 
   render() {
@@ -33,14 +40,35 @@ export default class Frontpage extends React.PureComponent {
           size="small"
           onClick={this.toggleFilters.bind(this)}
         />
-        <Button content="Generate" color="pink" size="small" />
+
+        <Button
+          content="Generate"
+          color="pink"
+          size="small"
+          onClick={this.toggleGenerateWorkout.bind(this)}
+        />
         <br />
-        {!this.state.hideFilters && <Child />}
+        <ReactCSSTransitionGroup
+          transitionName="example"
+          transitionEnterTimeout={200}
+          transitionLeaveTimeout={200}
+        >
+          {!this.state.hideFilters && <ChildFilters />}
+        </ReactCSSTransitionGroup>
         <br />
-        <GeneratedWorkout />
+        {!this.state.hideGeneratedWorkout && <ChildGeneratedWorkout />}
       </Layout>
     );
   }
 }
 
-const Child = () => <Filters />;
+const ChildFilters = () => (
+  <ReactCSSTransitionGroup
+    transitionName="example"
+    transitionEnterTimeout={200}
+    transitionLeaveTimeout={200}
+  >
+    <Filters />
+  </ReactCSSTransitionGroup>
+);
+const ChildGeneratedWorkout = () => <GeneratedWorkout />;
