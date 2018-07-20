@@ -26,7 +26,10 @@ export default class Frontpage extends React.PureComponent {
   }
 
   toggleGenerateWorkout() {
-    this.setState({ hideGeneratedWorkout: false });
+    this.setState({
+      hideFilters: !this.state.hideFilters,
+      hideGeneratedWorkout: false
+    });
   }
 
   render() {
