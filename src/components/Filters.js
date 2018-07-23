@@ -8,7 +8,7 @@ export default class Filters extends Component {
 
   render() {
     return (
-      <React.Fragment>
+      <div>
         <br />
         <Button.Group widths="3" size="small">
           <Button content="Calisthenics" />
@@ -31,7 +31,7 @@ export default class Filters extends Component {
         <br />
         <br />
         <br />
-      </React.Fragment>
+      </div>
     );
   }
 }

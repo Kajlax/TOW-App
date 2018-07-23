@@ -3,7 +3,7 @@ import Layout from "./Layout";
 import Filters from "./Filters";
 import GeneratedWorkout from "./GeneratedWorkout";
 import { Button } from "semantic-ui-react";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import { CSSTransitionGroup } from "react-transition-group";
 import "./Animations.css";
 
 export default class Frontpage extends React.PureComponent {
@@ -27,17 +27,18 @@ export default class Frontpage extends React.PureComponent {
 
   toggleGenerateWorkout = () => {
     this.setState({
-      hideFilters: true,
       hideGeneratedWorkout: false
     });
   }
-
+  
   render() {
+    const { hideFilters, hideGeneratedWorkout, filterIcon } = this.state;
+
     return (
       <Layout {...this.props}>
         <Button
           content="Filters"
-          icon={this.state.filterIcon}
+          icon={filterIcon}
           labelPosition="right"
           color="teal"
           size="small"
@@ -51,27 +52,20 @@ export default class Frontpage extends React.PureComponent {
           onClick={this.toggleGenerateWorkout}
         />
         <br />
-        <ReactCSSTransitionGroup
+        <CSSTransitionGroup
           transitionName="example"
           transitionEnterTimeout={200}
           transitionLeaveTimeout={200}
         >
-          {!this.state.hideFilters && <ChildFilters />}
-        </ReactCSSTransitionGroup>
+          { 
+            !hideFilters ? <Filters /> : null 
+          }
+        </CSSTransitionGroup>
         <br />
-        {!this.state.hideGeneratedWorkout && <ChildGeneratedWorkout />}
+        {
+          !hideGeneratedWorkout ? <GeneratedWorkout /> : null
+        }
       </Layout>
     );
   }
 }
-
-const ChildFilters = () => (
-  <ReactCSSTransitionGroup
-    transitionName="example"
-    transitionEnterTimeout={200}
-    transitionLeaveTimeout={200}
-  >
-    <Filters />
-  </ReactCSSTransitionGroup>
-);
-const ChildGeneratedWorkout = () => <GeneratedWorkout />;
