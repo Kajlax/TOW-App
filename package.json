@@ -1,8 +1,8 @@
 {
-  "name": "evolve",
+  "name": "evolve_app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://kajlax.mbnet.fi/Projects/evolveGenerate/",
+  "homepage": "http://kajlax.mbnet.fi/Projects/EvolveApp/",
   "dependencies": {
     "axios": "^0.18.0",
     "react": "^16.4.1",
@@ -10,6 +10,7 @@
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
+    "react-transition-group": "^1.2.1",
     "semantic-ui-css": "^2.3.3",
     "semantic-ui-react": "^0.81.3"
   },
