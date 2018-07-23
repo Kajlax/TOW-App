@@ -16,7 +16,7 @@ export default class Frontpage extends React.PureComponent {
     };
   }
 
-  toggleFilters() {
+  toggleFilters = () => {
     this.setState({
       hideFilters: !this.state.hideFilters
     });
@@ -25,7 +25,7 @@ export default class Frontpage extends React.PureComponent {
       : this.setState({ filterIcon: "caret up" });
   }
 
-  toggleGenerateWorkout() {
+  toggleGenerateWorkout = () => {
     this.setState({
       hideFilters: true,
       hideGeneratedWorkout: false
@@ -41,14 +41,14 @@ export default class Frontpage extends React.PureComponent {
           labelPosition="right"
           color="teal"
           size="small"
-          onClick={this.toggleFilters.bind(this)}
+          onClick={this.toggleFilters}
         />
 
         <Button
           content="Generate"
           color="pink"
           size="small"
-          onClick={this.toggleGenerateWorkout.bind(this)}
+          onClick={this.toggleGenerateWorkout}
         />
         <br />
         <ReactCSSTransitionGroup
