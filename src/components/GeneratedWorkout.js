@@ -4,7 +4,7 @@ import JSONdata from "../data/TableData.json";
 
 class GeneratedWorkout extends Component {
   renderRows = () => {
-    return JSONdata.map(item => {
+    return this.props.workouts.map(item => {
       return (
         <Table.Row key={item.name}>
           <Table.Cell>{item.name}</Table.Cell>
