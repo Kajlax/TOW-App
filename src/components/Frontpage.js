@@ -17,12 +17,13 @@ export default class Frontpage extends React.PureComponent {
   }
 
   toggleFilters = () => {
+    const { hideFilters, filterIcon } = this.state;
+    const icon = filterIcon === "caret up" ? "caret down" : "caret up";
+
     this.setState({
-      hideFilters: !this.state.hideFilters
+      hideFilters: !hideFilters,
+      filterIcon: icon,
     });
-    this.state.filterIcon === "caret up"
-      ? this.setState({ filterIcon: "caret down" })
-      : this.setState({ filterIcon: "caret up" });
   }
 
   toggleGenerateWorkout = () => {
