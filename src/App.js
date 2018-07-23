@@ -15,10 +15,10 @@ class App extends Component {
 
   getWorkouts = async () => {
     try {
-      const work = await axios.get('http://localhost:1337/workout');
+      const work = await axios.get('https://evolve-fitness.herokuapp.com/workout/');
       this.setState({
         workouts: work.data,
-      })
+      });
     } catch(e) {
 
     }

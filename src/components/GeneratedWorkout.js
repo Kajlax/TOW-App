@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, Table } from "semantic-ui-react";
-import JSONdata from "../data/TableData.json";
 
 class GeneratedWorkout extends React.PureComponent {
   renderRows = () => {
