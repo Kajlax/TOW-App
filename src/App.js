@@ -9,7 +9,9 @@ class App extends Component {
     super(p);
     this.state = {
       workouts: [],
+      filters: [],
       getWorkouts: this.getWorkouts,
+      updateFilters: this.updateFilters,
     };
   }
 
@@ -22,6 +24,20 @@ class App extends Component {
     } catch(e) {
 
     }
+  }
+
+  updateFilters = (value) => {
+    const { filters } = this.state;
+
+    const index = filters.indexOf(value);
+    if(index > -1) {
+      filters.splice(index, 1);
+    } else {
+      filters.push(value);
+    }
+    this.setState({
+      filters
+    });
   }
 
   render() {
