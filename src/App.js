@@ -16,13 +16,41 @@ class App extends Component {
   }
 
   getWorkouts = async () => {
+    const { filters } = this.state;
+    let success = false; 
+    if (filters.length === 0) {
+      success = this.getAllWorkouts();
+    } else {
+      success = this.getFilteredWorkouts();
+    }
+    return success;
+  }
+
+  getAllWorkouts = async () => {
     try {
       const work = await axios.get('https://evolve-fitness.herokuapp.com/workout/');
       this.setState({
         workouts: work.data,
       });
+      return true;
     } catch(e) {
+      return false;
+    }
+  }
 
+  getFilteredWorkouts = async () => {
+    const { filters } = this.state;
+    try {
+      const workouts = await axios.post('https://evolve-fitness.herokuapp.com/workout/filter',
+      {
+        tags: filters,
+      });
+      this.setState({
+        workouts: workouts.data,
+      });
+      return true;
+    } catch(e) {
+      return false;
     }
   }
 

@@ -18,10 +18,6 @@ class Frontpage extends React.PureComponent {
     };
   }
 
-  componentDidMount(){
-    this.props.getWorkouts();
-  }
-
   toggleFilters = () => {
     const { hideFilters, filterIcon } = this.state;
     const icon = filterIcon === "caret up" ? "caret down" : "caret up";
@@ -32,10 +28,14 @@ class Frontpage extends React.PureComponent {
     });
   }
 
-  toggleGenerateWorkout = () => {
-    this.setState({
-      hideGeneratedWorkout: false
-    });
+  toggleGenerateWorkout = async () => {
+    const success = await this.props.getWorkouts();
+    console.log('success', success);
+    if(success) {
+      this.setState({
+        hideGeneratedWorkout: false
+      });  
+    }
   }
   
   render() {
