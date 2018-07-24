@@ -69,9 +69,15 @@ class Frontpage extends React.PureComponent {
           }
         </CSSTransitionGroup>
         <br />
+        <CSSTransitionGroup
+          transitionName="example"
+          transitionEnterTimeout={200}
+          transitionLeaveTimeout={200}
+        >
         {
           !hideGeneratedWorkout ? <GeneratedWorkout workouts={workouts} /> : null
         }
+        </CSSTransitionGroup>
       </Layout>
     );
   }
