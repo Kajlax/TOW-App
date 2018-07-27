@@ -3,7 +3,7 @@ import Layout from "./Layout";
 import Filters from "./Filters";
 import GeneratedWorkout from "./GeneratedWorkout";
 import { Button } from "semantic-ui-react";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import { CSSTransitionGroup } from "react-transition-group";
 import "./Animations.css";
 
 export default class Frontpage extends React.PureComponent {
@@ -16,62 +16,57 @@ export default class Frontpage extends React.PureComponent {
     };
   }
 
-  toggleFilters() {
+  toggleFilters = () => {
+    const { hideFilters, filterIcon } = this.state;
+    const icon = filterIcon === "caret up" ? "caret down" : "caret up";
+
     this.setState({
-      hideFilters: !this.state.hideFilters
+      hideFilters: !hideFilters,
+      filterIcon: icon,
     });
-    this.state.filterIcon === "caret up"
-      ? this.setState({ filterIcon: "caret down" })
-      : this.setState({ filterIcon: "caret up" });
   }
 
-  toggleGenerateWorkout() {
+  toggleGenerateWorkout = () => {
     this.setState({
-      hideFilters: true,
       hideGeneratedWorkout: false
     });
   }
-
+  
   render() {
+    const { hideFilters, hideGeneratedWorkout, filterIcon } = this.state;
+
     return (
       <Layout {...this.props}>
         <Button
           content="Filters"
-          icon={this.state.filterIcon}
+          icon={filterIcon}
           labelPosition="right"
           color="teal"
           size="small"
-          onClick={this.toggleFilters.bind(this)}
+          onClick={this.toggleFilters}
         />
 
         <Button
           content="Generate"
           color="pink"
           size="small"
-          onClick={this.toggleGenerateWorkout.bind(this)}
+          onClick={this.toggleGenerateWorkout}
         />
         <br />
-        <ReactCSSTransitionGroup
+        <CSSTransitionGroup
           transitionName="example"
           transitionEnterTimeout={200}
           transitionLeaveTimeout={200}
         >
-          {!this.state.hideFilters && <ChildFilters />}
-        </ReactCSSTransitionGroup>
+          { 
+            !hideFilters ? <Filters /> : null 
+          }
+        </CSSTransitionGroup>
         <br />
-        {!this.state.hideGeneratedWorkout && <ChildGeneratedWorkout />}
+        {
+          !hideGeneratedWorkout ? <GeneratedWorkout /> : null
+        }
       </Layout>
     );
   }
 }
-
-const ChildFilters = () => (
-  <ReactCSSTransitionGroup
-    transitionName="example"
-    transitionEnterTimeout={200}
-    transitionLeaveTimeout={200}
-  >
-    <Filters />
-  </ReactCSSTransitionGroup>
-);
-const ChildGeneratedWorkout = () => <GeneratedWorkout />;
