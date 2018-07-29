@@ -22,16 +22,17 @@ export default class Frontpage extends React.PureComponent {
 
     this.setState({
       hideFilters: !hideFilters,
-      filterIcon: icon,
+      filterIcon: icon
     });
-  }
+  };
 
   toggleGenerateWorkout = () => {
     this.setState({
+      hideFilters: true,
       hideGeneratedWorkout: false
     });
-  }
-  
+  };
+
   render() {
     const { hideFilters, hideGeneratedWorkout, filterIcon } = this.state;
 
@@ -58,14 +59,16 @@ export default class Frontpage extends React.PureComponent {
           transitionEnterTimeout={200}
           transitionLeaveTimeout={200}
         >
-          { 
-            !hideFilters ? <Filters /> : null 
-          }
+          {!hideFilters ? <Filters /> : null}
         </CSSTransitionGroup>
         <br />
-        {
-          !hideGeneratedWorkout ? <GeneratedWorkout /> : null
-        }
+        <CSSTransitionGroup
+          transitionName="example"
+          transitionEnterTimeout={200}
+          transitionLeaveTimeout={200}
+        >
+          {!hideGeneratedWorkout ? <GeneratedWorkout /> : null}
+        </CSSTransitionGroup>
       </Layout>
     );
   }

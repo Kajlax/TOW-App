@@ -13,13 +13,18 @@ const segmentStyle = {
 export default class Footer extends React.PureComponent {
   render() {
     return (
-      <Segment inverted style={segmentStyle}>
-        <div className="ui center aligned container">
-          <Header as="h6" inverted>
-            Evolve App, 2018.
-          </Header>
-        </div>
-      </Segment>
+      <React.Fragment>
+        <br />
+        <br />
+        <br />
+        <Segment inverted style={segmentStyle}>
+          <div className="ui center aligned container">
+            <Header as="h6" inverted>
+              Evolve App, 2018.
+            </Header>
+          </div>
+        </Segment>
+      </React.Fragment>
     );
   }
 }

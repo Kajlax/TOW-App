@@ -1,5 +1,14 @@
 import React, { Component } from "react";
-import { Button } from "semantic-ui-react";
+import { Button, Dropdown } from "semantic-ui-react";
+
+const numberOfExercises = [
+  { key: "3", text: "3", value: "3" },
+  { key: "4", text: "4", value: "4" },
+  { key: "5", text: "5", value: "5" },
+  { key: "6", text: "6", value: "6" },
+  { key: "7", text: "7", value: "7" },
+  { key: "8", text: "8", value: "8" }
+];
 
 export default class Filters extends Component {
   state = {
@@ -30,6 +39,10 @@ export default class Filters extends Component {
         </Button.Group>
         <br />
         <br />
+        <Button.Group fluid>
+          <Button>Number of exercises</Button>
+          <Dropdown options={numberOfExercises} button />
+        </Button.Group>
         <br />
       </div>
     );
