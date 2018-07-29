@@ -22,18 +22,16 @@ class GeneratedWorkout extends React.PureComponent {
 
   render() {
     return (
-      <div>
-        <Table color="pink" unstackable selectable striped celled fixed compact>
-          <Table.Header>
-            <Table.Row textAlign="center">
-              <Table.HeaderCell>Exercise</Table.HeaderCell>
-              <Table.HeaderCell>Reps</Table.HeaderCell>
-              <Table.HeaderCell>Edit</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>{this.renderRows()}</Table.Body>
-        </Table>
-      </div>
+      <Table basic="very" unstackable selectable celled fixed compact>
+        <Table.Header>
+          <Table.Row textAlign="center">
+            <Table.HeaderCell width={9}>Exercise</Table.HeaderCell>
+            <Table.HeaderCell width={3}>Reps</Table.HeaderCell>
+            <Table.HeaderCell width={4}>Edit</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>{this.renderRows()}</Table.Body>
+      </Table>
     );
   }
 }
