@@ -24,15 +24,16 @@ class Frontpage extends React.PureComponent {
 
     this.setState({
       hideFilters: !hideFilters,
-      filterIcon: icon,
+      filterIcon: icon
     });
-  }
+  };
 
   toggleGenerateWorkout = async () => {
     const success = await this.props.getWorkouts();
     console.log('success', success);
     if(success) {
       this.setState({
+        hideFilters: true,
         hideGeneratedWorkout: false
       });  
     }
@@ -64,9 +65,7 @@ class Frontpage extends React.PureComponent {
           transitionEnterTimeout={200}
           transitionLeaveTimeout={200}
         >
-          { 
-            !hideFilters ? <Filters /> : null 
-          }
+          {!hideFilters ? <Filters /> : null}
         </CSSTransitionGroup>
         <br />
         <CSSTransitionGroup
@@ -74,9 +73,7 @@ class Frontpage extends React.PureComponent {
           transitionEnterTimeout={200}
           transitionLeaveTimeout={200}
         >
-        {
-          !hideGeneratedWorkout ? <GeneratedWorkout workouts={workouts} /> : null
-        }
+          { !hideGeneratedWorkout ? <GeneratedWorkout workouts={workouts} /> : null }
         </CSSTransitionGroup>
       </Layout>
     );
