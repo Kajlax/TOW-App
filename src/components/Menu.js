@@ -33,7 +33,7 @@ class Menu extends PureComponent {
 
   render() {
     return (
-      <SemanticMenu attached="top" color="black" inverted stackable>
+      <SemanticMenu attached="top" color="black" inverted unstackable="true">
         <Dropdown item icon="bars" simple>
           <Dropdown.Menu>{this.renderDropdownItems()}</Dropdown.Menu>
         </Dropdown>
