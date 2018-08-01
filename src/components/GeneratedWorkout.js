@@ -7,7 +7,7 @@ class GeneratedWorkout extends React.PureComponent {
       return (
         <Table.Row key={item.name}>
           <Table.Cell>{item.name}</Table.Cell>
-          <Table.Cell>{item.reps}</Table.Cell>
+          <Table.Cell>{Math.floor(Math.random() * 11) + 5}</Table.Cell>
           <Table.Cell>
             <Button.Group compact size="mini">
               <Button icon="minus" />

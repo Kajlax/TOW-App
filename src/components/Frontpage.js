@@ -1,6 +1,6 @@
 import React from "react";
-import { connectContext } from "react-connect-context" 
-import { Context } from '../context';
+import { connectContext } from "react-connect-context";
+import { Context } from "../context";
 import Layout from "./Layout";
 import Filters from "./Filters";
 import GeneratedWorkout from "./GeneratedWorkout";
@@ -30,15 +30,15 @@ class Frontpage extends React.PureComponent {
 
   toggleGenerateWorkout = async () => {
     const success = await this.props.getWorkouts();
-    console.log('success', success);
-    if(success) {
+    console.log("success", success);
+    if (success) {
       this.setState({
         hideFilters: true,
         hideGeneratedWorkout: false
-      });  
+      });
     }
-  }
-  
+  };
+
   render() {
     const { hideFilters, hideGeneratedWorkout, filterIcon } = this.state;
     const { workouts } = this.props;
@@ -69,11 +69,13 @@ class Frontpage extends React.PureComponent {
         </CSSTransitionGroup>
         <br />
         <CSSTransitionGroup
-          transitionName="example"
-          transitionEnterTimeout={200}
-          transitionLeaveTimeout={200}
+          transitionName="generated"
+          transitionEnterTimeout={400}
+          transitionLeaveTimeout={400}
         >
-          { !hideGeneratedWorkout ? <GeneratedWorkout workouts={workouts} /> : null }
+          {!hideGeneratedWorkout ? (
+            <GeneratedWorkout workouts={workouts} />
+          ) : null}
         </CSSTransitionGroup>
       </Layout>
     );
