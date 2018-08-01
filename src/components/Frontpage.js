@@ -1,4 +1,6 @@
 import React from "react";
+import { connectContext } from "react-connect-context" 
+import { Context } from '../context';
 import Layout from "./Layout";
 import Filters from "./Filters";
 import GeneratedWorkout from "./GeneratedWorkout";
@@ -6,7 +8,7 @@ import { Button } from "semantic-ui-react";
 import { CSSTransitionGroup } from "react-transition-group";
 import "./Animations.css";
 
-export default class Frontpage extends React.PureComponent {
+class Frontpage extends React.PureComponent {
   constructor() {
     super();
     this.state = {
@@ -26,16 +28,20 @@ export default class Frontpage extends React.PureComponent {
     });
   };
 
-  toggleGenerateWorkout = () => {
-    this.setState({
-      hideFilters: true,
-      hideGeneratedWorkout: false
-    });
-  };
-
+  toggleGenerateWorkout = async () => {
+    const success = await this.props.getWorkouts();
+    console.log('success', success);
+    if(success) {
+      this.setState({
+        hideFilters: true,
+        hideGeneratedWorkout: false
+      });  
+    }
+  }
+  
   render() {
     const { hideFilters, hideGeneratedWorkout, filterIcon } = this.state;
-
+    const { workouts } = this.props;
     return (
       <Layout {...this.props}>
         <Button
@@ -67,9 +73,11 @@ export default class Frontpage extends React.PureComponent {
           transitionEnterTimeout={200}
           transitionLeaveTimeout={200}
         >
-          {!hideGeneratedWorkout ? <GeneratedWorkout /> : null}
+          { !hideGeneratedWorkout ? <GeneratedWorkout workouts={workouts} /> : null }
         </CSSTransitionGroup>
       </Layout>
     );
   }
 }
+
+export default connectContext(Context)(Frontpage);

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Button, Dropdown } from "semantic-ui-react";
+import { connectContext } from "react-connect-context" 
+import { Context } from '../context';
 
 const numberOfExercises = [
   { key: "3", text: "3", value: "3" },
@@ -10,32 +12,45 @@ const numberOfExercises = [
   { key: "8", text: "8", value: "8" }
 ];
 
-export default class Filters extends Component {
-  state = {
-    filterTags: ""
-  };
+class Filters extends Component {
+  toggleButton = (value) => {
+    this.props.updateFilters(value);
+  }
+
+  checkActive = (value) => {
+    const { filters } = this.props;
+    return filters.indexOf(value)>-1;
+  }
+
+  renderButton = (text) => {
+    return <Button
+              active={this.checkActive(text)}
+              onClick={() => this.toggleButton(text)}
+              content={text}
+            />;
+  }
 
   render() {
     return (
       <div>
         <br />
         <Button.Group widths="3" size="small">
-          <Button content="Calisthenics" />
-          <Button content="Gym" />
-          <Button content="Mixed" />
+          {this.renderButton('Calisthenics')}
+          {this.renderButton('Gym')}
+          {this.renderButton('Mixed')}
         </Button.Group>
         <br /> <br />
         <Button.Group widths="4" size="small">
-          <Button content="Upper body" />
-          <Button content="Lower body" />
-          <Button content="Full body" />
-          <Button content="Core" />
+          {this.renderButton('Upper body')}
+          {this.renderButton('Lower body')}
+          {this.renderButton('Full body')}
+          {this.renderButton('Core')}
         </Button.Group>
         <br /> <br />
         <Button.Group widths="3" size="small">
-          <Button content="Beginner" />
-          <Button content="Intermediate" />
-          <Button content="Advanced" />
+          {this.renderButton('Beginner')}
+          {this.renderButton('Intermediate')}
+          {this.renderButton('Advanced')}
         </Button.Group>
         <br />
         <br />
@@ -48,3 +63,5 @@ export default class Filters extends Component {
     );
   }
 }
+
+export default connectContext(Context)(Filters);

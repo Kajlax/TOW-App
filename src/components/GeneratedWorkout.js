@@ -1,10 +1,9 @@
 import React from "react";
 import { Button, Table } from "semantic-ui-react";
-import JSONdata from "../data/TableData.json";
 
 class GeneratedWorkout extends React.PureComponent {
   renderRows = () => {
-    return JSONdata.map(item => {
+    return this.props.workouts.map(item => {
       return (
         <Table.Row key={item.name}>
           <Table.Cell>{item.name}</Table.Cell>
