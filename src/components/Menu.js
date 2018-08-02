@@ -4,6 +4,14 @@ import { Link } from "react-router-dom";
 
 const dropdownItems = [
   {
+    Title: "Workouts",
+    Path: "/Workouts/Workouts"
+  },
+  {
+    Title: "Challenges",
+    Path: "/Challenges/Challenges"
+  },
+  {
     Title: "Evolve: Generate",
     Path: "/"
   },
