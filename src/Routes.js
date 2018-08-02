@@ -6,7 +6,7 @@ import About from "./components/About";
 export default class Routes extends React.PureComponent {
   render() {
     return (
-      <Router>
+      <Router basename="/evolve"> 
         <Switch>
           <Route path="/" component={Frontpage} exact />
           <Route path="/About" component={About} exact />
