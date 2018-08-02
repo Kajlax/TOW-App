@@ -1,0 +1,20 @@
+{
+  "Pirkkola challenge": {
+    "submitter": "Kaj Laxström",
+    "challenge": {
+      "Muscle up": "5",
+      "Straight bar dip": "10",
+      "Pull up": "10",
+      "Push up": "10"
+    }
+  },
+  "Second challenge": {
+    "submitter": "Kaj Laxström",
+    "cars": {
+      "Muscle up": "5",
+      "Straight bar dip": "10",
+      "Pull up": "10",
+      "Push up": "10"
+    }
+  }
+}
