@@ -6,16 +6,43 @@ import Challenges from "./components/Challenges/Challenges";
 import Generate from "./components/Generate/Generate";
 import About from "./components/About";
 
+export const routes = [
+  {
+    Title: "Workouts",
+    Path: "/workouts",
+    component: Workouts,
+  },
+  {
+    Title: "Challenges",
+    Path: "/challenges",
+    component: Challenges,
+  },
+  {
+    Title: "Evolve: Generate",
+    Path: "/generate",
+    component: Generate,
+  },
+  {
+    Title: "About",
+    Path: "/about",
+    component: About,
+  }
+];
+
 export default class Routes extends React.PureComponent {
+  renderRoutes = () => {
+    return routes.map(route => {
+      return <Route path={route.Path} component={route.component} exact />;
+    });
+  }
   render() {
     return (
       <Router>
         <Switch>
           <Route path="/" component={Frontpage} exact />
-          <Route path="/workouts" component={Workouts} exact />
-          <Route path="/challenges" component={Challenges} exact />
-          <Route path="/generate" component={Generate} exact />
-          <Route path="/about" component={About} exact />
+          {
+            this.renderRoutes()
+          }
         </Switch>
       </Router>
     );

@@ -1,29 +1,11 @@
 import React, { PureComponent } from "react";
 import { Dropdown, Menu as SemanticMenu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-
-const dropdownItems = [
-  {
-    Title: "Workouts",
-    Path: "/workouts"
-  },
-  {
-    Title: "Challenges",
-    Path: "/challenges"
-  },
-  {
-    Title: "Evolve: Generate",
-    Path: "/generate"
-  },
-  {
-    Title: "About",
-    Path: "/about"
-  }
-];
+import { routes } from '../Routes';
 
 class Menu extends PureComponent {
   renderDropdownItems = () => {
-    return dropdownItems.map(item => {
+    return routes.map(item => {
       const { path } = this.props.match;
 
       return (
