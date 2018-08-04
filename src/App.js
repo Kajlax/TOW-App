@@ -12,6 +12,8 @@ class App extends Component {
       filters: [],
       getWorkouts: this.getWorkouts,
       updateFilters: this.updateFilters,
+      getSavedWorkout: this.getSavedWorkout,
+      error: null,
     };
   }
 
@@ -50,6 +52,21 @@ class App extends Component {
       });
       return true;
     } catch(e) {
+      return false;
+    }
+  }
+
+  getSavedWorkout = async (name) => {
+    try {
+      const workouts = await axios.get(`https://evolve-fitness.herokuapp.com/savedworkout/${name}`);
+      this.setState({
+        workouts: workouts.data.workouts,
+      });
+      return true;
+    } catch(e) {
+      this.setState({
+        error: e.response.data,
+      });
       return false;
     }
   }
