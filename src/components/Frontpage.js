@@ -3,14 +3,15 @@ import { connectContext } from "react-connect-context";
 import { Context } from "../context";
 import Menu from "./Menu";
 import Footer from "./Footer";
-import { Header, Image } from "semantic-ui-react";
+import { Header } from "semantic-ui-react";
 import CoverImage from "../img/Frontpage.jpeg";
 
 const bg = {
-  backgroundSize: "cover",
+  backgroundImage: `url(${CoverImage})`,
   backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
   opacity: 0.6,
-  overflow: "hidden"
+  height: "100vh"
 };
 
 const textStyle = {
@@ -29,14 +30,15 @@ class Frontpage extends React.PureComponent {
     return (
       <React.Fragment>
         <Menu {...this.props} />
-        <Image src={CoverImage} style={bg} alt="bg" />
-        <Header
-          as="h1"
-          content="Evolve App"
-          textAlign="center"
-          inverted
-          style={textStyle}
-        />
+        <div style={bg}>
+          <Header
+            as="h1"
+            content="Evolve App"
+            textAlign="center"
+            inverted
+            style={textStyle}
+          />
+        </div>
         <Footer />
       </React.Fragment>
     );

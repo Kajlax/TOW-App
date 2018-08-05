@@ -23,6 +23,17 @@ class Filters extends Component {
     );
   };
 
+  renderDifficultyButton = (text, color) => {
+    return (
+      <Button
+        active={this.checkActive(text)}
+        onClick={() => this.toggleButton(text, color)}
+        content={text}
+        color={color}
+      />
+    );
+  };
+
   render() {
     return (
       <div>
@@ -46,7 +57,13 @@ class Filters extends Component {
           {this.renderButton("Advanced")}
         </Button.Group>
         <br />
-        <br />Toistojen skaalaustoiminto?
+        <br />
+        <Button.Group widths="4" size="small">
+          {this.renderDifficultyButton("25 %", "green")}
+          {this.renderDifficultyButton("50 %", "yellow")}
+          {this.renderDifficultyButton("75 %", "orange")}
+          {this.renderDifficultyButton("100 %", "red")}
+        </Button.Group>
       </div>
     );
   }

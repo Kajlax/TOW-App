@@ -2,12 +2,14 @@ import React from "react";
 import { Button, Table } from "semantic-ui-react";
 
 class GeneratedWorkout extends React.PureComponent {
+  generateReps = () => Math.floor(Math.random() * 11) + 5;
+
   renderRows = () => {
     return this.props.workouts.map(item => {
       return (
         <Table.Row key={item.name}>
           <Table.Cell>{item.name}</Table.Cell>
-          <Table.Cell>{Math.floor(Math.random() * 11) + 5}</Table.Cell>
+          <Table.Cell>{this.generateReps()}</Table.Cell>
           <Table.Cell>
             <Button.Group compact size="mini">
               <Button icon="minus" />
