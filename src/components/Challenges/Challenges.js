@@ -15,21 +15,21 @@ class Challenges extends React.PureComponent {
   };
 
   renderChallenges = () => {
-    let { searchQuery } = this.props;
+    let { searchQuery, challenges } = this.props;
     searchQuery = searchQuery.toUpperCase();
 
     if (searchQuery !== "") {
-      this.props.challenges = this.props.challenges.filter(Header => {
-        const upperCaseName = Header.content.toUpperCase();
+      challenges = this.props.challenges.filter(singlechallenge => {
+        const upperCaseName = singlechallenge.name.toUpperCase();
 
         if (upperCaseName.indexOf(searchQuery) > -1) {
-          return Header;
+          return singlechallenge;
         }
         return null;
       });
-    } else {
     }
-    return this.props.challenges.map(item => {
+
+    return challenges.map(item => {
       return (
         <Grid.Column key={item.id}>
           <Header
