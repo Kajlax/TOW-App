@@ -6,17 +6,17 @@
 
 ## Things that are still under work
 
-# Generate-section:
+### Generate-section:
 
 - Random rep incrementing/decrementing
 - Number of exercises filtering
 
-# Workouts-section:
+### Workouts-section:
 
 - Database tables
 - Backend controllers etc.
 - Frontend data mapping
 
-# Challenges-section:
+### Challenges-section:
 
 - Description field
