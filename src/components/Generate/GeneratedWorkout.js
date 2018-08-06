@@ -2,7 +2,18 @@ import React from "react";
 import { Button, Table } from "semantic-ui-react";
 
 class GeneratedWorkout extends React.PureComponent {
+  renderDecreaseButton = () => {
+    return <Button onClick={() => this.decreaseReps()} icon="minus" />;
+  };
+
+  renderIncreaseButton = () => {
+    return <Button onClick={() => this.increaseReps()} icon="plus" />;
+  };
+
   generateReps = () => Math.floor(Math.random() * 11) + 5;
+
+  decreaseReps = () => console.log("decrease");
+  increaseReps = () => console.log("increase");
 
   renderRows = () => {
     return this.props.workouts.map(item => {
@@ -12,8 +23,8 @@ class GeneratedWorkout extends React.PureComponent {
           <Table.Cell>{this.generateReps()}</Table.Cell>
           <Table.Cell>
             <Button.Group compact size="mini">
-              <Button icon="minus" />
-              <Button icon="plus" />
+              {this.renderDecreaseButton()}
+              {this.renderIncreaseButton()}
             </Button.Group>
           </Table.Cell>
         </Table.Row>
