@@ -2,6 +2,21 @@ import React from "react";
 import { Button, Table } from "semantic-ui-react";
 
 class GeneratedWorkout extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      randomReps: Array(this.props.workouts.length)
+        .fill()
+        .map(() => Math.floor(Math.random() * 11) + 5)
+    };
+  }
+
+  renderReps = () => {
+    return this.state.randomReps[
+      Math.floor(Math.random() * this.state.randomReps.length)
+    ];
+  };
+
   renderDecreaseButton = () => {
     return <Button onClick={() => this.decreaseReps()} icon="minus" />;
   };
@@ -9,8 +24,6 @@ class GeneratedWorkout extends React.PureComponent {
   renderIncreaseButton = () => {
     return <Button onClick={() => this.increaseReps()} icon="plus" />;
   };
-
-  generateReps = () => Math.floor(Math.random() * 11) + 5;
 
   decreaseReps = () => console.log("decrease");
   increaseReps = () => console.log("increase");
@@ -20,7 +33,7 @@ class GeneratedWorkout extends React.PureComponent {
       return (
         <Table.Row key={item.name}>
           <Table.Cell>{item.name}</Table.Cell>
-          <Table.Cell>{this.generateReps()}</Table.Cell>
+          <Table.Cell>{this.renderReps()}</Table.Cell>
           <Table.Cell>
             <Button.Group compact size="mini">
               {this.renderDecreaseButton()}
