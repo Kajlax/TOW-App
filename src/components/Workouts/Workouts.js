@@ -58,6 +58,7 @@ class WorkoutSets extends React.PureComponent {
                   icon="star"
                   defaultRating={item.rating1}
                   maxRating={5}
+                  disabled
                 />
               </Grid.Row>
               <Grid.Row>
@@ -65,6 +66,7 @@ class WorkoutSets extends React.PureComponent {
                   icon="star"
                   defaultRating={item.rating2}
                   maxRating={5}
+                  disabled
                 />
               </Grid.Row>
             </Grid.Column>
