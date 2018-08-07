@@ -41,7 +41,7 @@ class WorkoutSets extends React.PureComponent {
             dividing
             textAlign="center"
           />
-          <Table color="purple" inverted unstackable columns={2}>
+          <Table color="purple" inverted unstackable compact columns={2}>
             <Table.Body>{this.renderWorkoutSetRow(item.challenge)}</Table.Body>
           </Table>
           <i>

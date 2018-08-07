@@ -39,12 +39,12 @@ class Challenges extends React.PureComponent {
             dividing
             textAlign="center"
           />
-          <Table color="pink" inverted unstackable>
+          <Table color="pink" inverted unstackable compact>
             <Table.Body>{this.renderChallengeRow(item.challenge)}</Table.Body>
           </Table>
           <i>
             "Do all exercises without letting go of the bar except for the push
-            ups. Try to complete the challenge without any pauses."
+            ups. Try to complete the challenge without any pause."
           </i>
         </Grid.Column>
       );

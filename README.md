@@ -13,8 +13,7 @@
 
 ### Workouts-section:
 
-- Add description field to database
-- Add Endurance and strenght fields to database
+- Description, endurance and strenght added to database. Api still need conf.
 - Add filtering-functionality
 
 ### Challenges-section:
