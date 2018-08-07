@@ -32,8 +32,10 @@ class GeneratedWorkout extends React.PureComponent {
       return (
         <Table.Row key={item.name}>
           <Table.Cell>{item.name}</Table.Cell>
-          <Table.Cell>{this.state.randomReps[index]}</Table.Cell>
-          <Table.Cell>
+          <Table.Cell textAlign="center">
+            {this.state.randomReps[index]}
+          </Table.Cell>
+          <Table.Cell textAlign="center">
             <Button.Group compact size="mini">
               <Button onClick={() => this.decreaseReps(index)} icon="minus" />;
               <Button onClick={() => this.increaseReps(index)} icon="plus" />;
