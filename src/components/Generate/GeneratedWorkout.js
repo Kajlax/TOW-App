@@ -47,16 +47,19 @@ class GeneratedWorkout extends React.PureComponent {
 
   render() {
     return (
-      <Table basic="very" unstackable selectable celled fixed compact>
-        <Table.Header>
-          <Table.Row textAlign="center">
-            <Table.HeaderCell width={9}>Exercise</Table.HeaderCell>
-            <Table.HeaderCell width={3}>Reps</Table.HeaderCell>
-            <Table.HeaderCell width={4}>Edit</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>{this.renderRows()}</Table.Body>
-      </Table>
+      <React.Fragment>
+        <Table basic="very" unstackable selectable celled fixed compact>
+          <Table.Header>
+            <Table.Row textAlign="center">
+              <Table.HeaderCell width={9}>Exercise</Table.HeaderCell>
+              <Table.HeaderCell width={3}>Reps</Table.HeaderCell>
+              <Table.HeaderCell width={4}>Edit</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>{this.renderRows()}</Table.Body>
+        </Table>
+        <br /> <br />
+      </React.Fragment>
     );
   }
 }

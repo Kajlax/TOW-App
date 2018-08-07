@@ -51,13 +51,6 @@ class Filters extends Component {
           {this.renderButton("Core")}
         </Button.Group>
         <br /> <br />
-        <Button.Group widths="3" size="small">
-          {this.renderButton("Beginner")}
-          {this.renderButton("Intermediate")}
-          {this.renderButton("Advanced")}
-        </Button.Group>
-        <br />
-        <br />
         <Button.Group widths="4" size="small">
           {this.renderDifficultyButton("25 %", "green")}
           {this.renderDifficultyButton("50 %", "yellow")}

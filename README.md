@@ -8,15 +8,15 @@
 
 ### Generate-section:
 
-- Random rep incrementing/decrementing
+- Random rep incrementing/decrementing with buttons
 - Number of exercises filtering
 
 ### Workouts-section:
 
-- Frontend data mapping
-- Decription field
-- Endurance and strenght values
+- Add description field to database
+- Add Endurance and strenght fields to database
+- Add filtering-functionality
 
 ### Challenges-section:
 
-- Description field
+- Description field mapping to front end

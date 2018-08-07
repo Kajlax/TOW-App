@@ -16,9 +16,12 @@ export default class About extends React.PureComponent {
           Workouts and challenges
         </Header>
         Head out to the workouts section and choose a pre-made, approved
-        workout. When you feel ready test your strength and endurance with the
-        challenges section. Challenges should be done without any pause, each
-        rep and exercise non-stop to the end.
+        workout. You can use filtering and scale the amount of reps.
+        <br />
+        <br />
+        When you feel ready test your strength and endurance with the challenges
+        section. Challenges should be done without any pause, each rep and
+        exercise non-stop to the end.
         <br />
         <Header color="teal" as="h3">
           Evolve: Generate

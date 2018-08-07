@@ -42,7 +42,7 @@ class WorkoutSets extends React.PureComponent {
             textAlign="center"
           />
           <Table color="purple" inverted unstackable columns={2}>
-            <Table.Body>{this.renderWorkoutSetRow(item.workoutset)}</Table.Body>
+            <Table.Body>{this.renderWorkoutSetRow(item.challenge)}</Table.Body>
           </Table>
           <i>
             "One of Mika's favourite upper body workouts. Try to hit ten rounds.
@@ -64,6 +64,8 @@ class WorkoutSets extends React.PureComponent {
               </Grid.Row>
             </Grid.Column>
           </Grid>
+          <br />
+          <br />
         </Grid.Column>
       );
     });
@@ -102,9 +104,12 @@ class WorkoutSets extends React.PureComponent {
           {!hideFilters ? <Filters /> : null}
         </CSSTransitionGroup>
         <br />
+        <br />
         <Grid columns={3} stackable>
           {this.renderWorkoutSets()}
         </Grid>
+        <br />
+        <br />
       </Layout>
     );
   }
