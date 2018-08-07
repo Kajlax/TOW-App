@@ -11,33 +11,32 @@ class GeneratedWorkout extends React.PureComponent {
     };
   }
 
-  renderReps = () => {
-    return this.state.randomReps[
-      Math.floor(Math.random() * this.state.randomReps.length)
-    ];
+  decreaseReps = index => {
+    this.setState(prevState => {
+      const randomReps = prevState.randomReps.slice();
+      randomReps[index] = randomReps[index] - 1;
+      return { randomReps };
+    });
   };
 
-  renderDecreaseButton = () => {
-    return <Button onClick={() => this.decreaseReps()} icon="minus" />;
+  increaseReps = index => {
+    this.setState(prevState => {
+      const randomReps = prevState.randomReps.slice();
+      randomReps[index] = randomReps[index] + 1;
+      return { randomReps };
+    });
   };
-
-  renderIncreaseButton = () => {
-    return <Button onClick={() => this.increaseReps()} icon="plus" />;
-  };
-
-  decreaseReps = () => console.log("decrease");
-  increaseReps = () => console.log("increase");
 
   renderRows = () => {
-    return this.props.workouts.map(item => {
+    return this.props.workouts.map((item, index) => {
       return (
         <Table.Row key={item.name}>
           <Table.Cell>{item.name}</Table.Cell>
-          <Table.Cell>{this.renderReps()}</Table.Cell>
+          <Table.Cell>{this.state.randomReps[index]}</Table.Cell>
           <Table.Cell>
             <Button.Group compact size="mini">
-              {this.renderDecreaseButton()}
-              {this.renderIncreaseButton()}
+              <Button onClick={() => this.decreaseReps(index)} icon="minus" />;
+              <Button onClick={() => this.increaseReps(index)} icon="plus" />;
             </Button.Group>
           </Table.Cell>
         </Table.Row>

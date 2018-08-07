@@ -8,12 +8,11 @@
 
 ### Generate-section:
 
-- Random rep incrementing/decrementing with buttons
-- Number of exercises filtering
+- Number of exercises -filtering
 
 ### Workouts-section:
 
-- Description, endurance and strenght added to database. Api still need conf.
+- Description, endurance and strenght added to database. Api still needs configuration so that the fields can be fetched.
 - Add filtering-functionality
 
 ### Challenges-section:
