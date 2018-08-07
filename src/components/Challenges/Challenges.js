@@ -42,10 +42,7 @@ class Challenges extends React.PureComponent {
           <Table color="pink" inverted unstackable compact>
             <Table.Body>{this.renderChallengeRow(item.challenge)}</Table.Body>
           </Table>
-          <i>
-            "Do all exercises without letting go of the bar except for the push
-            ups. Try to complete the challenge without any pause."
-          </i>
+          <i>{item.description}</i>
         </Grid.Column>
       );
     });

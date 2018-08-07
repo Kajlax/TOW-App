@@ -4,17 +4,16 @@
 - Data comes from JawsDB database
 - Workouts, Challenges and Generate sections
 
+### Challenges-section:
+
+- Each challenge is rendered from the database. You can use the search for filtering.
+
 ## Things that are still under work
 
 ### Generate-section:
 
-- Number of exercises -filtering
+- Generate-button should return the amount chosen in Number of exercises -filter. Default value could be set to five?
 
 ### Workouts-section:
 
-- Description, endurance and strenght added to database. Api still needs configuration so that the fields can be fetched.
 - Add filtering-functionality
-
-### Challenges-section:
-
-- Description field mapping to front end
