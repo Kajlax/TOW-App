@@ -10,10 +10,12 @@ class App extends Component {
     this.state = {
       workouts: [],
       challenges: [],
+      workoutsets: [],
       filters: [],
       getWorkouts: this.getWorkouts,
       updateFilters: this.updateFilters,
       getChallenges: this.getChallenges,
+      getWorkoutSets: this.getWorkoutSets,
       searchQuery: "",
       updateSearchQuery: this.updateSearchQuery
     };
@@ -89,6 +91,20 @@ class App extends Component {
       );
       this.setState({
         challenges: challenge.data
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+
+  getWorkoutSets = async () => {
+    try {
+      const workoutset = await axios.get(
+        "https://evolve-fitness.herokuapp.com/workoutset/"
+      );
+      this.setState({
+        workoutsets: workoutset.data
       });
       return true;
     } catch (e) {

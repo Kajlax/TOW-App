@@ -13,9 +13,9 @@
 
 ### Workouts-section:
 
-- Database tables
-- Backend controllers etc.
 - Frontend data mapping
+- Decription field
+- Endurance and strenght values
 
 ### Challenges-section:
 

@@ -71,7 +71,7 @@ class Challenges extends React.PureComponent {
           fluid
         />
         <br />
-        <Grid columns={3} divided stackable>
+        <Grid columns={3} stackable>
           {this.renderChallenges()}
         </Grid>
       </Layout>
