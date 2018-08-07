@@ -7,7 +7,7 @@ import { Button, Grid, Header, Rating, Table } from "semantic-ui-react";
 import { CSSTransitionGroup } from "react-transition-group";
 import "../Animations.css";
 
-class WorkoutSets extends React.PureComponent {
+class WorkoutSets extends React.Component {
   componentDidMount() {
     this.props.getWorkoutSets();
   }
@@ -45,8 +45,7 @@ class WorkoutSets extends React.PureComponent {
             <Table.Body>{this.renderWorkoutSetRow(item.challenge)}</Table.Body>
           </Table>
           <i>
-            "One of Mika's favourite upper body workouts. Try to hit ten rounds.
-            Pause only between rounds."
+            {item.description}
           </i>
           <br />
           <br />
@@ -57,10 +56,10 @@ class WorkoutSets extends React.PureComponent {
             </Grid.Column>
             <Grid.Column>
               <Grid.Row>
-                <Rating icon="star" defaultRating={4} maxRating={5} />
+                <Rating icon="star" defaultRating={item.rating1} maxRating={5} disabled />
               </Grid.Row>
               <Grid.Row>
-                <Rating icon="star" defaultRating={3} maxRating={5} />
+                <Rating icon="star" defaultRating={item.rating2} maxRating={5} disabled />
               </Grid.Row>
             </Grid.Column>
           </Grid>
