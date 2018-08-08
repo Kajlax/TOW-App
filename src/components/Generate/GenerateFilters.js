@@ -58,7 +58,7 @@ class Filters extends Component {
         <br />
         <Button.Group fluid>
           <Button>Number of exercises</Button>
-          <Dropdown options={numberOfExercises} button />
+          <Dropdown options={numberOfExercises} default text="5" button />
         </Button.Group>
         <br />
       </div>

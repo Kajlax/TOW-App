@@ -1,12 +1,12 @@
-import React from 'react';
-import { Header, Grid, Table, Rating } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Header, Grid, Segment, Table, Rating } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 export default class WorkoutsetComponent extends React.Component {
   renderWorkoutSetRow = workoutsets => {
     let { difficulty } = this.props;
-    
-    if(!difficulty) {
+
+    if (!difficulty) {
       difficulty = 1;
     }
 
@@ -23,56 +23,57 @@ export default class WorkoutsetComponent extends React.Component {
     });
   };
 
-
   render() {
     const { workoutset } = this.props;
 
     const setUrl = `/workouts/${workoutset.id}`;
 
-    return(
+    return (
       <Grid.Column>
-      <Link to={setUrl}>
-      <Header
-        as="h3"
-        content={workoutset.name}
-        subheader={workoutset.submitter}
-        dividing
-        textAlign="center"
-      />
-      </Link>
-      <Table color="purple" inverted unstackable compact columns={2}>
-        <Table.Body>{this.renderWorkoutSetRow(workoutset.challenge)}</Table.Body>
-      </Table>
-      <i>{workoutset.description}</i>
-      <br />
-      <br />
-      <Grid columns={2} unstackable="true">
-        <Grid.Column>
-          <Grid.Row>Endurance</Grid.Row>
-          <Grid.Row>Strength</Grid.Row>
-        </Grid.Column>
-        <Grid.Column>
-          <Grid.Row>
-            <Rating
-              icon="star"
-              defaultRating={workoutset.rating1}
-              maxRating={5}
-              disabled
+        <Segment color="purple">
+          <Link to={setUrl}>
+            <Header
+              as="h2"
+              content={workoutset.name}
+              subheader={workoutset.submitter}
+              textAlign="center"
             />
-          </Grid.Row>
-          <Grid.Row>
-            <Rating
-              icon="star"
-              defaultRating={workoutset.rating2}
-              maxRating={5}
-              disabled
-            />
-          </Grid.Row>
-        </Grid.Column>
-      </Grid>
-      <br />
-      <br />
-    </Grid.Column>
+          </Link>
+          <Table color="purple" inverted unstackable compact columns={2}>
+            <Table.Body>
+              {this.renderWorkoutSetRow(workoutset.challenge)}
+            </Table.Body>
+          </Table>
+          {workoutset.description}
+          <br />
+          <br />
+          <Grid columns={2} unstackable="true">
+            <Grid.Column>
+              <Grid.Row>Endurance</Grid.Row>
+              <Grid.Row>Strength</Grid.Row>
+            </Grid.Column>
+            <Grid.Column>
+              <Grid.Row>
+                <Rating
+                  icon="star"
+                  defaultRating={workoutset.rating1}
+                  maxRating={5}
+                  disabled
+                />
+              </Grid.Row>
+              <Grid.Row>
+                <Rating
+                  icon="star"
+                  defaultRating={workoutset.rating2}
+                  maxRating={5}
+                  disabled
+                />
+              </Grid.Row>
+            </Grid.Column>
+          </Grid>
+          <br />
+        </Segment>
+      </Grid.Column>
     );
   }
 }
