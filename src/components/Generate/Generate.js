@@ -30,7 +30,6 @@ class Generate extends React.PureComponent {
 
   toggleGenerateWorkout = async () => {
     const success = await this.props.getWorkouts();
-    console.log("success", success);
     if (success) {
       this.setState({
         hideFilters: true,

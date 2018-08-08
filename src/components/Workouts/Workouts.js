@@ -3,9 +3,10 @@ import { connectContext } from "react-connect-context";
 import { Context } from "../../context";
 import Layout from "../Layout";
 import Filters from "./WorkoutFilters";
-import { Button, Grid, Header, Rating, Table } from "semantic-ui-react";
+import { Button, Grid } from "semantic-ui-react";
 import { CSSTransitionGroup } from "react-transition-group";
 import "../Animations.css";
+import WorkoutsetComponent from './WorkoutsetComponent';
 
 class WorkoutSets extends React.Component {
   componentDidMount() {
@@ -33,58 +34,7 @@ class WorkoutSets extends React.Component {
     let { workoutsets } = this.props;
     return workoutsets.map(item => {
       return (
-        <Grid.Column key={item.id}>
-          <Header
-            as="h3"
-            content={item.name}
-            subheader={item.submitter}
-            dividing
-            textAlign="center"
-          />
-          <Table color="purple" inverted unstackable compact columns={2}>
-            <Table.Body>{this.renderWorkoutSetRow(item.challenge)}</Table.Body>
-          </Table>
-          <i>{item.description}</i>
-          <br />
-          <br />
-          <Grid columns={2} unstackable="true">
-            <Grid.Column>
-              <Grid.Row>Endurance</Grid.Row>
-              <Grid.Row>Strength</Grid.Row>
-            </Grid.Column>
-            <Grid.Column>
-              <Grid.Row>
-                <Rating
-                  icon="star"
-                  defaultRating={item.rating1}
-                  maxRating={5}
-                  disabled
-                />
-              </Grid.Row>
-              <Grid.Row>
-                <Rating
-                  icon="star"
-                  defaultRating={item.rating2}
-                  maxRating={5}
-                  disabled
-                />
-              </Grid.Row>
-            </Grid.Column>
-          </Grid>
-          <br />
-          <br />
-        </Grid.Column>
-      );
-    });
-  };
-
-  renderWorkoutSetRow = workoutsets => {
-    return workoutsets.map(item => {
-      return (
-        <Table.Row key={item.id}>
-          <Table.Cell>{item.name}</Table.Cell>
-          <Table.Cell>{item.reps}</Table.Cell>
-        </Table.Row>
+        <WorkoutsetComponent workoutset={item} key={item.id} />
       );
     });
   };

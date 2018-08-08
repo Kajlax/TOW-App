@@ -2,7 +2,8 @@ import React from "react";
 import { connectContext } from "react-connect-context";
 import { Context } from "../../context";
 import Layout from "../Layout";
-import { Header, Input, Grid, Table } from "semantic-ui-react";
+import { Input, Grid } from "semantic-ui-react";
+import ChallengeComponent from './ChallengeComponent';
 
 class Challenges extends React.PureComponent {
   componentDidMount() {
@@ -31,30 +32,7 @@ class Challenges extends React.PureComponent {
 
     return challenges.map(item => {
       return (
-        <Grid.Column key={item.id}>
-          <Header
-            as="h3"
-            content={item.name}
-            subheader={item.submitter}
-            dividing
-            textAlign="center"
-          />
-          <Table color="pink" inverted unstackable compact>
-            <Table.Body>{this.renderChallengeRow(item.challenge)}</Table.Body>
-          </Table>
-          <i>{item.description}</i>
-        </Grid.Column>
-      );
-    });
-  };
-
-  renderChallengeRow = challenges => {
-    return challenges.map(item => {
-      return (
-        <Table.Row key={item.id}>
-          <Table.Cell>{item.name}</Table.Cell>
-          <Table.Cell>{item.reps}</Table.Cell>
-        </Table.Row>
+        <ChallengeComponent challenge={item} key={item.id} />
       );
     });
   };

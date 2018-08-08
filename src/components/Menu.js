@@ -7,17 +7,19 @@ class Menu extends PureComponent {
   renderDropdownItems = () => {
     return routes.map(item => {
       const { path } = this.props.match;
-
-      return (
-        <Dropdown.Item
-          key={item.Title}
-          as={Link}
-          active={path === item.Path}
-          to={item.Path}
-        >
-          {item.Title}
-        </Dropdown.Item>
-      );
+      if(item.showInMenu) {
+        return (
+          <Dropdown.Item
+            key={item.Title}
+            as={Link}
+            active={path === item.Path}
+            to={item.Path}
+          >
+            {item.Title}
+          </Dropdown.Item>
+        );  
+      }
+      return null;
     });
   };
 
