@@ -7,7 +7,7 @@ import { Button, Grid, Header, Rating, Table } from "semantic-ui-react";
 import { CSSTransitionGroup } from "react-transition-group";
 import "../Animations.css";
 
-class WorkoutSets extends React.PureComponent {
+class WorkoutSets extends React.Component {
   componentDidMount() {
     this.props.getWorkoutSets();
   }
