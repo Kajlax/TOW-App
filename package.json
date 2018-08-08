@@ -2,7 +2,7 @@
   "name": "evolve_app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://kajlax.mbnet.fi/Projects/EvolveApp/",
+  "homepage": "https://evolve-app-4c2.firebaseapp.com/",
   "dependencies": {
     "axios": "^0.18.0",
     "react": "^16.4.1",

@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Frontpage from "./components/Frontpage";
 import WorkoutSets from "./components/Workouts/Workouts";
+import Workout from './components/Workouts/Workout';
 import Challenges from "./components/Challenges/Challenges";
 import Challenge from "./components/Challenges/Challenge";
 import Generate from "./components/Generate/Generate";
@@ -36,6 +37,12 @@ export const routes = [
     Title: "Single Challenge",
     Path: "/challenges/:id",
     component: Challenge,
+    showInMenu: false,
+  },
+  {
+    Title: "Single Curated Workout",
+    Path: "/workouts/:id",
+    component: Workout,
     showInMenu: false,
   }
 ];
