@@ -12,12 +12,10 @@ class Challenges extends React.PureComponent {
   }
 
   render() {
-    console.log(this.props);
     const { challenges } = this.props;
     const id = parseInt(this.props.match.params.id, 10);
 
     const challenge = challenges.filter(c => c.id === id);
-    console.log(challenge, id);
     return (
       <Layout {...this.props}>
         <Grid columns={1} stackable>
