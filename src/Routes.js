@@ -48,7 +48,7 @@ export default class Routes extends React.PureComponent {
   };
   render() {
     return (
-      <Router basename="/evolve">
+      <Router>
         <Switch>
           <Route path="/" component={Frontpage} exact />
           {this.renderRoutes()}
