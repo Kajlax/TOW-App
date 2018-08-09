@@ -8,6 +8,10 @@ import { Button } from "semantic-ui-react";
 import { CSSTransitionGroup } from "react-transition-group";
 import "../Animations.css";
 
+const fillArrayWithRandomNumbers = (count) => {
+  return new Array(count).fill().map(() => Math.floor(Math.random() * 11) + 5)
+}
+
 class Generate extends React.Component {
   constructor() {
     super();
@@ -16,6 +20,7 @@ class Generate extends React.Component {
       filterIcon: "caret up",
       hideGeneratedWorkout: true,
       numberOfExercises: 5,
+      reps: fillArrayWithRandomNumbers(5),
     };
   }
   
@@ -40,15 +45,28 @@ class Generate extends React.Component {
   };
   
   handleDropdownChange = (e, { value }) => {
+    const number = parseInt(value, 10);    
     this.setState({
-      numberOfExercises: parseInt(value, 10) 
+      numberOfExercises: parseInt(number, 10),
+      reps: fillArrayWithRandomNumbers(number),
     });
   }
 
-  render() {
-    const { hideFilters, hideGeneratedWorkout, filterIcon, numberOfExercises } = this.state;
-    let { workouts } = this.props;
+  updateRep = (index, value) => {
+    const { reps } = this.state;
+    const newReps = reps.map((v, i) => i === index ? value: v);
 
+    if(value > 0){
+      this.setState({
+        reps: newReps
+      });
+    }
+  };
+
+
+  render() {
+    const { hideFilters, hideGeneratedWorkout, filterIcon, numberOfExercises, reps } = this.state;
+    let { workouts } = this.props;
     workouts = workouts.slice(0,numberOfExercises);
     
     return (
@@ -85,6 +103,8 @@ class Generate extends React.Component {
           {!hideGeneratedWorkout ? (
             <GeneratedWorkout
               workouts={workouts}
+              reps={reps}
+              updateRep={this.updateRep}
             />
           ) : null}
         </CSSTransitionGroup>
