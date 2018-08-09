@@ -39,6 +39,16 @@ const filters = [
   },
 ]
 
+const activeFilters = (fs) => {
+  const af = [];
+  fs.forEach(f => {
+    if(f.selected) {
+      af.push(f.title);
+    }
+  });
+  return af;
+}
+
 class WorkoutSets extends React.Component {
   componentDidMount() {
     this.props.getWorkoutSets();
@@ -64,6 +74,24 @@ class WorkoutSets extends React.Component {
 
   renderWorkoutSets = () => {
     let { workoutsets } = this.props;
+    const { filters } = this.state;
+    const active = activeFilters(filters);
+
+    if (active.length > 0) {
+      workoutsets = workoutsets.filter(workout => {
+        const tags = workout.tags;
+        let returnWorkout = false;
+        active.forEach(a => {
+          if (tags && tags.indexOf(a)>-1) {
+            returnWorkout = true;
+          }
+        })
+        
+        return returnWorkout;
+      });
+    }
+
+
     return workoutsets.map(item => {
       return (
         <WorkoutsetComponent workoutset={item} key={item.id} />
@@ -97,7 +125,6 @@ class WorkoutSets extends React.Component {
           size="small"
           onClick={this.toggleFilters}
         />
-        <Button content="Search" color="pink" size="small" />
         <br />
         <CSSTransitionGroup
           transitionName="example"
