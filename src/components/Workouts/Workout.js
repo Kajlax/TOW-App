@@ -55,6 +55,7 @@ class Workout extends React.Component {
           onClick={() => this.selectDifficulty(d.multiplier)}
           content={d.text}
           color={d.color}
+          key={d.text}
         />
       );
     })
