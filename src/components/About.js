@@ -13,28 +13,34 @@ export default class About extends React.PureComponent {
         training.
         <br />
         <Header color="teal" as="h3">
-          Workouts and challenges
+          Workouts
         </Header>
-        The workouts section contains pre-made, approved workouts. Scroll
-        workouts or use filtering and scale the amount of reps to decrease
-        difficulty.
+        The workout section contains pre-made, approved workouts. Browse
+        workouts or use filtering. Press the title of the workout and scale the
+        amount of reps to decrease difficulty.
         <br />
-        <br />
+        <Header color="teal" as="h3">
+          Challenges
+        </Header>
         When you feel ready test your strength and endurance with the challenges
         section. Challenges should be done without pause, each rep and exercise
-        non-stop to the end.
+        non-stop to the end. The description field tells more details about the
+        challenge, for example a time to beat to complete the challenge.
         <br />
         <Header color="teal" as="h3">
           Evolve: Generate
         </Header>
         Evolve: Generate creates quickly a workout by chosen preferences. Choose
-        your workout preferences from the filters pane and click generate. Never
-        run out of ideas.
+        suitable workout preferences from the filters pane and click generate.
+        Can be used as a WOD (workout of the day). Never run out of ideas.
         <br />
         <Header color="teal" as="h3">
           Creators
         </Header>
         Created by Kaj Laxström and Lauri Katajisto.
+        <br />
+        <br />
+        <br />
         <br />
       </Layout>
     );
