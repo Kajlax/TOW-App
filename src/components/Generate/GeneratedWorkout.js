@@ -2,38 +2,27 @@ import React from "react";
 import { Button, Table } from "semantic-ui-react";
 
 class GeneratedWorkout extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      randomReps: Array(this.props.workouts.length)
-        .fill()
-        .map(() => Math.floor(Math.random() * 11) + 5)
-    };
-  }
-
-  decreaseReps = index => {
-    this.setState(prevState => {
-      const randomReps = prevState.randomReps.slice();
-      randomReps[index] = randomReps[index] - 1;
-      return { randomReps };
-    });
+  decreaseReps = (index) => {
+    const { updateRep, reps } = this.props;
+    const value = reps[index] - 1;
+    updateRep(index, value);
   };
 
-  increaseReps = index => {
-    this.setState(prevState => {
-      const randomReps = prevState.randomReps.slice();
-      randomReps[index] = randomReps[index] + 1;
-      return { randomReps };
-    });
+  increaseReps = (index) => {
+    const { updateRep, reps } = this.props;
+    const value = reps[index] + 1; 
+    updateRep(index, value);
   };
-
+  
   renderRows = () => {
-    return this.props.workouts.map((item, index) => {
+    const { workouts, reps } = this.props;
+
+    return workouts.map((item, index) => {
       return (
         <Table.Row key={item.name}>
           <Table.Cell>{item.name}</Table.Cell>
           <Table.Cell textAlign="center">
-            {this.state.randomReps[index]}
+            {reps[index]}
           </Table.Cell>
           <Table.Cell textAlign="center">
             <Button.Group compact size="mini">
