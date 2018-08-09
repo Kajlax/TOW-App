@@ -12,7 +12,7 @@
 
 ### Generate-section:
 
-- Generate-button should return the amount chosen in Number of exercises -filter. Default value could be set to five?
+- Generate-button should return the amount chosen in Number of exercises -filter. Default value 5.
 
 ### Workouts-section:
 
