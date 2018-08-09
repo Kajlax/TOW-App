@@ -8,16 +8,17 @@ import { Button } from "semantic-ui-react";
 import { CSSTransitionGroup } from "react-transition-group";
 import "../Animations.css";
 
-class Generate extends React.PureComponent {
+class Generate extends React.Component {
   constructor() {
     super();
     this.state = {
       hideFilters: false,
       filterIcon: "caret up",
-      hideGeneratedWorkout: true
+      hideGeneratedWorkout: true,
+      numberOfExercises: 5,
     };
   }
-
+  
   toggleFilters = () => {
     const { hideFilters, filterIcon } = this.state;
     const icon = filterIcon === "caret up" ? "caret down" : "caret up";
@@ -37,10 +38,19 @@ class Generate extends React.PureComponent {
       });
     }
   };
+  
+  handleDropdownChange = (e, { value }) => {
+    this.setState({
+      numberOfExercises: parseInt(value, 10) 
+    });
+  }
 
   render() {
-    const { hideFilters, hideGeneratedWorkout, filterIcon } = this.state;
-    const { workouts } = this.props;
+    const { hideFilters, hideGeneratedWorkout, filterIcon, numberOfExercises } = this.state;
+    let { workouts } = this.props;
+
+    workouts = workouts.slice(0,numberOfExercises);
+    
     return (
       <Layout {...this.props}>
         <Button
@@ -64,7 +74,7 @@ class Generate extends React.PureComponent {
           transitionEnterTimeout={200}
           transitionLeaveTimeout={200}
         >
-          {!hideFilters ? <Filters /> : null}
+          {!hideFilters ? <Filters handleDropdownChange={this.handleDropdownChange} numberOfExercises={this.state.numberOfExercises} /> : null}
         </CSSTransitionGroup>
         <br />
         <CSSTransitionGroup
@@ -73,7 +83,9 @@ class Generate extends React.PureComponent {
           transitionLeaveTimeout={400}
         >
           {!hideGeneratedWorkout ? (
-            <GeneratedWorkout workouts={workouts} />
+            <GeneratedWorkout
+              workouts={workouts}
+            />
           ) : null}
         </CSSTransitionGroup>
       </Layout>
