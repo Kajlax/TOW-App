@@ -3,7 +3,7 @@ import { Button, Dropdown } from "semantic-ui-react";
 import { connectContext } from "react-connect-context";
 import { Context } from "../../context";
 
-const numberOfExercises = [
+const dropdownvalues = [
   { key: "3", text: "3", value: "3" },
   { key: "4", text: "4", value: "4" },
   { key: "5", text: "5", value: "5" },
@@ -33,6 +33,10 @@ class Filters extends Component {
   };
 
   render() {
+    const { handleDropdownChange } = this.props;
+    let { numberOfExercises } = this.props;
+    numberOfExercises = `${numberOfExercises}`;
+
     return (
       <div>
         <br />
@@ -58,7 +62,7 @@ class Filters extends Component {
         <br />
         <Button.Group fluid>
           <Button>Number of exercises</Button>
-          <Dropdown options={numberOfExercises} default text="5" button />
+          <Dropdown options={dropdownvalues} default text={numberOfExercises} button onChange={handleDropdownChange} />
         </Button.Group>
         <br />
       </div>

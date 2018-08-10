@@ -4,6 +4,14 @@ import axios from "axios";
 import Routes from "./Routes";
 import { Context } from "./context";
 
+const shuffle = (arr) => {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 class App extends Component {
   constructor(p) {
     super(p);
@@ -44,7 +52,7 @@ class App extends Component {
         "https://evolve-fitness.herokuapp.com/workout/"
       );
       this.setState({
-        workouts: work.data
+        workouts: shuffle(work.data)
       });
       return true;
     } catch (e) {
@@ -62,7 +70,7 @@ class App extends Component {
         }
       );
       this.setState({
-        workouts: workouts.data
+        workouts: shuffle(workouts.data)
       });
       return true;
     } catch (e) {

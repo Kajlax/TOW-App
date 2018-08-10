@@ -8,16 +8,22 @@ import { Button } from "semantic-ui-react";
 import { CSSTransitionGroup } from "react-transition-group";
 import "../Animations.css";
 
-class Generate extends React.PureComponent {
+const fillArrayWithRandomNumbers = (count) => {
+  return new Array(count).fill().map(() => Math.floor(Math.random() * 11) + 5)
+}
+
+class Generate extends React.Component {
   constructor() {
     super();
     this.state = {
       hideFilters: false,
       filterIcon: "caret up",
-      hideGeneratedWorkout: true
+      hideGeneratedWorkout: true,
+      numberOfExercises: 5,
+      reps: fillArrayWithRandomNumbers(5),
     };
   }
-
+  
   toggleFilters = () => {
     const { hideFilters, filterIcon } = this.state;
     const icon = filterIcon === "caret up" ? "caret down" : "caret up";
@@ -37,10 +43,32 @@ class Generate extends React.PureComponent {
       });
     }
   };
+  
+  handleDropdownChange = (e, { value }) => {
+    const number = parseInt(value, 10);    
+    this.setState({
+      numberOfExercises: parseInt(number, 10),
+      reps: fillArrayWithRandomNumbers(number),
+    });
+  }
+
+  updateRep = (index, value) => {
+    const { reps } = this.state;
+    const newReps = reps.map((v, i) => i === index ? value: v);
+
+    if(value > 0){
+      this.setState({
+        reps: newReps
+      });
+    }
+  };
+
 
   render() {
-    const { hideFilters, hideGeneratedWorkout, filterIcon } = this.state;
-    const { workouts } = this.props;
+    const { hideFilters, hideGeneratedWorkout, filterIcon, numberOfExercises, reps } = this.state;
+    let { workouts } = this.props;
+    workouts = workouts.slice(0,numberOfExercises);
+    
     return (
       <Layout {...this.props}>
         <Button
@@ -64,7 +92,7 @@ class Generate extends React.PureComponent {
           transitionEnterTimeout={200}
           transitionLeaveTimeout={200}
         >
-          {!hideFilters ? <Filters /> : null}
+          {!hideFilters ? <Filters handleDropdownChange={this.handleDropdownChange} numberOfExercises={this.state.numberOfExercises} /> : null}
         </CSSTransitionGroup>
         <br />
         <CSSTransitionGroup
@@ -73,7 +101,11 @@ class Generate extends React.PureComponent {
           transitionLeaveTimeout={400}
         >
           {!hideGeneratedWorkout ? (
-            <GeneratedWorkout workouts={workouts} />
+            <GeneratedWorkout
+              workouts={workouts}
+              reps={reps}
+              updateRep={this.updateRep}
+            />
           ) : null}
         </CSSTransitionGroup>
       </Layout>
