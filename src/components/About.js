@@ -16,8 +16,9 @@ export default class About extends React.PureComponent {
           Workouts
         </Header>
         The workout section contains pre-made, approved workouts. Browse
-        workouts or use filtering. Press the title of the workout and scale the
-        amount of reps to decrease difficulty. Difficulty range 25% - 100%.
+        workouts or use filtering. Press the title of the workout to access it
+        and scale the amount of reps to decrease difficulty. Difficulty range
+        25% - 100%.
         <br />
         <Header color="teal" as="h3">
           Challenges
