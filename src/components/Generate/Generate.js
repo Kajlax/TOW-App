@@ -47,6 +47,7 @@ class Generate extends React.Component {
         hideFilters: true,
         hideGeneratedWorkout: false,
         loading: false,
+        reps: fillArrayWithRandomNumbers(this.state.numberOfExercises),
       });
     }
   };
