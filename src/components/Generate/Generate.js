@@ -4,9 +4,10 @@ import { Context } from "../../context";
 import Layout from "../Layout";
 import Filters from "./GenerateFilters";
 import GeneratedWorkout from "./GeneratedWorkout";
-import { Button } from "semantic-ui-react";
+import { Button, Grid } from "semantic-ui-react";
 import { CSSTransitionGroup } from "react-transition-group";
 import "../Animations.css";
+import Loading from '../Loading';
 
 const fillArrayWithRandomNumbers = (count) => {
   return new Array(count).fill().map(() => Math.floor(Math.random() * 11) + 5)
@@ -21,6 +22,7 @@ class Generate extends React.Component {
       hideGeneratedWorkout: true,
       numberOfExercises: 5,
       reps: fillArrayWithRandomNumbers(5),
+      loading: false,
     };
   }
   
@@ -35,11 +37,16 @@ class Generate extends React.Component {
   };
 
   toggleGenerateWorkout = async () => {
+    this.setState({
+      loading: true,
+    });
+
     const success = await this.props.getWorkouts();
     if (success) {
       this.setState({
         hideFilters: true,
-        hideGeneratedWorkout: false
+        hideGeneratedWorkout: false,
+        loading: false,
       });
     }
   };
@@ -65,7 +72,7 @@ class Generate extends React.Component {
 
 
   render() {
-    const { hideFilters, hideGeneratedWorkout, filterIcon, numberOfExercises, reps } = this.state;
+    const { loading, hideFilters, hideGeneratedWorkout, filterIcon, numberOfExercises, reps } = this.state;
     let { workouts } = this.props;
     workouts = workouts.slice(0,numberOfExercises);
     
@@ -100,13 +107,16 @@ class Generate extends React.Component {
           transitionEnterTimeout={400}
           transitionLeaveTimeout={400}
         >
-          {!hideGeneratedWorkout ? (
+          {
+            !hideGeneratedWorkout ? 
+            loading ? 
+            <Grid columns={3} stackable><Loading /></Grid> :
             <GeneratedWorkout
               workouts={workouts}
               reps={reps}
               updateRep={this.updateRep}
             />
-          ) : null}
+            : null }
         </CSSTransitionGroup>
       </Layout>
     );
