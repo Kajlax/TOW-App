@@ -12,6 +12,8 @@ const shuffle = (arr) => {
   return arr;
 }
 
+const apiUrl = 'https://evolve-fitness.herokuapp.com';
+
 class App extends Component {
   constructor(p) {
     super(p);
@@ -49,7 +51,7 @@ class App extends Component {
   getAllWorkouts = async () => {
     try {
       const work = await axios.get(
-        "https://evolve-fitness.herokuapp.com/workout/"
+        `${apiUrl}/workout/`
       );
       this.setState({
         workouts: shuffle(work.data)
@@ -64,7 +66,7 @@ class App extends Component {
     const { filters } = this.state;
     try {
       const workouts = await axios.post(
-        "https://evolve-fitness.herokuapp.com/workout/filter",
+        `${apiUrl}/workout/filter`,
         {
           tags: filters
         }
@@ -95,7 +97,7 @@ class App extends Component {
   getChallenges = async () => {
     try {
       const challenge = await axios.get(
-        "https://evolve-fitness.herokuapp.com/challenge/"
+        `${apiUrl}/challenge/`
       );
       this.setState({
         challenges: challenge.data
@@ -109,7 +111,7 @@ class App extends Component {
   getWorkoutSets = async () => {
     try {
       const workoutset = await axios.get(
-        "https://evolve-fitness.herokuapp.com/workoutset/"
+        `${apiUrl}/workoutset/`
       );
       this.setState({
         workoutsets: workoutset.data
