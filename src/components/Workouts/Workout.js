@@ -3,29 +3,29 @@ import { connectContext } from "react-connect-context";
 import { Context } from "../../context";
 import Layout from "../Layout";
 import { Grid, Icon, Button } from "semantic-ui-react";
-import WorkoutsetComponent from './WorkoutsetComponent';
-import { Link } from 'react-router-dom';
+import WorkoutsetComponent from "./WorkoutsetComponent";
+import { Link } from "react-router-dom";
 
 const difficulties = [
   {
-    color: 'green',
-    text: '25 %',
-    multiplier: 0.25,
+    color: "green",
+    text: "25 %",
+    multiplier: 0.25
   },
   {
-    color: 'yellow',
-    text: '50 %',
-    multiplier: 0.5,
+    color: "yellow",
+    text: "50 %",
+    multiplier: 0.5
   },
   {
-    color: 'orange',
-    text: '75 %',
-    multiplier: 0.75,
+    color: "orange",
+    text: "75 %",
+    multiplier: 0.75
   },
   {
-    color: 'red',
-    text: '100 %',
-    multiplier: 1,
+    color: "red",
+    text: "100 %",
+    multiplier: 1
   }
 ];
 
@@ -34,23 +34,23 @@ class Workout extends React.Component {
     super(p);
 
     this.state = {
-      difficulty: 1,
-    }
+      difficulty: 1
+    };
   }
-  
+
   componentDidMount() {
     this.props.getWorkoutSets();
   }
 
-  selectDifficulty = (value) => {
+  selectDifficulty = value => {
     this.setState({
-      difficulty: value,
+      difficulty: value
     });
-  }
+  };
 
   renderDifficulties = () => {
     return difficulties.map(d => {
-      return(
+      return (
         <Button
           onClick={() => this.selectDifficulty(d.multiplier)}
           content={d.text}
@@ -58,8 +58,8 @@ class Workout extends React.Component {
           key={d.text}
         />
       );
-    })
-  }
+    });
+  };
 
   render() {
     const { workoutsets } = this.props;
@@ -71,20 +71,19 @@ class Workout extends React.Component {
     return (
       <Layout {...this.props}>
         <Button.Group widths="4" size="small">
-          {
-            this.renderDifficulties()
-          }
+          {this.renderDifficulties()}
         </Button.Group>
-        <br /><br />
+        <br />
+        <br />
         <Grid columns={1} stackable>
-        {
-          set.length > 0 ?
-          <WorkoutsetComponent workoutset={set[0]} difficulty={difficulty} />:
-          null
-        }
+          {set.length > 0 ? (
+            <WorkoutsetComponent workoutset={set[0]} difficulty={difficulty} />
+          ) : null}
         </Grid>
         <Grid columns={1} stackable>
-            <Link to="/workouts"><Icon name='angle double left' circular inverted /></Link>
+          <Link to="/workouts">
+            <Icon name="angle double left" circular inverted />
+          </Link>
         </Grid>
         <br />
         <br />

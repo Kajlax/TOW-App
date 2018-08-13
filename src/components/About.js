@@ -31,16 +31,20 @@ export default class About extends React.PureComponent {
         <Header color="teal" as="h3">
           Evolve: Generate
         </Header>
-        Evolve: Generate creates quickly a workout by chosen preferences. Choose
-        suitable workout preferences from the filters pane and click generate.
-        Can be used as a WOD (workout of the day). Never run out of ideas.
+        Evolve: Generate creates instantly a workout by chosen preferences.
+        Choose suitable workout preferences from the filters pane and click
+        generate. Can be used as a WOD (workout of the day). Never run out of
+        ideas.
+        <br />
+        <br />
+        Tip: Set the number of exercises to 4 and hit generate. Perform one
+        round and hit generate again for a varied second round. Get ready to be
+        addicted..
         <br />
         <Header color="teal" as="h3">
           Creators
         </Header>
         Created by Kaj Laxström and Lauri Katajisto.
-        <br />
-        <br />
         <br />
         <br />
       </Layout>

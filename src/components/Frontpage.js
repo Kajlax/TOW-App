@@ -4,15 +4,6 @@ import { Context } from "../context";
 import Menu from "./Menu";
 import Footer from "./Footer";
 import { Header } from "semantic-ui-react";
-import CoverImage from "../img/Frontpage.jpeg";
-
-const bg = {
-  backgroundImage: `url(${CoverImage})`,
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  opacity: 0.6,
-  height: "100vh"
-};
 
 const textStyle = {
   width: 220,
@@ -30,7 +21,7 @@ class Frontpage extends React.PureComponent {
     return (
       <React.Fragment>
         <Menu {...this.props} />
-        <div style={bg}>
+        <div className="frontpage-bg">
           <Header
             as="h1"
             content="Evolve App"

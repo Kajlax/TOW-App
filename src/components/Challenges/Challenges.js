@@ -3,7 +3,7 @@ import { connectContext } from "react-connect-context";
 import { Context } from "../../context";
 import Layout from "../Layout";
 import { Input, Grid } from "semantic-ui-react";
-import ChallengeComponent from './ChallengeComponent';
+import ChallengeComponent from "./ChallengeComponent";
 
 class Challenges extends React.PureComponent {
   componentDidMount() {
@@ -31,9 +31,7 @@ class Challenges extends React.PureComponent {
     }
 
     return challenges.map(item => {
-      return (
-        <ChallengeComponent challenge={item} key={item.id} />
-      );
+      return <ChallengeComponent challenge={item} key={item.id} />;
     });
   };
 
@@ -54,6 +52,7 @@ class Challenges extends React.PureComponent {
         <Grid columns={3} stackable>
           {this.renderChallenges()}
         </Grid>
+        <br />
       </Layout>
     );
   }

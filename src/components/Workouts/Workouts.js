@@ -6,48 +6,48 @@ import Filters from "./WorkoutFilters";
 import { Button, Grid } from "semantic-ui-react";
 import { CSSTransitionGroup } from "react-transition-group";
 import "../Animations.css";
-import WorkoutsetComponent from './WorkoutsetComponent';
+import WorkoutsetComponent from "./WorkoutsetComponent";
 
 const filters = [
   {
-    title: 'Calisthenics',
-    selected: false,
+    title: "Calisthenics",
+    selected: false
   },
   {
-    title: 'Gym',
-    selected: false,
+    title: "Gym",
+    selected: false
   },
   {
-    title: 'Mixed',
-    selected: false,
+    title: "Mixed",
+    selected: false
   },
   {
-    title: 'Upper body',
-    selected: false,
+    title: "Upper body",
+    selected: false
   },
   {
-    title: 'Lower body',
-    selected: false,
+    title: "Lower body",
+    selected: false
   },
   {
-    title: 'Full body',
-    selected: false,
+    title: "Full body",
+    selected: false
   },
   {
-    title: 'Core',
-    selected: false,
-  },
-]
+    title: "Core",
+    selected: false
+  }
+];
 
-const activeFilters = (fs) => {
+const activeFilters = fs => {
   const af = [];
   fs.forEach(f => {
-    if(f.selected) {
+    if (f.selected) {
       af.push(f.title);
     }
   });
   return af;
-}
+};
 
 class WorkoutSets extends React.Component {
   componentDidMount() {
@@ -58,7 +58,7 @@ class WorkoutSets extends React.Component {
     this.state = {
       hideFilters: true,
       filterIcon: "caret down",
-      filters,
+      filters
     };
   }
 
@@ -82,36 +82,33 @@ class WorkoutSets extends React.Component {
         const tags = workout.tags;
         let returnWorkout = false;
         active.forEach(a => {
-          if (tags && tags.indexOf(a)>-1) {
+          if (tags && tags.indexOf(a) > -1) {
             returnWorkout = true;
           }
-        })
-        
+        });
+
         return returnWorkout;
       });
     }
 
-
     return workoutsets.map(item => {
-      return (
-        <WorkoutsetComponent workoutset={item} key={item.id} />
-      );
+      return <WorkoutsetComponent workoutset={item} key={item.id} />;
     });
   };
 
-  toggleFilter = (index) => {
+  toggleFilter = index => {
     const { filters } = this.state;
     const newState = filters.map((f, i) => {
       const filter = f;
-      if(i === index) {
+      if (i === index) {
         filter.selected = !filter.selected;
       }
       return filter;
     });
     this.setState({
-      filters: newState,
+      filters: newState
     });
-  }
+  };
 
   render() {
     const { hideFilters, filterIcon, filters } = this.state;
@@ -131,22 +128,15 @@ class WorkoutSets extends React.Component {
           transitionEnterTimeout={200}
           transitionLeaveTimeout={200}
         >
-          {
-            !hideFilters ?
-            <Filters
-              filters={filters}
-              toggleFilter={this.toggleFilter}
-            />
-            : 
-            null
-          }
+          {!hideFilters ? (
+            <Filters filters={filters} toggleFilter={this.toggleFilter} />
+          ) : null}
         </CSSTransitionGroup>
         <br />
         <br />
         <Grid columns={3} stackable>
           {this.renderWorkoutSets()}
         </Grid>
-        <br />
         <br />
       </Layout>
     );
