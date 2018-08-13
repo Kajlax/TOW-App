@@ -4,6 +4,7 @@ import { Context } from "../../context";
 import Layout from "../Layout";
 import { Input, Grid } from "semantic-ui-react";
 import ChallengeComponent from "./ChallengeComponent";
+import Loading from '../Loading';
 
 class Challenges extends React.PureComponent {
   componentDidMount() {
@@ -36,7 +37,7 @@ class Challenges extends React.PureComponent {
   };
 
   render() {
-    const { searchQuery } = this.props;
+    const { searchQuery, challenges } = this.props;
     return (
       <Layout {...this.props}>
         <Input
@@ -50,7 +51,11 @@ class Challenges extends React.PureComponent {
         <br />
         <br />
         <Grid columns={3} stackable>
-          {this.renderChallenges()}
+          {
+            challenges.length > 0 ? 
+            this.renderChallenges():
+            <Loading />
+          }
         </Grid>
         <br />
       </Layout>

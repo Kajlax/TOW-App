@@ -7,6 +7,7 @@ import { Button, Grid } from "semantic-ui-react";
 import { CSSTransitionGroup } from "react-transition-group";
 import "../Animations.css";
 import WorkoutsetComponent from "./WorkoutsetComponent";
+import Loading from '../Loading';
 
 const filters = [
   {
@@ -112,6 +113,7 @@ class WorkoutSets extends React.Component {
 
   render() {
     const { hideFilters, filterIcon, filters } = this.state;
+    let { workoutsets } = this.props;
     return (
       <Layout {...this.props}>
         <Button
@@ -135,7 +137,10 @@ class WorkoutSets extends React.Component {
         <br />
         <br />
         <Grid columns={3} stackable>
-          {this.renderWorkoutSets()}
+          { workoutsets.length > 0 ? 
+            this.renderWorkoutSets():
+            <Loading />
+          }
         </Grid>
         <br />
       </Layout>
