@@ -2,7 +2,7 @@
   "name": "evolve_app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://www.laurikatajisto.com/evolve/",
+  "homepage": "https://evolve-app-4c2.firebaseapp.com/",
   "dependencies": {
     "axios": "^0.18.0",
     "react": "^16.4.1",

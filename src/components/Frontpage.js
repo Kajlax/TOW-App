@@ -1,83 +1,46 @@
 import React from "react";
 import { connectContext } from "react-connect-context";
 import { Context } from "../context";
-import Layout from "./Layout";
-import Filters from "./Filters";
-import GeneratedWorkout from "./GeneratedWorkout";
-import { Button } from "semantic-ui-react";
-import { CSSTransitionGroup } from "react-transition-group";
-import "./Animations.css";
+import Menu from "./Menu";
+import Footer from "./Footer";
+import { Header } from "semantic-ui-react";
+import CoverImage from "../img/Frontpage.jpeg";
+
+const bg = {
+  backgroundImage: `url(${CoverImage})`,
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+  opacity: 0.6,
+  height: "100vh"
+};
+
+const textStyle = {
+  width: 220,
+  height: 50,
+  position: "absolute",
+  top: 0,
+  bottom: 0,
+  left: 0,
+  right: 0,
+  margin: "auto"
+};
 
 class Frontpage extends React.PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      hideFilters: false,
-      filterIcon: "caret up",
-      hideGeneratedWorkout: true
-    };
-  }
-
-  toggleFilters = () => {
-    const { hideFilters, filterIcon } = this.state;
-    const icon = filterIcon === "caret up" ? "caret down" : "caret up";
-
-    this.setState({
-      hideFilters: !hideFilters,
-      filterIcon: icon
-    });
-  };
-
-  toggleGenerateWorkout = async () => {
-    const success = await this.props.getWorkouts();
-    console.log("success", success);
-    if (success) {
-      this.setState({
-        hideFilters: true,
-        hideGeneratedWorkout: false
-      });
-    }
-  };
-
   render() {
-    const { hideFilters, hideGeneratedWorkout, filterIcon } = this.state;
-    const { workouts } = this.props;
     return (
-      <Layout {...this.props}>
-        <Button
-          content="Filters"
-          icon={filterIcon}
-          labelPosition="right"
-          color="teal"
-          size="small"
-          onClick={this.toggleFilters}
-        />
-
-        <Button
-          content="Generate"
-          color="pink"
-          size="small"
-          onClick={this.toggleGenerateWorkout}
-        />
-        <br />
-        <CSSTransitionGroup
-          transitionName="example"
-          transitionEnterTimeout={200}
-          transitionLeaveTimeout={200}
-        >
-          {!hideFilters ? <Filters /> : null}
-        </CSSTransitionGroup>
-        <br />
-        <CSSTransitionGroup
-          transitionName="generated"
-          transitionEnterTimeout={400}
-          transitionLeaveTimeout={400}
-        >
-          {!hideGeneratedWorkout ? (
-            <GeneratedWorkout workouts={workouts} />
-          ) : null}
-        </CSSTransitionGroup>
-      </Layout>
+      <React.Fragment>
+        <Menu {...this.props} />
+        <div style={bg}>
+          <Header
+            as="h1"
+            content="Evolve App"
+            textAlign="center"
+            inverted
+            style={textStyle}
+          />
+        </div>
+        <Footer />
+      </React.Fragment>
     );
   }
 }

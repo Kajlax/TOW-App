@@ -2,7 +2,7 @@ import React from 'react';
 import Layout from "./Layout";
 import { connectContext } from "react-connect-context";
 import { Context } from "../context";
-import GeneratedWorkout from "./GeneratedWorkout"; 
+import GeneratedWorkout from "./Generate/GeneratedWorkout"; 
 
 class SavedWorkout extends React.PureComponent {
   componentDidMount() {

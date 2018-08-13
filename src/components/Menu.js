@@ -1,33 +1,25 @@
 import React, { PureComponent } from "react";
 import { Dropdown, Menu as SemanticMenu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-
-const dropdownItems = [
-  {
-    Title: "Evolve: Generate",
-    Path: "/"
-  },
-  {
-    Title: "About",
-    Path: "/About"
-  }
-];
+import { routes } from '../Routes';
 
 class Menu extends PureComponent {
   renderDropdownItems = () => {
-    return dropdownItems.map(item => {
+    return routes.map(item => {
       const { path } = this.props.match;
-
-      return (
-        <Dropdown.Item
-          key={item.Title}
-          as={Link}
-          active={path === item.Path}
-          to={item.Path}
-        >
-          {item.Title}
-        </Dropdown.Item>
-      );
+      if(item.showInMenu) {
+        return (
+          <Dropdown.Item
+            key={item.Title}
+            as={Link}
+            active={path === item.Path}
+            to={item.Path}
+          >
+            {item.Title}
+          </Dropdown.Item>
+        );  
+      }
+      return null;
     });
   };
 
