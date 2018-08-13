@@ -25,8 +25,9 @@ export default class About extends React.PureComponent {
         </Header>
         When you feel ready test your strength and endurance with the challenges
         section. Challenges should be done without pause, each rep and exercise
-        non-stop to the end. The description field tells more details about the
-        challenge, for example a time to beat to complete the challenge.
+        non-stop to the end. The description gives more details about the
+        challenge, for example a time to beat. The difficulty of each challenge
+        can be modified.
         <br />
         <Header color="teal" as="h3">
           Evolve: Generate

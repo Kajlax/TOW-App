@@ -25,7 +25,6 @@ export default class WorkoutsetComponent extends React.Component {
 
   render() {
     const { workoutset } = this.props;
-
     const setUrl = `/workouts/${workoutset.id}`;
 
     return (

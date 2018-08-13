@@ -4,11 +4,20 @@ import { Link } from "react-router-dom";
 
 export default class ChallengeCompnent extends React.PureComponent {
   renderChallengeRow = challenges => {
+    let { difficulty } = this.props;
+
+    if (!difficulty) {
+      difficulty = 1;
+    }
+
     return challenges.map(item => {
+      let calculatedReps = item.reps * difficulty;
+      calculatedReps = Math.floor(calculatedReps);
+
       return (
         <Table.Row key={item.id}>
           <Table.Cell>{item.name}</Table.Cell>
-          <Table.Cell>{item.reps}</Table.Cell>
+          <Table.Cell>{calculatedReps}</Table.Cell>
         </Table.Row>
       );
     });
@@ -17,6 +26,7 @@ export default class ChallengeCompnent extends React.PureComponent {
   render() {
     const { challenge } = this.props;
     const challengeRoute = `/challenges/${challenge.id}`;
+
     return (
       <Grid.Column>
         <Segment color="pink">

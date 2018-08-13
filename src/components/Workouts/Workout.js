@@ -75,6 +75,7 @@ class Workout extends React.Component {
         </Button.Group>
         <br />
         <br />
+        <br />
         <Grid columns={1} stackable>
           {set.length > 0 ? (
             <WorkoutsetComponent workoutset={set[0]} difficulty={difficulty} />
