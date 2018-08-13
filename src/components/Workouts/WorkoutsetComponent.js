@@ -1,5 +1,5 @@
 import React from "react";
-import { Header, Grid, Segment, Table, Rating } from "semantic-ui-react";
+import { Header, Grid, Segment, Table, Progress } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 export default class WorkoutsetComponent extends React.Component {
@@ -46,31 +46,20 @@ export default class WorkoutsetComponent extends React.Component {
           {workoutset.description}
           <br />
           <br />
-          <Grid columns={2} unstackable="true">
-            <Grid.Column>
-              <Grid.Row>Endurance</Grid.Row>
-              <Grid.Row>Strength</Grid.Row>
-            </Grid.Column>
-            <Grid.Column>
-              <Grid.Row>
-                <Rating
-                  icon="star"
-                  defaultRating={workoutset.rating1}
-                  maxRating={5}
-                  disabled
-                />
-              </Grid.Row>
-              <Grid.Row>
-                <Rating
-                  icon="star"
-                  defaultRating={workoutset.rating2}
-                  maxRating={5}
-                  disabled
-                />
-              </Grid.Row>
-            </Grid.Column>
-          </Grid>
-          <br />
+          <Progress
+            value={workoutset.rating1}
+            total="5"
+            label="Endurance"
+            progress="ratio"
+            color="orange"
+          />
+          <Progress
+            value={workoutset.rating2}
+            total="5"
+            label="Strength"
+            progress="ratio"
+            color="yellow"
+          />
         </Segment>
       </Grid.Column>
     );
