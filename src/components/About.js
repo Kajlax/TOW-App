@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "./Layout";
-import { Header } from "semantic-ui-react";
+import { Button, Header } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 export default class About extends React.PureComponent {
   render() {
@@ -41,6 +42,17 @@ export default class About extends React.PureComponent {
         Tip: Set the number of exercises to 4 and hit generate. Perform one
         round and hit generate again for a varied second round. Get ready to be
         addicted..
+        <br />
+        <Header color="teal" as="h3">
+          Submit
+        </Header>
+        Become a part of the community and submit your favourite workout or
+        challenge.
+        <br />
+        <br />
+        <Link to="/submit">
+          <Button content="Submit" color="teal" size="small" />
+        </Link>
         <br />
         <Header color="teal" as="h3">
           Creators
