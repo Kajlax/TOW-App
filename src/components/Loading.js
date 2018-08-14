@@ -4,11 +4,11 @@ import { Grid, Icon } from "semantic-ui-react";
 export default class Loading extends React.PureComponent {
   render() {
     return [
-      <Grid.Column>&nbsp;</Grid.Column>,
-      <Grid.Column textAlign="center">
+      <Grid.Column key={1}>&nbsp;</Grid.Column>,
+      <Grid.Column key={2} textAlign="center">
         <Icon size="huge" loading name="spinner" />
       </Grid.Column>,
-      <Grid.Column>&nbsp;</Grid.Column>
+      <Grid.Column key={3}>&nbsp;</Grid.Column>
     ];
   }
 }
