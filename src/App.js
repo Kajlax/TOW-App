@@ -17,6 +17,8 @@ const apiUrl = 'https://evolve-fitness.herokuapp.com';
 class App extends Component {
   constructor(p) {
     super(p);
+    const myVotes = localStorage.getItem('myVotes');
+
     this.state = {
       workouts: [],
       challenges: [],
@@ -27,7 +29,9 @@ class App extends Component {
       getChallenges: this.getChallenges,
       getWorkoutSets: this.getWorkoutSets,
       searchQuery: "",
-      updateSearchQuery: this.updateSearchQuery
+      updateSearchQuery: this.updateSearchQuery,
+      myVotes: myVotes ? myVotes : [],
+      updateVotes: this.updateVotes,
     };
   }
 
@@ -121,6 +125,17 @@ class App extends Component {
       return false;
     }
   };
+
+  updateVotes = (challengeId) => {
+    const { myVotes } = this.state;
+    const newVotes = [...myVotes, challengeId]
+    this.setState({
+      myVotes: newVotes,
+    });
+
+    localStorage.setItem('myVotes', newVotes);
+
+  }
 
   render() {
     return (

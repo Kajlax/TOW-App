@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Table, Header, Segment } from "semantic-ui-react";
+import { Grid, Table, Header, Segment, Icon, Container, Label } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 export default class ChallengeCompnent extends React.PureComponent {
@@ -24,7 +24,7 @@ export default class ChallengeCompnent extends React.PureComponent {
   };
 
   render() {
-    const { challenge } = this.props;
+    const { challenge, upVote } = this.props;
     const challengeRoute = `/challenges/${challenge.id}`;
 
     return (
@@ -38,7 +38,14 @@ export default class ChallengeCompnent extends React.PureComponent {
               subheader={challenge.submitter}
               textAlign="center"
             />
-          </Link>
+          </Link><br />
+          <Container textAlign='center'>
+          <Label color='teal'>
+            <Icon color='black' onClick={() => upVote(challenge.id)} name='arrow up' />
+            <Icon name='arrow down' />
+            {challenge.score}
+          </Label>
+          </Container>
           <Table color="pink" inverted unstackable compact columns={2}>
             <Table.Body>
               {this.renderChallengeRow(challenge.challenge)}

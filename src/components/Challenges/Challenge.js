@@ -62,7 +62,7 @@ class Challenges extends React.PureComponent {
   };
 
   render() {
-    const { challenges } = this.props;
+    const { challenges, updateVotes } = this.props;
     const { difficulty } = this.state;
     const id = parseInt(this.props.match.params.id, 10);
 
@@ -80,6 +80,7 @@ class Challenges extends React.PureComponent {
             <ChallengeComponent
               challenge={challenge[0]}
               difficulty={difficulty}
+              upVote={updateVotes}
             />
           ) : null}
         </Grid>
