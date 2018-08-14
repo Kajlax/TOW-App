@@ -2,7 +2,18 @@ import React from "react";
 import { Grid, Table, Header, Segment, Icon, Container, Label } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
+const checkVoteStatus = (myVotes, cId) => {
+  return myVotes.find(id => id === cId);
+}
+
 export default class ChallengeCompnent extends React.PureComponent {
+  handleVote = () => {
+    const { vote, challenge, myVotes } = this.props;
+    const idFound = checkVoteStatus(myVotes, challenge.id);
+
+    vote(challenge.id, idFound ? 'down' : 'up');
+  }
+
   renderChallengeRow = challenges => {
     let { difficulty } = this.props;
 
@@ -23,9 +34,30 @@ export default class ChallengeCompnent extends React.PureComponent {
     });
   };
 
+  renderVoteIcons = () => {
+    const { challenge, myVotes } = this.props;
+
+    const idFound = checkVoteStatus(myVotes, challenge.id);
+    let returnable = null;
+    if (idFound){
+      returnable = [
+        <Icon key={1} color='black' disabled name='arrow up' />,
+        <Icon key={2} color='black' onClick={this.handleVote} name='arrow down' />    
+      ]
+    } else {
+      returnable = [
+        <Icon key={1} color='black' onClick={this.handleVote} name='arrow up' />,
+        <Icon key={2} color='black' disabled name='arrow down' />    
+      ];
+    }
+
+    return returnable;
+  }
+
   render() {
-    const { challenge, upVote } = this.props;
+    const { challenge } = this.props;
     const challengeRoute = `/challenges/${challenge.id}`;
+    let score = challenge.score;
 
     return (
       <Grid.Column>
@@ -40,10 +72,9 @@ export default class ChallengeCompnent extends React.PureComponent {
             />
           </Link><br />
           <Container textAlign='center'>
-          <Label color='teal'>
-            <Icon color='black' onClick={() => upVote(challenge.id)} name='arrow up' />
-            <Icon name='arrow down' />
-            {challenge.score}
+          <Label color='blue'>
+            {this.renderVoteIcons()}
+            {score}
           </Label>
           </Container>
           <Table color="pink" inverted unstackable compact columns={2}>

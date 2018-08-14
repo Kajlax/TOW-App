@@ -17,7 +17,7 @@ class Challenges extends React.PureComponent {
   };
 
   renderChallenges = () => {
-    let { searchQuery, challenges } = this.props;
+    let { searchQuery, challenges, updateVotes, myVotes } = this.props;
     searchQuery = searchQuery.toUpperCase();
 
     if (searchQuery !== "") {
@@ -32,7 +32,12 @@ class Challenges extends React.PureComponent {
     }
 
     return challenges.map(item => {
-      return <ChallengeComponent challenge={item} key={item.id} />;
+      return <ChallengeComponent
+              challenge={item}
+              key={item.id}
+              vote={updateVotes}
+              myVotes={myVotes}
+            />;
     });
   };
 
