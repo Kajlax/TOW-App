@@ -47,7 +47,8 @@ export default class About extends React.PureComponent {
           Submit
         </Header>
         Become a part of the community and submit your favourite workout or
-        challenge.
+        challenge. Submitted routines will go through a moderating and approval
+        process before publishing. This may take a few days.
         <br />
         <br />
         <Link to="/submit">

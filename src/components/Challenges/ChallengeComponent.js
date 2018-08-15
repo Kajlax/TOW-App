@@ -1,18 +1,26 @@
 import React from "react";
-import { Grid, Table, Header, Segment, Icon, Container, Label } from "semantic-ui-react";
+import {
+  Grid,
+  Table,
+  Header,
+  Segment,
+  Icon,
+  Container,
+  Label
+} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 const checkVoteStatus = (myVotes, cId) => {
   return myVotes.find(id => id === cId);
-}
+};
 
 export default class ChallengeCompnent extends React.PureComponent {
   handleVote = () => {
     const { vote, challenge, myVotes } = this.props;
     const idFound = checkVoteStatus(myVotes, challenge.id);
 
-    vote(challenge.id, idFound ? 'down' : 'up');
-  }
+    vote(challenge.id, idFound ? "down" : "up");
+  };
 
   renderChallengeRow = challenges => {
     let { difficulty } = this.props;
@@ -39,20 +47,30 @@ export default class ChallengeCompnent extends React.PureComponent {
 
     const idFound = checkVoteStatus(myVotes, challenge.id);
     let returnable = null;
-    if (idFound){
+    if (idFound) {
       returnable = [
-        <Icon key={1} color='black' disabled name='arrow up' />,
-        <Icon key={2} color='black' onClick={this.handleVote} name='arrow down' />    
-      ]
+        <Icon key={1} color="black" disabled name="arrow up" />,
+        <Icon
+          key={2}
+          color="black"
+          onClick={this.handleVote}
+          name="arrow down"
+        />
+      ];
     } else {
       returnable = [
-        <Icon key={1} color='black' onClick={this.handleVote} name='arrow up' />,
-        <Icon key={2} color='black' disabled name='arrow down' />    
+        <Icon
+          key={1}
+          color="black"
+          onClick={this.handleVote}
+          name="arrow up"
+        />,
+        <Icon key={2} color="black" disabled name="arrow down" />
       ];
     }
 
     return returnable;
-  }
+  };
 
   render() {
     const { challenge } = this.props;
@@ -70,13 +88,8 @@ export default class ChallengeCompnent extends React.PureComponent {
               subheader={challenge.submitter}
               textAlign="center"
             />
-          </Link><br />
-          <Container textAlign='center'>
-          <Label color='blue'>
-            {this.renderVoteIcons()}
-            {score}
-          </Label>
-          </Container>
+          </Link>
+          <br />
           <Table color="pink" inverted unstackable compact columns={2}>
             <Table.Body>
               {this.renderChallengeRow(challenge.challenge)}
@@ -85,6 +98,12 @@ export default class ChallengeCompnent extends React.PureComponent {
           {challenge.description}
           <br />
           <br />
+          <Container textAlign="center">
+            <Label attached="bottom">
+              {this.renderVoteIcons()}
+              {score}
+            </Label>
+          </Container>
         </Segment>
       </Grid.Column>
     );
