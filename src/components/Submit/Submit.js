@@ -63,7 +63,12 @@ export default class SubmitFrom extends React.PureComponent {
     if (isSubmitted === false) {
       form = (
         <React.Fragment>
-          <Header as="h2" content="Submit" textAlign="center" />
+          <Header
+            as="h2"
+            content="Submit a challenge or workout"
+            textAlign="center"
+            color="teal"
+          />
           <Form onSubmit={this.handleSubmit}>
             <Form.Group widths="equal">
               <Form.Field
@@ -95,7 +100,7 @@ export default class SubmitFrom extends React.PureComponent {
             <Form.Field
               control={TextArea}
               label="Description"
-              placeholder="Describe the workout/challenge. Exercises, reps and rounds..."
+              placeholder="Describe the workout/challenge. Exercises, reps, rounds and a short description..."
               name="submitDescription"
               value={submitDescription}
               onChange={this.handleChange}
@@ -107,7 +112,7 @@ export default class SubmitFrom extends React.PureComponent {
     } else {
       form = (
         <React.Fragment>
-          <Header as="h2" content="Thank you" textAlign="center" />
+          <Header as="h2" content="Thank you" textAlign="center" color="teal" />
           <Segment basic textAlign="center">
             <Header
               as="h2"
