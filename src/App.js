@@ -13,10 +13,26 @@ const shuffle = (arr) => {
 }
 
 const apiUrl = 'https://evolve-fitness.herokuapp.com';
+const getVotes = () => {
+  const votes = localStorage.getItem('myVotes');
+  if(votes) {
+    return votes;
+  }
+  return '0';
+}
+const createVoteArray = (voteString) => {
+  const myVotes = voteString.split(',');
+  myVotes.forEach((element, index) => {
+    myVotes[index] = parseInt(myVotes[index], 10);
+  });
+  
+  return myVotes;
+}
 
 class App extends Component {
   constructor(p) {
     super(p);
+    let myVotes = getVotes();
     this.state = {
       workouts: [],
       challenges: [],
@@ -27,7 +43,9 @@ class App extends Component {
       getChallenges: this.getChallenges,
       getWorkoutSets: this.getWorkoutSets,
       searchQuery: "",
-      updateSearchQuery: this.updateSearchQuery
+      updateSearchQuery: this.updateSearchQuery,
+      myVotes: createVoteArray(myVotes),
+      updateVotes: this.updateVotes,
     };
   }
 
@@ -121,6 +139,34 @@ class App extends Component {
       return false;
     }
   };
+
+  updateVotes = async (challengeId, mode) => {
+    const { myVotes } = this.state;
+    let newVotes = null;
+    let result = null;
+
+    try {
+      if (mode === 'up') {
+        newVotes = myVotes.concat(challengeId);
+        result = await axios.post(`${apiUrl}/challenge/${challengeId}/voteup`);
+      } else {
+        newVotes = myVotes.filter(id => challengeId !== id);
+        result = await axios.post(`${apiUrl}/challenge/${challengeId}/votedown`);
+      }
+      
+      if(result.data.workouttype === 'challenge') {
+        await this.getChallenges();
+      } else {
+        await this.getWorkoutSets();
+      }
+    } catch(e) {}
+
+    this.setState({
+      myVotes: newVotes,
+    });
+
+    localStorage.setItem('myVotes', newVotes.toString());
+  }
 
   render() {
     return (
