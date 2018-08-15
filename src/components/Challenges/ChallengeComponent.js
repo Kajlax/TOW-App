@@ -89,7 +89,6 @@ export default class ChallengeCompnent extends React.PureComponent {
               textAlign="center"
             />
           </Link>
-          <br />
           <Table color="pink" inverted unstackable compact columns={2}>
             <Table.Body>
               {this.renderChallengeRow(challenge.challenge)}

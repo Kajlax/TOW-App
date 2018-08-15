@@ -44,7 +44,7 @@ export default class About extends React.PureComponent {
         addicted..
         <br />
         <Header color="teal" as="h3">
-          Submit
+          Submit your challenge or workout
         </Header>
         Become a part of the community and submit your favourite workout or
         challenge. Submitted routines will go through a moderating and approval
