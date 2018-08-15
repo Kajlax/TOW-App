@@ -10,7 +10,7 @@ import {
   TextArea
 } from "semantic-ui-react";
 
-const options = [
+const typeOptions = [
   { key: "challenge", text: "Challenge", value: "challenge" },
   { key: "workout", text: "Workout", value: "workout" }
 ];
@@ -43,7 +43,10 @@ export default class SubmitFrom extends React.PureComponent {
 
   resetForm = () => {
     this.setState({
-      isSubmitted: false
+      isSubmitted: false,
+      title: "",
+      submitType: "",
+      submitDescription: ""
     });
   };
 
@@ -82,7 +85,7 @@ export default class SubmitFrom extends React.PureComponent {
               <Form.Field
                 control={Select}
                 label="Type"
-                options={options}
+                options={typeOptions}
                 placeholder="Type of submit"
                 name="submitType"
                 value={submitType}
