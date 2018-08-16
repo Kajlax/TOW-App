@@ -1,8 +1,28 @@
 import React from "react";
-import { Header, Grid, Segment, Table, Progress } from "semantic-ui-react";
+import {
+  Container,
+  Grid,
+  Header,
+  Icon,
+  Label,
+  Segment,
+  Table,
+  Progress
+} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
+const checkVoteStatus = (myVotes, cId) => {
+  return myVotes.find(id => id === cId);
+};
+
 export default class WorkoutsetComponent extends React.Component {
+  handleVote = () => {
+    const { vote, workoutset, myVotes } = this.props;
+    const idFound = checkVoteStatus(myVotes, workoutset.id);
+
+    vote(workoutset.id, idFound ? "down" : "up");
+  };
+
   renderWorkoutSetRow = workoutsets => {
     let { difficulty } = this.props;
 
@@ -23,9 +43,40 @@ export default class WorkoutsetComponent extends React.Component {
     });
   };
 
+  renderVoteIcons = () => {
+    const { workoutset, myVotes } = this.props;
+
+    const idFound = checkVoteStatus(myVotes, workoutset.id);
+    let returnable = null;
+    if (idFound) {
+      returnable = [
+        <Icon key={1} color="black" disabled name="arrow up" />,
+        <Icon
+          key={2}
+          color="black"
+          onClick={this.handleVote}
+          name="arrow down"
+        />
+      ];
+    } else {
+      returnable = [
+        <Icon
+          key={1}
+          color="black"
+          onClick={this.handleVote}
+          name="arrow up"
+        />,
+        <Icon key={2} color="black" disabled name="arrow down" />
+      ];
+    }
+
+    return returnable;
+  };
+
   render() {
     const { workoutset } = this.props;
     const setUrl = `/workouts/${workoutset.id}`;
+    let score = workoutset.score;
 
     return (
       <Grid.Column>
@@ -60,6 +111,13 @@ export default class WorkoutsetComponent extends React.Component {
             progress="ratio"
             color="yellow"
           />
+          <br />
+          <Container textAlign="center">
+            <Label attached="bottom">
+              {this.renderVoteIcons()}
+              {score}
+            </Label>
+          </Container>
         </Segment>
       </Grid.Column>
     );

@@ -7,7 +7,7 @@ import { Button, Grid } from "semantic-ui-react";
 import { CSSTransitionGroup } from "react-transition-group";
 import "../Animations.css";
 import WorkoutsetComponent from "./WorkoutsetComponent";
-import Loading from '../Loading';
+import Loading from "../Loading";
 
 const filters = [
   {
@@ -74,7 +74,7 @@ class WorkoutSets extends React.Component {
   };
 
   renderWorkoutSets = () => {
-    let { workoutsets } = this.props;
+    let { workoutsets, updateVotes, myVotes } = this.props;
     const { filters } = this.state;
     const active = activeFilters(filters);
 
@@ -93,7 +93,14 @@ class WorkoutSets extends React.Component {
     }
 
     return workoutsets.map(item => {
-      return <WorkoutsetComponent workoutset={item} key={item.id} />;
+      return (
+        <WorkoutsetComponent
+          workoutset={item}
+          key={item.id}
+          vote={updateVotes}
+          myVotes={myVotes}
+        />
+      );
     });
   };
 
@@ -137,10 +144,7 @@ class WorkoutSets extends React.Component {
         <br />
         <br />
         <Grid columns={3} stackable>
-          { workoutsets.length > 0 ? 
-            this.renderWorkoutSets():
-            <Loading />
-          }
+          {workoutsets.length > 0 ? this.renderWorkoutSets() : <Loading />}
         </Grid>
         <br />
       </Layout>

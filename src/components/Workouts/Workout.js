@@ -62,7 +62,7 @@ class Workout extends React.Component {
   };
 
   render() {
-    const { workoutsets } = this.props;
+    const { workoutsets, updateVotes, myVotes } = this.props;
     const { difficulty } = this.state;
     const id = parseInt(this.props.match.params.id, 10);
 
@@ -78,7 +78,12 @@ class Workout extends React.Component {
         <br />
         <Grid columns={1} stackable>
           {set.length > 0 ? (
-            <WorkoutsetComponent workoutset={set[0]} difficulty={difficulty} />
+            <WorkoutsetComponent
+              workoutset={set[0]}
+              difficulty={difficulty}
+              vote={updateVotes}
+              myVotes={myVotes}
+            />
           ) : null}
         </Grid>
         <Grid columns={1} stackable>
