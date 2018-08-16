@@ -23,11 +23,21 @@ export default class SubmitFrom extends React.PureComponent {
       submitter: "",
       submitType: "",
       submitDescription: "",
+      formValid: false,
       isSubmitted: false
     };
   }
 
-  handleChange = (e, { name, value }) => this.setState({ [name]: value });
+  handleChange = (e, { name, value }) => {
+    this.setState({ [name]: value });
+    if (
+      this.state.title.value === !"" &&
+      this.state.submitter === !"" &&
+      this.state.submitType === !"" &&
+      this.state.submitDescription === !""
+    )
+      this.setState({ formValid: true });
+  };
 
   handleSubmit = () => {
     const { title, submitter, submitType, submitDescription } = this.state;
@@ -105,7 +115,11 @@ export default class SubmitFrom extends React.PureComponent {
               value={submitDescription}
               onChange={this.handleChange}
             />
-            <Form.Button color="teal" content="Submit" />
+            <Form.Button
+              color="teal"
+              content="Submit"
+              disabled={!this.state.formValid}
+            />
           </Form>
         </React.Fragment>
       );
