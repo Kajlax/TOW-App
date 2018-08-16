@@ -31,7 +31,7 @@ export default class SubmitFrom extends React.PureComponent {
   handleChange = (e, { name, value }) => {
     this.setState({ [name]: value });
     if (
-      this.state.title.value === !"" &&
+      this.state.title === !"" &&
       this.state.submitter === !"" &&
       this.state.submitType === !"" &&
       this.state.submitDescription === !""
