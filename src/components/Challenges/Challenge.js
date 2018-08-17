@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import ChallengeComponent from "./ChallengeComponent";
 import Layout from "../Layout";
 import ChallengeActions from '../../redux/reducers/challengeRedux';
+import VoteActions from '../../redux/reducers/voteRedux';
 import Loading from '../Loading';
 
 const difficulties = [
@@ -81,8 +82,8 @@ class Challenge extends React.Component {
   }
 
   render() {
-    const { fetching, challenges } = this.props;
-
+    const { fetching, challenges, myVotes } = this.props;
+    console.log('votes', myVotes);
     return (
       <Layout {...this.props}>
         <Button.Group widths="4" size="small">
@@ -110,10 +111,12 @@ const mapStateToProps = (state) => ({
   challenges: state.challenge.challenges,
   fetching: state.challenge.fetching,
   error: state.challenge.error,
+  myVotes: state.vote.myVotes,
 }); 
 
 const mapDispatchToProps = (dispatch) => ({
   getChallenges: () => dispatch(ChallengeActions.fetchChallenges()),
+  updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Challenge);

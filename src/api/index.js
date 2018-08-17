@@ -1,6 +1,6 @@
 import apisauce from 'apisauce';
 
-const baseURL = 'https://evolve-fitness.herokuapp.com';
+const baseURL = 'https://evolve-fitness-staging.herokuapp.com';
 
 const create = () => {
   const api = apisauce.create({
@@ -10,9 +10,14 @@ const create = () => {
 
 
   const getChallenges = () => api.get('/challenge/');
+  const voteUp = (id) => api.post(`/challenge/${id}/voteup`);
+  const voteDown = (id) => api.post(`/challenge/${id}/votedown`);
+
 
   return {
     getChallenges,
+    voteUp,
+    voteDown,
   }
 };
 

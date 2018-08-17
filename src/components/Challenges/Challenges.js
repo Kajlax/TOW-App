@@ -6,6 +6,7 @@ import Loading from "../Loading";
 import Layout from "../Layout";
 import SearchActions from '../../redux/reducers/searchRedux';
 import ChallengeActions from '../../redux/reducers/challengeRedux';
+import VoteActions from '../../redux/reducers/voteRedux';
 
 class Challenges extends React.PureComponent {
   componentDidMount() {
@@ -73,11 +74,13 @@ const mapStateToProps = (state) => ({
   challenges: state.challenge.challenges,
   fetching: state.challenge.fetching,
   error: state.challenge.error,
+  myVotes: state.vote.myVotes,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   updateSearchQuery: (query) => dispatch(SearchActions.updateQuery(query)),
   getChallenges: () => dispatch(ChallengeActions.fetchChallenges()),
+  updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Challenges);

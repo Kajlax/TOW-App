@@ -3,7 +3,6 @@ import ChallengeActions from '../../redux/reducers/challengeRedux';
 
 export function* getChallenges(api, action) {
   const response = yield call(api.getChallenges);
-  console.log(response);
   if(response.ok) {
     yield put(ChallengeActions.fetchChallengesSuccess(response.data));
   } else {
