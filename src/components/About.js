@@ -14,13 +14,6 @@ export default class About extends React.PureComponent {
         training.
         <br />
         <Header color="teal" as="h3">
-          Adjust the difficulty
-        </Header>
-        Adjust the difficulty of each challenge and workout. Press the title to
-        access the challenge/workout and adjust the difficulty with the
-        difficulty bar. Difficulty range 25% - 100%.
-        <br />
-        <Header color="teal" as="h3">
           Workouts
         </Header>
         The workout section contains pre-made, approved workouts. Browse
@@ -35,6 +28,19 @@ export default class About extends React.PureComponent {
         about the challenge, for example a time to beat.
         <br />
         <Header color="teal" as="h3">
+          Adjust the difficulty
+        </Header>
+        Adjust the difficulty of each challenge and workout. Press the title to
+        access the challenge/workout and adjust the difficulty with the
+        difficulty bar. Difficulty range 25% - 100%.
+        <br />
+        <Header color="teal" as="h3">
+          Voting
+        </Header>
+        Give your favourite workout an upVote with the voting arrows at the
+        bottom. The total upVote count is displayed.
+        <br />
+        <Header color="teal" as="h3">
           Evolve: Generate
         </Header>
         Evolve: Generate creates instantly a workout by chosen preferences.
@@ -45,12 +51,6 @@ export default class About extends React.PureComponent {
         Tip: Set the number of exercises to 4 and hit generate. Perform one
         round and hit generate again for a varied second round. Get ready to be
         addicted..
-        <br />
-        <Header color="teal" as="h3">
-          Voting
-        </Header>
-        Give your favourite workout an upVote with the voting arrows at the
-        bottom. The total upVote count is displayed.
         <br />
         <Header color="teal" as="h3">
           Submit your challenge or workout
