@@ -82,8 +82,7 @@ class Challenge extends React.Component {
   }
 
   render() {
-    const { fetching, challenges, myVotes } = this.props;
-    console.log('votes', myVotes);
+    const { fetching, challenges } = this.props;
     return (
       <Layout {...this.props}>
         <Button.Group widths="4" size="small">
