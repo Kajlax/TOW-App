@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
 import axios from "axios";
+import { Provider } from 'react-redux';
 import Routes from "./Routes";
-import { Context } from "./context";
+import { store } from './redux/store';
+
 
 const shuffle = (arr) => {
   for (let i = arr.length - 1; i > 0; i--) {
@@ -170,9 +172,9 @@ class App extends Component {
 
   render() {
     return (
-      <Context.Provider value={this.state}>
+      <Provider store={store}>
         <Routes />
-      </Context.Provider>
+      </Provider>
     );
   }
 }
