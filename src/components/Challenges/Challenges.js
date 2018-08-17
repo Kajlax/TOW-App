@@ -1,14 +1,19 @@
 import React from "react";
-import { connectContext } from "react-connect-context";
-import { Context } from "../../context";
-import Layout from "../Layout";
+import { connect } from 'react-redux'
 import { Input, Grid } from "semantic-ui-react";
 import ChallengeComponent from "./ChallengeComponent";
 import Loading from "../Loading";
+import Layout from "../Layout";
+import SearchActions from '../../redux/reducers/searchRedux';
+import ChallengeActions from '../../redux/reducers/challengeRedux';
+import VoteActions from '../../redux/reducers/voteRedux';
 
 class Challenges extends React.PureComponent {
   componentDidMount() {
-    this.props.getChallenges();
+    const { challenges, getChallenges } = this.props;
+    if (challenges.length === 0) {
+      getChallenges();      
+    }
   }
 
   handleTextChange = e => {
@@ -42,7 +47,7 @@ class Challenges extends React.PureComponent {
   };
 
   render() {
-    const { searchQuery, challenges } = this.props;
+    const { searchQuery, fetching } = this.props;
     return (
       <Layout {...this.props}>
         <Input
@@ -56,7 +61,7 @@ class Challenges extends React.PureComponent {
         <br />
         <br />
         <Grid columns={3} stackable>
-          {challenges.length > 0 ? this.renderChallenges() : <Loading />}
+          {!fetching ? this.renderChallenges() : <Loading />}
         </Grid>
         <br />
       </Layout>
@@ -64,4 +69,18 @@ class Challenges extends React.PureComponent {
   }
 }
 
-export default connectContext(Context)(Challenges);
+const mapStateToProps = (state) => ({
+  searchQuery: state.search.searchQuery,
+  challenges: state.challenge.challenges,
+  fetching: state.challenge.fetching,
+  error: state.challenge.error,
+  myVotes: state.vote.myVotes,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  updateSearchQuery: (query) => dispatch(SearchActions.updateQuery(query)),
+  getChallenges: () => dispatch(ChallengeActions.fetchChallenges()),
+  updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Challenges);

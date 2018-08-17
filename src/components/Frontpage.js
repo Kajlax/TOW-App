@@ -1,6 +1,4 @@
 import React from "react";
-import { connectContext } from "react-connect-context";
-import { Context } from "../context";
 import Menu from "./Menu";
 import Footer from "./Footer";
 import { Header } from "semantic-ui-react";
@@ -36,4 +34,4 @@ class Frontpage extends React.PureComponent {
   }
 }
 
-export default connectContext(Context)(Frontpage);
+export default Frontpage;

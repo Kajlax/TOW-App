@@ -15,7 +15,7 @@ const checkVoteStatus = (myVotes, cId) => {
   return myVotes.find(id => id === cId);
 };
 
-export default class WorkoutsetComponent extends React.Component {
+export default class WorkoutsetComponent extends React.PureComponent {
   handleVote = () => {
     const { vote, workoutset, myVotes } = this.props;
     const idFound = checkVoteStatus(myVotes, workoutset.id);
