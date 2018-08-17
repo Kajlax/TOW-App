@@ -1,10 +1,11 @@
 import React from "react";
-import { connectContext } from "react-connect-context";
-import { Context } from "../../context";
-import Layout from "../Layout";
 import { Grid, Icon, Button } from "semantic-ui-react";
-import ChallengeComponent from "./ChallengeComponent";
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
+import ChallengeComponent from "./ChallengeComponent";
+import Layout from "../Layout";
+import ChallengeActions from '../../redux/reducers/challengeRedux';
+import Loading from '../Loading';
 
 const difficulties = [
   {
@@ -29,7 +30,7 @@ const difficulties = [
   }
 ];
 
-class Challenges extends React.PureComponent {
+class Challenge extends React.Component {
   constructor(p) {
     super(p);
 
@@ -39,7 +40,10 @@ class Challenges extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.props.getChallenges();
+    const { challenges, getChallenges } = this.props;
+    if (challenges.length === 0) {
+      getChallenges();      
+    }
   }
 
   selectDifficulty = value => {
@@ -61,12 +65,24 @@ class Challenges extends React.PureComponent {
     });
   };
 
-  render() {
+  renderComponent = () => {
     const { challenges, updateVotes, myVotes } = this.props;
     const { difficulty } = this.state;
-    const id = parseInt(this.props.match.params.id, 10);
 
+    const id = parseInt(this.props.match.params.id, 10);
     const challenge = challenges.filter(c => c.id === id);
+
+    return(<ChallengeComponent
+      challenge={challenge[0]}
+      difficulty={difficulty}
+      vote={updateVotes}
+      myVotes={myVotes}
+    />);
+  }
+
+  render() {
+    const { fetching, challenges } = this.props;
+
     return (
       <Layout {...this.props}>
         <Button.Group widths="4" size="small">
@@ -76,14 +92,9 @@ class Challenges extends React.PureComponent {
         <br />
         <br />
         <Grid columns={1} stackable>
-          {challenge.length > 0 ? (
-            <ChallengeComponent
-              challenge={challenge[0]}
-              difficulty={difficulty}
-              vote={updateVotes}
-              myVotes={myVotes}
-            />
-          ) : null}
+          { !fetching &&  challenges.length > 0 ?
+            this.renderComponent()  
+           : <Loading />}
         </Grid>
         <Grid columns={1} stackable>
           <Link to="/challenges">
@@ -95,4 +106,14 @@ class Challenges extends React.PureComponent {
   }
 }
 
-export default connectContext(Context)(Challenges);
+const mapStateToProps = (state) => ({
+  challenges: state.challenge.challenges,
+  fetching: state.challenge.fetching,
+  error: state.challenge.error,
+}); 
+
+const mapDispatchToProps = (dispatch) => ({
+  getChallenges: () => dispatch(ChallengeActions.fetchChallenges()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Challenge);
