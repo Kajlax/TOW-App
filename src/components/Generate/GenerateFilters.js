@@ -1,7 +1,5 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Button, Dropdown } from "semantic-ui-react";
-import { connectContext } from "react-connect-context";
-import { Context } from "../../context";
 
 const dropdownvalues = [
   { key: "3", text: "3", value: "3" },
@@ -12,14 +10,14 @@ const dropdownvalues = [
   { key: "8", text: "8", value: "8" }
 ];
 
-class Filters extends Component {
+class Filters extends PureComponent {
   toggleButton = value => {
     this.props.updateFilters(value);
   };
 
   checkActive = value => {
     const { filters } = this.props;
-    return filters.indexOf(value) > -1;
+    return filters.includes(value);
   };
 
   renderButton = text => {
@@ -70,4 +68,4 @@ class Filters extends Component {
   }
 }
 
-export default connectContext(Context)(Filters);
+export default Filters;

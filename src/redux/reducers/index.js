@@ -5,4 +5,5 @@ export default combineReducers({
   challenge: require('./challengeRedux').reducer,
   vote: require('./voteRedux').reducer,
   workoutset: require('./workoutsetRedux').reducer,
+  workout: require('./workoutRedux').reducer,
 });
