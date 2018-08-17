@@ -17,26 +17,35 @@ export default class About extends React.PureComponent {
           Workouts
         </Header>
         The workout section contains pre-made, approved workouts. Browse
-        workouts or use filtering. Press the title of the workout to access it
-        and scale the amount of reps to decrease difficulty. Difficulty range
-        25% - 100%.
+        workouts or use filtering.
         <br />
         <Header color="teal" as="h3">
           Challenges
         </Header>
-        When you feel ready test your strength and endurance with the challenges
-        section. Challenges should be done without pause, each rep and exercise
-        non-stop to the end. The description gives more details about the
-        challenge, for example a time to beat. The difficulty of each challenge
-        can be modified.
+        When you feel ready, test your strength and endurance with the
+        challenges section. Challenges should be done without pause, each
+        exercise and rep non-stop to the end. The description gives more details
+        about the challenge, for example a time to beat.
+        <br />
+        <Header color="teal" as="h3">
+          Adjust the difficulty
+        </Header>
+        Adjust the difficulty of each challenge and workout. Press the title to
+        access the challenge/workout and adjust the difficulty with the
+        difficulty bar. Difficulty range 25% - 100%.
+        <br />
+        <Header color="teal" as="h3">
+          Voting
+        </Header>
+        Give your favourite workout an upVote with the voting arrows at the
+        bottom. The total upVote count is displayed.
         <br />
         <Header color="teal" as="h3">
           Evolve: Generate
         </Header>
         Evolve: Generate creates instantly a workout by chosen preferences.
-        Choose suitable workout preferences from the filters pane and click
-        generate. Can be used as a WOD (workout of the day). Never run out of
-        ideas.
+        Choose your preferences from the filters pane and click generate. Can be
+        used as a WOD (workout of the day). Never run out of ideas.
         <br />
         <br />
         Tip: Set the number of exercises to 4 and hit generate. Perform one
@@ -44,7 +53,7 @@ export default class About extends React.PureComponent {
         addicted..
         <br />
         <Header color="teal" as="h3">
-          Submit a challenge or workout
+          Submit your challenge or workout
         </Header>
         Become a part of the community and submit your favourite workout or
         challenge. Submitted routines will go through a moderating and approval
@@ -54,7 +63,6 @@ export default class About extends React.PureComponent {
         <Link to="/submit">
           <Button content="Submit" color="teal" size="small" />
         </Link>
-        <br />
         <Header color="teal" as="h3">
           Creators
         </Header>
