@@ -1,6 +1,6 @@
 import apisauce from 'apisauce';
 
-const baseURL = 'https://evolve-fitness-staging.herokuapp.com';
+const baseURL = 'https://evolve-fitness.herokuapp.com';
 
 const create = () => {
   const api = apisauce.create({

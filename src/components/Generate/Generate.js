@@ -22,7 +22,6 @@ class Generate extends React.Component {
       hideGeneratedWorkout: true,
       numberOfExercises: 5,
       reps: fillArrayWithRandomNumbers(5),
-      loading: false,
     };
   }
   
@@ -71,10 +70,9 @@ class Generate extends React.Component {
 
 
   render() {
-    const { loading, hideFilters, hideGeneratedWorkout, filterIcon, numberOfExercises, reps } = this.state;
-    let { workouts, filters, updateFilters } = this.props;
+    const { hideFilters, hideGeneratedWorkout, filterIcon, numberOfExercises, reps } = this.state;
+    let { fetching, workouts, filters, updateFilters } = this.props;
 
-    console.log(this.props);
     workouts = workouts.slice(0,numberOfExercises);
     
     return (
@@ -120,7 +118,7 @@ class Generate extends React.Component {
         >
           {
             !hideGeneratedWorkout ? 
-            loading ? 
+            fetching ? 
             <Grid columns={3} stackable><Loading /></Grid> :
             <GeneratedWorkout
               workouts={workouts}
@@ -137,6 +135,7 @@ class Generate extends React.Component {
 const mapStateToProps = (state) => ({
   workouts: state.workout.workouts,
   filters: state.workout.filters,
+  fetching: state.workout.fetching,
 });
 
 const mapDispatchToProps = (dispatch) => ({
