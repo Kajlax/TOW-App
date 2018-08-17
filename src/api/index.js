@@ -10,12 +10,14 @@ const create = () => {
 
 
   const getChallenges = () => api.get('/challenge/');
+  const getWorkoutsets = () => api.get('/workoutset/');
   const voteUp = (id) => api.post(`/challenge/${id}/voteup`);
   const voteDown = (id) => api.post(`/challenge/${id}/votedown`);
 
 
   return {
     getChallenges,
+    getWorkoutsets,
     voteUp,
     voteDown,
   }

@@ -1,13 +1,15 @@
 import React from "react";
-import { connectContext } from "react-connect-context";
-import { Context } from "../../context";
-import Layout from "../Layout";
-import Filters from "./WorkoutFilters";
 import { Button, Grid } from "semantic-ui-react";
 import { CSSTransitionGroup } from "react-transition-group";
-import "../Animations.css";
+import { connect } from 'react-redux';
+import Layout from "../Layout";
+import Filters from "./WorkoutFilters";
 import WorkoutsetComponent from "./WorkoutsetComponent";
 import Loading from "../Loading";
+import WorkoutsetActions from '../../redux/reducers/workoutsetRedux';
+import VoteActions from '../../redux/reducers/voteRedux';
+
+import "../Animations.css";
 
 const filters = [
   {
@@ -50,9 +52,12 @@ const activeFilters = fs => {
   return af;
 };
 
-class WorkoutSets extends React.Component {
+class Workouts extends React.Component {
   componentDidMount() {
-    this.props.getWorkoutSets();
+    const { getWorkoutSets, workoutsets } = this.props;
+    if (workoutsets.length === 0) {
+      getWorkoutSets();
+    }
   }
   constructor() {
     super();
@@ -120,7 +125,7 @@ class WorkoutSets extends React.Component {
 
   render() {
     const { hideFilters, filterIcon, filters } = this.state;
-    let { workoutsets } = this.props;
+    let { fetching } = this.props;
     return (
       <Layout {...this.props}>
         <Button
@@ -144,7 +149,10 @@ class WorkoutSets extends React.Component {
         <br />
         <br />
         <Grid columns={3} stackable>
-          {workoutsets.length > 0 ? this.renderWorkoutSets() : <Loading />}
+          {
+            !fetching ? this.renderWorkoutSets() :
+            <Loading />
+          }
         </Grid>
         <br />
       </Layout>
@@ -152,4 +160,16 @@ class WorkoutSets extends React.Component {
   }
 }
 
-export default connectContext(Context)(WorkoutSets);
+const mapStateToProps = (state) => ({
+  workoutsets: state.workoutset.workoutsets,
+  fetching: state.workoutset.fetching,
+  error: state.workoutset.error,
+  myVotes: state.vote.myVotes,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getWorkoutSets: () => dispatch(WorkoutsetActions.fetchWorkoutsets()),
+  updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Workouts);
