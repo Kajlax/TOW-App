@@ -17,3 +17,14 @@ export function* getChallenges(api, action) {
     yield put(ChallengeActions.fetchChallengesError(error));
   }
 }
+
+export function* suggestWorkout(api, action) {
+  console.log(action);
+  const response = yield call(api.suggestWorkout, action.data);
+
+  if(response.ok) {
+
+  } else {
+    yield put(ChallengeActions.suggestRequestError(response.data.message ? response.data.message : 'Error'));
+  }
+}
