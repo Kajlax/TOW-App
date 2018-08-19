@@ -54,12 +54,14 @@ export const suggestRequestSuccess = (state, { result }) => {
   return produce(state, draft => {
     draft.sending = false;
     draft.error = null;
+    draft.result = result;
   });
 }
 
 export const suggestRequestError = (state, { error }) => {
   return produce(state, draft => {
     draft.sending = false;
+    draft.error = error;
   });
 }
 

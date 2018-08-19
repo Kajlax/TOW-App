@@ -15,6 +15,7 @@ const create = () => {
   const getWorkoutsets = () => api.get('/workoutset/');
   const voteUp = (id) => api.post(`/challenge/${id}/voteup`);
   const voteDown = (id) => api.post(`/challenge/${id}/votedown`);
+  const suggestWorkout = (data) => api.post('/challenge/suggest', data);
 
 
   return {
@@ -24,6 +25,7 @@ const create = () => {
     voteDown,
     getWorkouts,
     getFilteredWorkouts,
+    suggestWorkout,
   }
 };
 
