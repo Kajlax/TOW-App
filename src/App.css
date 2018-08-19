@@ -1,3 +1,5 @@
+/* Desktop, tablet landscape */
+
 .frontpage-bg {
   background-image: url("img/Frontpage_desktop.jpg");
   background-size: cover;
@@ -7,17 +9,15 @@
   height: 100vh;
 }
 
+/* Tablet portrait, mobile landscape*/
+
 @media (max-width: 990px) {
   .frontpage-bg {
-    background-image: url("img/Frontpage_tablet.jpg");
+    background-image: url("img/Frontpage_tablet_portrait.jpg");
   }
 }
 
-@media (max-width: 700px) {
-  .frontpage-bg {
-    background-image: url("img/Frontpage_mobile_landscape.jpg");
-  }
-}
+/* Mobile portrait */
 
 @media (max-width: 400px) {
   .frontpage-bg {
