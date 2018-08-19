@@ -19,7 +19,7 @@
 
 /* Mobile portrait */
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
   .frontpage-bg {
     background-image: url("img/Frontpage_mobile_portrait.jpg");
   }
