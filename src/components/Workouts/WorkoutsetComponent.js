@@ -1,8 +1,28 @@
 import React from "react";
-import { Header, Grid, Segment, Table, Rating } from "semantic-ui-react";
+import {
+  Container,
+  Grid,
+  Header,
+  Icon,
+  Label,
+  Segment,
+  Table,
+  Progress
+} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
-export default class WorkoutsetComponent extends React.Component {
+const checkVoteStatus = (myVotes, cId) => {
+  return myVotes.find(id => id === cId);
+};
+
+export default class WorkoutsetComponent extends React.PureComponent {
+  handleVote = () => {
+    const { vote, workoutset, myVotes } = this.props;
+    const idFound = checkVoteStatus(myVotes, workoutset.id);
+
+    vote(workoutset.id, idFound ? "down" : "up");
+  };
+
   renderWorkoutSetRow = workoutsets => {
     let { difficulty } = this.props;
 
@@ -23,10 +43,40 @@ export default class WorkoutsetComponent extends React.Component {
     });
   };
 
+  renderVoteIcons = () => {
+    const { workoutset, myVotes } = this.props;
+
+    const idFound = checkVoteStatus(myVotes, workoutset.id);
+    let returnable = null;
+    if (idFound) {
+      returnable = [
+        <Icon key={1} color="black" disabled name="arrow up" />,
+        <Icon
+          key={2}
+          color="black"
+          onClick={this.handleVote}
+          name="arrow down"
+        />
+      ];
+    } else {
+      returnable = [
+        <Icon
+          key={1}
+          color="black"
+          onClick={this.handleVote}
+          name="arrow up"
+        />,
+        <Icon key={2} color="black" disabled name="arrow down" />
+      ];
+    }
+
+    return returnable;
+  };
+
   render() {
     const { workoutset } = this.props;
-
     const setUrl = `/workouts/${workoutset.id}`;
+    let score = workoutset.score;
 
     return (
       <Grid.Column>
@@ -47,31 +97,27 @@ export default class WorkoutsetComponent extends React.Component {
           {workoutset.description}
           <br />
           <br />
-          <Grid columns={2} unstackable="true">
-            <Grid.Column>
-              <Grid.Row>Endurance</Grid.Row>
-              <Grid.Row>Strength</Grid.Row>
-            </Grid.Column>
-            <Grid.Column>
-              <Grid.Row>
-                <Rating
-                  icon="star"
-                  defaultRating={workoutset.rating1}
-                  maxRating={5}
-                  disabled
-                />
-              </Grid.Row>
-              <Grid.Row>
-                <Rating
-                  icon="star"
-                  defaultRating={workoutset.rating2}
-                  maxRating={5}
-                  disabled
-                />
-              </Grid.Row>
-            </Grid.Column>
-          </Grid>
+          <Progress
+            value={workoutset.rating1}
+            total="5"
+            label="Endurance"
+            progress="ratio"
+            color="orange"
+          />
+          <Progress
+            value={workoutset.rating2}
+            total="5"
+            label="Strength"
+            progress="ratio"
+            color="yellow"
+          />
           <br />
+          <Container textAlign="center">
+            <Label attached="bottom">
+              {this.renderVoteIcons()}
+              {score}
+            </Label>
+          </Container>
         </Segment>
       </Grid.Column>
     );

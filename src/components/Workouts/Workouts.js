@@ -1,64 +1,70 @@
 import React from "react";
-import { connectContext } from "react-connect-context";
-import { Context } from "../../context";
-import Layout from "../Layout";
-import Filters from "./WorkoutFilters";
 import { Button, Grid } from "semantic-ui-react";
 import { CSSTransitionGroup } from "react-transition-group";
+import { connect } from 'react-redux';
+import Layout from "../Layout";
+import Filters from "./WorkoutFilters";
+import WorkoutsetComponent from "./WorkoutsetComponent";
+import Loading from "../Loading";
+import WorkoutsetActions from '../../redux/reducers/workoutsetRedux';
+import VoteActions from '../../redux/reducers/voteRedux';
+
 import "../Animations.css";
-import WorkoutsetComponent from './WorkoutsetComponent';
 
 const filters = [
   {
-    title: 'Calisthenics',
-    selected: false,
+    title: "Calisthenics",
+    selected: false
   },
   {
-    title: 'Gym',
-    selected: false,
+    title: "Gym",
+    selected: false
   },
   {
-    title: 'Mixed',
-    selected: false,
+    title: "Mixed",
+    selected: false
   },
   {
-    title: 'Upper body',
-    selected: false,
+    title: "Upper body",
+    selected: false
   },
   {
-    title: 'Lower body',
-    selected: false,
+    title: "Lower body",
+    selected: false
   },
   {
-    title: 'Full body',
-    selected: false,
+    title: "Full body",
+    selected: false
   },
   {
-    title: 'Core',
-    selected: false,
-  },
-]
+    title: "Core",
+    selected: false
+  }
+];
 
-const activeFilters = (fs) => {
+const activeFilters = fs => {
   const af = [];
   fs.forEach(f => {
-    if(f.selected) {
+    if (f.selected) {
       af.push(f.title);
     }
   });
   return af;
-}
+};
 
-class WorkoutSets extends React.Component {
+class Workouts extends React.Component {
   componentDidMount() {
-    this.props.getWorkoutSets();
+    const { getWorkoutSets, workoutsets } = this.props;
+    if (workoutsets.length === 0) {
+      getWorkoutSets();
+    }
   }
   constructor() {
     super();
     this.state = {
       hideFilters: true,
       filterIcon: "caret down",
-      filters,
+      filters
     };
   }
 
@@ -73,7 +79,7 @@ class WorkoutSets extends React.Component {
   };
 
   renderWorkoutSets = () => {
-    let { workoutsets } = this.props;
+    let { workoutsets, updateVotes, myVotes } = this.props;
     const { filters } = this.state;
     const active = activeFilters(filters);
 
@@ -82,39 +88,44 @@ class WorkoutSets extends React.Component {
         const tags = workout.tags;
         let returnWorkout = false;
         active.forEach(a => {
-          if (tags && tags.indexOf(a)>-1) {
+          if (tags && tags.indexOf(a) > -1) {
             returnWorkout = true;
           }
-        })
-        
+        });
+
         return returnWorkout;
       });
     }
 
-
     return workoutsets.map(item => {
       return (
-        <WorkoutsetComponent workoutset={item} key={item.id} />
+        <WorkoutsetComponent
+          workoutset={item}
+          key={item.id}
+          vote={updateVotes}
+          myVotes={myVotes}
+        />
       );
     });
   };
 
-  toggleFilter = (index) => {
+  toggleFilter = index => {
     const { filters } = this.state;
     const newState = filters.map((f, i) => {
       const filter = f;
-      if(i === index) {
+      if (i === index) {
         filter.selected = !filter.selected;
       }
       return filter;
     });
     this.setState({
-      filters: newState,
+      filters: newState
     });
-  }
+  };
 
   render() {
     const { hideFilters, filterIcon, filters } = this.state;
+    let { fetching } = this.props;
     return (
       <Layout {...this.props}>
         <Button
@@ -131,26 +142,34 @@ class WorkoutSets extends React.Component {
           transitionEnterTimeout={200}
           transitionLeaveTimeout={200}
         >
-          {
-            !hideFilters ?
-            <Filters
-              filters={filters}
-              toggleFilter={this.toggleFilter}
-            />
-            : 
-            null
-          }
+          {!hideFilters ? (
+            <Filters filters={filters} toggleFilter={this.toggleFilter} />
+          ) : null}
         </CSSTransitionGroup>
         <br />
         <br />
         <Grid columns={3} stackable>
-          {this.renderWorkoutSets()}
+          {
+            !fetching ? this.renderWorkoutSets() :
+            <Loading />
+          }
         </Grid>
-        <br />
         <br />
       </Layout>
     );
   }
 }
 
-export default connectContext(Context)(WorkoutSets);
+const mapStateToProps = (state) => ({
+  workoutsets: state.workoutset.workoutsets,
+  fetching: state.workoutset.fetching,
+  error: state.workoutset.error,
+  myVotes: state.vote.myVotes,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getWorkoutSets: () => dispatch(WorkoutsetActions.fetchWorkoutsets()),
+  updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Workouts);

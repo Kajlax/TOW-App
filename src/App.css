@@ -1,0 +1,26 @@
+/* Desktop, tablet landscape */
+
+.frontpage-bg {
+  background-image: url("img/Frontpage_desktop.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.6;
+  height: 100vh;
+}
+
+/* Tablet portrait, mobile landscape*/
+
+@media (max-width: 990px) {
+  .frontpage-bg {
+    background-image: url("img/Frontpage_tablet_portrait.jpg");
+  }
+}
+
+/* Mobile portrait */
+
+@media (max-width: 500px) {
+  .frontpage-bg {
+    background-image: url("img/Frontpage_mobile_portrait.jpg");
+  }
+}

@@ -1,31 +1,34 @@
 import React from "react";
-import { connectContext } from "react-connect-context";
-import { Context } from "../../context";
-import Layout from "../Layout";
 import { Grid, Icon, Button } from "semantic-ui-react";
-import WorkoutsetComponent from './WorkoutsetComponent';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
+import Layout from "../Layout";
+import Loading from '../Loading';
+import WorkoutsetComponent from "./WorkoutsetComponent";
+import WorkoutsetActions from '../../redux/reducers/workoutsetRedux';
+import VoteActions from '../../redux/reducers/voteRedux';
+
 
 const difficulties = [
   {
-    color: 'green',
-    text: '25 %',
-    multiplier: 0.25,
+    color: "green",
+    text: "25 %",
+    multiplier: 0.25
   },
   {
-    color: 'yellow',
-    text: '50 %',
-    multiplier: 0.5,
+    color: "yellow",
+    text: "50 %",
+    multiplier: 0.5
   },
   {
-    color: 'orange',
-    text: '75 %',
-    multiplier: 0.75,
+    color: "orange",
+    text: "75 %",
+    multiplier: 0.75
   },
   {
-    color: 'red',
-    text: '100 %',
-    multiplier: 1,
+    color: "red",
+    text: "100 %",
+    multiplier: 1
   }
 ];
 
@@ -34,23 +37,26 @@ class Workout extends React.Component {
     super(p);
 
     this.state = {
-      difficulty: 1,
-    }
-  }
-  
-  componentDidMount() {
-    this.props.getWorkoutSets();
+      difficulty: 1
+    };
   }
 
-  selectDifficulty = (value) => {
-    this.setState({
-      difficulty: value,
-    });
+  componentDidMount() {
+    const { getWorkoutSets, workoutsets } = this.props;
+    if (workoutsets.length === 0) {
+      getWorkoutSets();
+    }
   }
+
+  selectDifficulty = value => {
+    this.setState({
+      difficulty: value
+    });
+  };
 
   renderDifficulties = () => {
     return difficulties.map(d => {
-      return(
+      return (
         <Button
           onClick={() => this.selectDifficulty(d.multiplier)}
           content={d.text}
@@ -58,11 +64,11 @@ class Workout extends React.Component {
           key={d.text}
         />
       );
-    })
-  }
+    });
+  };
 
   render() {
-    const { workoutsets } = this.props;
+    const { workoutsets, updateVotes, myVotes, fetching } = this.props;
     const { difficulty } = this.state;
     const id = parseInt(this.props.match.params.id, 10);
 
@@ -71,20 +77,25 @@ class Workout extends React.Component {
     return (
       <Layout {...this.props}>
         <Button.Group widths="4" size="small">
-          {
-            this.renderDifficulties()
-          }
+          {this.renderDifficulties()}
         </Button.Group>
-        <br /><br />
+        <br />
+        <br />
+        <br />
         <Grid columns={1} stackable>
-        {
-          set.length > 0 ?
-          <WorkoutsetComponent workoutset={set[0]} difficulty={difficulty} />:
-          null
-        }
+          {set.length > 0 && !fetching ? (
+            <WorkoutsetComponent
+              workoutset={set[0]}
+              difficulty={difficulty}
+              vote={updateVotes}
+              myVotes={myVotes}
+            />
+          ) : <Loading />}
         </Grid>
         <Grid columns={1} stackable>
-            <Link to="/workouts"><Icon name='angle double left' circular inverted /></Link>
+          <Link to="/workouts">
+            <Icon name="angle double left" circular inverted />
+          </Link>
         </Grid>
         <br />
         <br />
@@ -93,4 +104,17 @@ class Workout extends React.Component {
   }
 }
 
-export default connectContext(Context)(Workout);
+const mapStateToProps = (state) => ({
+  workoutsets: state.workoutset.workoutsets,
+  fetching: state.workoutset.fetching,
+  error: state.workoutset.error,
+  myVotes: state.vote.myVotes,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getWorkoutSets: () => dispatch(WorkoutsetActions.fetchWorkoutsets()),
+  updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode)),
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Workout);
