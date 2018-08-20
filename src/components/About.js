@@ -55,8 +55,8 @@ export default class About extends React.PureComponent {
         <Header color="teal" as="h3">
           Submit your challenge or workout
         </Header>
-        Become a part of the community and submit your favourite workout or
-        challenge. Submitted routines will go through a moderating and approval
+        Become a part of the community and submit your favourite challenge or
+        workout. Submitted routines will go through a moderating and approval
         process before publishing. This may take a few days.
         <br />
         <br />
