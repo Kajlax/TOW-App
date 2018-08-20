@@ -16,7 +16,7 @@
 
 - Choose suitable filters for your workout needs and press generate. The app fetches and generates a random workout based on your chosen filtering.
 
-## Scaling and voting:
+### Scaling and voting:
 
 - The difficulty of challenges and workouts can be scaled from 25% to 100%.
 - Each challenge and workout can be voted. The total score for each challenge/workout is shown.
