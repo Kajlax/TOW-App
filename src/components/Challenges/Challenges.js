@@ -36,6 +36,12 @@ class Challenges extends React.PureComponent {
       });
     }
 
+    if (challenges.length === 0) {
+      return (
+        <Grid.Column>No matching challenges found.</Grid.Column>
+      )
+    }
+
     return challenges.map(item => {
       return <ChallengeComponent
               challenge={item}
