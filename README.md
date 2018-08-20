@@ -3,7 +3,7 @@
 - App for displaying and managing calisthenics and gym workouts
 - Data comes from JawsDB database
 - Workouts, Challenges and Generate sections
-- Four fifficulty levels
+- Four difficulty levels
 - Vote challenges/workouts
 
 ### Workouts-section:
