@@ -1,18 +1,18 @@
 import React from "react";
-import { connect } from 'react-redux'
-import { Input, Grid } from "semantic-ui-react";
+import { connect } from "react-redux";
+import { Grid, Header, Input, Segment } from "semantic-ui-react";
 import ChallengeComponent from "./ChallengeComponent";
 import Loading from "../Loading";
 import Layout from "../Layout";
-import SearchActions from '../../redux/reducers/searchRedux';
-import ChallengeActions from '../../redux/reducers/challengeRedux';
-import VoteActions from '../../redux/reducers/voteRedux';
+import SearchActions from "../../redux/reducers/searchRedux";
+import ChallengeActions from "../../redux/reducers/challengeRedux";
+import VoteActions from "../../redux/reducers/voteRedux";
 
 class Challenges extends React.PureComponent {
   componentDidMount() {
     const { challenges, getChallenges } = this.props;
     if (challenges.length === 0) {
-      getChallenges();      
+      getChallenges();
     }
   }
 
@@ -38,17 +38,23 @@ class Challenges extends React.PureComponent {
 
     if (challenges.length === 0) {
       return (
-        <Grid.Column>No matching challenges found.</Grid.Column>
-      )
+        <Segment basic>
+          <Grid.Column>
+            <Header as="h3" content="No matching results found." />
+          </Grid.Column>
+        </Segment>
+      );
     }
 
     return challenges.map(item => {
-      return <ChallengeComponent
-              challenge={item}
-              key={item.id}
-              vote={updateVotes}
-              myVotes={myVotes}
-            />;
+      return (
+        <ChallengeComponent
+          challenge={item}
+          key={item.id}
+          vote={updateVotes}
+          myVotes={myVotes}
+        />
+      );
     });
   };
 
@@ -75,18 +81,21 @@ class Challenges extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   searchQuery: state.search.searchQuery,
   challenges: state.challenge.challenges,
   fetching: state.challenge.fetching,
   error: state.challenge.error,
-  myVotes: state.vote.myVotes,
+  myVotes: state.vote.myVotes
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  updateSearchQuery: (query) => dispatch(SearchActions.updateQuery(query)),
+const mapDispatchToProps = dispatch => ({
+  updateSearchQuery: query => dispatch(SearchActions.updateQuery(query)),
   getChallenges: () => dispatch(ChallengeActions.fetchChallenges()),
-  updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode)),
+  updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Challenges);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Challenges);
