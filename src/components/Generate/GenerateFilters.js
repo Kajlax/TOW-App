@@ -60,7 +60,13 @@ class Filters extends PureComponent {
         <br />
         <Button.Group fluid>
           <Button>Number of exercises</Button>
-          <Dropdown options={dropdownvalues} default text={numberOfExercises} button onChange={handleDropdownChange} />
+          <Dropdown
+            options={dropdownvalues}
+            default
+            text={numberOfExercises}
+            button
+            onChange={handleDropdownChange}
+          />
         </Button.Group>
         <br />
       </div>

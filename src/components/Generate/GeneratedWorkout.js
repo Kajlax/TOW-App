@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Table } from "semantic-ui-react";
+import { Button, Segment, Table } from "semantic-ui-react";
 
 class GeneratedWorkout extends React.PureComponent {
   decreaseReps = index => {
@@ -35,7 +35,7 @@ class GeneratedWorkout extends React.PureComponent {
 
   render() {
     return (
-      <React.Fragment>
+      <Segment color="teal">
         <Table basic="very" unstackable selectable celled fixed compact>
           <Table.Header>
             <Table.Row textAlign="center">
@@ -46,8 +46,7 @@ class GeneratedWorkout extends React.PureComponent {
           </Table.Header>
           <Table.Body>{this.renderRows()}</Table.Body>
         </Table>
-        <br />
-      </React.Fragment>
+      </Segment>
     );
   }
 }
