@@ -119,6 +119,7 @@ export default class WorkoutsetComponent extends React.PureComponent {
             </Label>
           </Container>
         </Segment>
+        <br />
       </Grid.Column>
     );
   }
