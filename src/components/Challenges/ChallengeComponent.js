@@ -104,6 +104,7 @@ export default class ChallengeCompnent extends React.PureComponent {
             </Label>
           </Container>
         </Segment>
+        <br />
       </Grid.Column>
     );
   }
