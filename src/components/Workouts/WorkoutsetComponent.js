@@ -36,8 +36,8 @@ export default class WorkoutsetComponent extends React.PureComponent {
 
       return (
         <Table.Row key={item.id}>
-          <Table.Cell>{item.name}</Table.Cell>
-          <Table.Cell>{calculatedReps}</Table.Cell>
+          <Table.Cell width={9}>{item.name}</Table.Cell>
+          <Table.Cell width={7}>{calculatedReps}</Table.Cell>
         </Table.Row>
       );
     });
@@ -119,6 +119,7 @@ export default class WorkoutsetComponent extends React.PureComponent {
             </Label>
           </Container>
         </Segment>
+        <br />
       </Grid.Column>
     );
   }

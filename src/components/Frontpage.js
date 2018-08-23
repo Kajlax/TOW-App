@@ -22,7 +22,7 @@ class Frontpage extends React.PureComponent {
         <div className="frontpage-bg">
           <Header
             as="h1"
-            content="Evolve App"
+            content="Tribe of wolves"
             textAlign="center"
             inverted
             style={textStyle}
