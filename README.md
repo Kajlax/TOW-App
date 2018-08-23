@@ -1,4 +1,4 @@
-# Evolve App
+# Tribe of wolves App
 
 - App for displaying and managing calisthenics and gym workouts
 - Data comes from JawsDB database

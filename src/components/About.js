@@ -8,10 +8,10 @@ export default class About extends React.PureComponent {
     return (
       <Layout {...this.props}>
         <Header color="teal" as="h3">
-          What is Evolve App?
+          What is the Tribe of wolves?
         </Header>
-        Evolve App is a workout application designed for calisthenics and gym
-        training.
+        Tribe of wolves is a workout application designed for calisthenics and
+        gym training.
         <br />
         <Header color="teal" as="h3">
           Workouts
