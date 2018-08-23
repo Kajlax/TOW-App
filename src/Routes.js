@@ -23,7 +23,7 @@ export const routes = [
     showInMenu: true
   },
   {
-    Title: "Evolve: Generate",
+    Title: "Generate",
     Path: "/generate",
     component: Generate,
     showInMenu: true

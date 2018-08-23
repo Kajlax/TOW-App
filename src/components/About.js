@@ -41,9 +41,9 @@ export default class About extends React.PureComponent {
         bottom. The total upVote count is displayed.
         <br />
         <Header color="teal" as="h3">
-          Evolve: Generate
+          Generate
         </Header>
-        Evolve: Generate creates instantly a workout by chosen preferences.
+        The generate section creates instantly a workout by chosen preferences.
         Choose your preferences from the filters pane and click generate. Can be
         used as a WOD (workout of the day). Never run out of ideas.
         <br />

@@ -111,7 +111,7 @@ export default class SubmitFrom extends React.PureComponent {
             <Form.Field
               control={TextArea}
               label="Description"
-              placeholder="Describe the workout/challenge. Exercises, reps, rounds and a short description..."
+              placeholder="Describe the challenge/workout. Exercises, reps, rounds and a short description..."
               name="submitDescription"
               value={submitDescription}
               onChange={this.handleChange}
