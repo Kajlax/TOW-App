@@ -80,7 +80,6 @@ class SubmitFrom extends React.PureComponent {
       submitter,
       submitType,
       submitDescription,
-      isSubmitted
     } = this.state;
     const { result, error } = this.props;
 
