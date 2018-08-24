@@ -22,3 +22,8 @@
 
 - The difficulty of challenges and workouts can be scaled from 25% to 100%.
 - Each challenge and workout can be voted. The total score for each challenge/workout is shown.
+
+### Submitting a challenge/workout:
+
+- The user can submit a workout through the submit form.
+- Submits will go through a approval process and then published.
