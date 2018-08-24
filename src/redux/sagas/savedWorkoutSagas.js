@@ -9,5 +9,20 @@ export function* getSavedWorkout(api, action) {
   } else {
     yield put(SavedWorkoutActions.fetchSavedWorkoutError(response.data.message ? response.data.message : 'Error'));
   }
-
 }
+
+export function* saveGeneratedWorkout(api, action) {
+  const data = {
+    workouts: action.data.workouts,
+    reps: action.data.reps.toString(),
+  }
+  const response = yield call(api.saveGeneratedWorkout, data);
+
+  if(response.ok) {
+    yield put(SavedWorkoutActions.createSavedWorkoutSuccess(response.data));
+  } else {
+    yield put(SavedWorkoutActions.fetchSavedWorkoutError(response.data.message ? response.data.message : 'Error'));
+  }
+}
+
+

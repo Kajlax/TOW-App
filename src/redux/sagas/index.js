@@ -26,5 +26,6 @@ export default function* sagas() {
     takeLatest(WorkoutTypes.FETCH_WORKOUTS, getWorkouts, api),
     takeLatest(ChallengeTypes.SUGGEST_REQUEST, suggestWorkout, api),
     takeLatest(SavedWorkoutTypes.FETCH_SAVED_WORKOUT, getSavedWorkout, api),
+    takeLatest(SavedWorkoutTypes.CREATE_SAVED_WORKOUT, saveGeneratedWorkout, api),
   ]);
 }

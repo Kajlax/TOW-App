@@ -8,6 +8,7 @@ import GeneratedWorkout from "./GeneratedWorkout";
 import Loading from "../Loading";
 import "../Animations.css";
 import WorkoutActions from "../../redux/reducers/workoutRedux";
+import SaveWorkoutActions from "../../redux/reducers/savedworkoutRedux";
 
 const fillArrayWithRandomNumbers = count => {
   return new Array(count).fill().map(() => Math.floor(Math.random() * 11) + 5);
@@ -23,6 +24,10 @@ class Generate extends React.Component {
       numberOfExercises: 5,
       reps: fillArrayWithRandomNumbers(5)
     };
+  }
+  
+  componentDidMount() {
+    this.props.resetCreated();
   }
 
   toggleFilters = () => {
@@ -75,7 +80,7 @@ class Generate extends React.Component {
       numberOfExercises,
       reps
     } = this.state;
-    let { fetching, workouts, filters, updateFilters } = this.props;
+    let { fetching, workouts, filters, updateFilters, createSavedWorkout, saving, newWorkout } = this.props;
 
     workouts = workouts.slice(0, numberOfExercises);
 
@@ -126,6 +131,9 @@ class Generate extends React.Component {
                 workouts={workouts}
                 reps={reps}
                 updateRep={this.updateRep}
+                saveWorkout={createSavedWorkout}
+                saving={saving}
+                workoutname={newWorkout.name}
               />
             )
           ) : null}
@@ -138,12 +146,16 @@ class Generate extends React.Component {
 const mapStateToProps = state => ({
   workouts: state.workout.workouts,
   filters: state.workout.filters,
-  fetching: state.workout.fetching
+  fetching: state.workout.fetching,
+  saving: state.savedworkout.saving,
+  newWorkout: state.savedworkout.newWorkout,
 });
 
 const mapDispatchToProps = dispatch => ({
   updateFilters: value => dispatch(WorkoutActions.updateFilters(value)),
-  getWorkouts: filters => dispatch(WorkoutActions.fetchWorkouts(filters))
+  getWorkouts: filters => dispatch(WorkoutActions.fetchWorkouts(filters)),
+  createSavedWorkout: data => dispatch(SaveWorkoutActions.createSavedWorkout(data)),
+  resetCreated: () => dispatch(SaveWorkoutActions.resetSavedWorkout()),
 });
 
 export default connect(

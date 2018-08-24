@@ -5,6 +5,10 @@ const { Types, Creators } = createActions({
   fetchSavedWorkout: ['name'],
   fetchSavedWorkoutSuccess: ['result'],
   fetchSavedWorkoutError: ['error'],
+  createSavedWorkout: ['data'],
+  createSavedWorkoutSuccess: ['result'],
+  createSavedWorkoutError: ['error'],
+  resetSavedWorkout: null,
 });
 
 export const SavedWorkoutTypes = Types;
@@ -14,6 +18,8 @@ export const INITIAL_STATE = {
   workout: {},
   fetching: false,
   error: null,
+  saving: false,
+  newWorkout: {},
 }
 
 export const fetchSavedWorkout = (state) => {
@@ -37,9 +43,38 @@ export const fetchSavedWorkoutError = (state, { error }) => {
   });
 }
 
+export const createSavedWorkout = (state) => {
+  return produce(state, draft => {
+    draft.saving = true;
+    draft.error = null;
+  });
+}
+
+export const createSavedWorkoutSuccess = (state, { result }) => {
+  return produce(state, draft => {
+    draft.saving = false;
+    draft.newWorkout = result;
+  });
+}
+
+export const createSavedWorkoutError = (state, { error }) => {
+  return produce(state, draft => {
+    draft.saving = false;
+    draft.error = error;
+  });
+}
+
+export const resetSavedWorkout = (state) => {
+  return INITIAL_STATE;
+}
+
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_SAVED_WORKOUT]: fetchSavedWorkout,
   [Types.FETCH_SAVED_WORKOUT_SUCCESS]: fetchSavedWorkoutSuccess,
   [Types.FETCH_SAVED_WORKOUT_ERROR]: fetchSavedWorkoutError,
+  [Types.CREATE_SAVED_WORKOUT]: createSavedWorkout,
+  [Types.CREATE_SAVED_WORKOUT_SUCCESS]: createSavedWorkoutSuccess,
+  [Types.CREATE_SAVED_WORKOUT_ERROR]: createSavedWorkoutError,
+  [Types.RESET_SAVED_WORKOUT]: resetSavedWorkout,
 });
