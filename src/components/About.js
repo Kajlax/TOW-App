@@ -11,13 +11,16 @@ export default class About extends React.PureComponent {
           What is the Tribe of wolves?
         </Header>
         Tribe of wolves is a workout application designed for calisthenics and
-        gym training.
+        gym training. Each challenge and workout is a favourite routine by a
+        wolf-athlete. The tribe shares their routines for other wolves to try.
+        Together we grow stronger. For we are a community. We are the Tribe of
+        wolves.
         <br />
         <Header color="teal" as="h3">
           Workouts
         </Header>
-        The workout section contains pre-made, approved workouts. Browse
-        workouts or use filtering.
+        The workout section contains pre-made, approved workouts. Browse or use
+        filtering.
         <br />
         <Header color="teal" as="h3">
           Challenges
@@ -55,7 +58,7 @@ export default class About extends React.PureComponent {
         <Header color="teal" as="h3">
           Submit your challenge or workout
         </Header>
-        Become a part of the community and submit your favourite challenge or
+        Become a part of the tribe and submit your favourite challenge or
         workout. Submitted routines will go through a moderating and approval
         process before publishing. This may take a few days.
         <br />
