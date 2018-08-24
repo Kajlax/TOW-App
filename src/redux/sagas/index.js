@@ -8,7 +8,7 @@ import { WorkoutTypes } from '../reducers/workoutRedux';
 import { VoteTypes } from '../reducers/voteRedux';
 
 // sagas
-import { getChallenges } from './challengeSagas';
+import { getChallenges, suggestWorkout } from './challengeSagas';
 import { getWorkoutsets } from './workoutsetSagas';
 import { getWorkouts } from './workoutSagas';
 import { updateVote } from './voteSagas';
@@ -22,5 +22,6 @@ export default function* sagas() {
     takeLatest(VoteTypes.UPDATE_VOTES, updateVote, api),
     takeLatest(WorkoutsetTypes.FETCH_WORKOUTSETS, getWorkoutsets, api),
     takeLatest(WorkoutTypes.FETCH_WORKOUTS, getWorkouts, api),
+    takeLatest(ChallengeTypes.SUGGEST_REQUEST, suggestWorkout, api),
   ]);
 }
