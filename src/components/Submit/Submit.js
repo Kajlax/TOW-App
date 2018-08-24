@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux';
 import Layout from "../Layout";
 import {
   Button,
@@ -9,13 +10,15 @@ import {
   Select,
   TextArea
 } from "semantic-ui-react";
+import ChallengeActions from '../../redux/reducers/challengeRedux';
+import Loading from '../Loading';
 
 const typeOptions = [
   { key: "challenge", text: "Challenge", value: "challenge" },
   { key: "workout", text: "Workout", value: "workout" }
 ];
 
-export default class SubmitFrom extends React.PureComponent {
+class SubmitFrom extends React.PureComponent {
   constructor() {
     super();
     this.state = {
@@ -41,6 +44,8 @@ export default class SubmitFrom extends React.PureComponent {
 
   handleSubmit = () => {
     const { title, submitter, submitType, submitDescription } = this.state;
+    const { sendSuggest } = this.props;
+    
 
     this.setState({
       title: title,
@@ -49,6 +54,14 @@ export default class SubmitFrom extends React.PureComponent {
       submitDescription: submitDescription,
       isSubmitted: true
     });
+    const suggestData = {
+      type: submitType,
+      message: submitDescription,
+      submitter,
+      title,
+    }
+
+    sendSuggest(suggestData);
   };
 
   resetForm = () => {
@@ -67,11 +80,12 @@ export default class SubmitFrom extends React.PureComponent {
       submitter,
       submitType,
       submitDescription,
-      isSubmitted
     } = this.state;
+    const { result, error } = this.props;
+
     let form;
 
-    if (isSubmitted === false) {
+    if (!result) {
       form = (
         <React.Fragment>
           <Header
@@ -80,6 +94,7 @@ export default class SubmitFrom extends React.PureComponent {
             textAlign="center"
             color="teal"
           />
+          {error}
           <Form onSubmit={this.handleSubmit}>
             <Form.Group widths="equal">
               <Form.Field
@@ -111,7 +126,7 @@ export default class SubmitFrom extends React.PureComponent {
             <Form.Field
               control={TextArea}
               label="Description"
-              placeholder="Describe the workout/challenge. Exercises, reps, rounds and a short description..."
+              placeholder="Describe the challenge/workout. Exercises, reps, rounds and a short description..."
               name="submitDescription"
               value={submitDescription}
               onChange={this.handleChange}
@@ -147,6 +162,23 @@ export default class SubmitFrom extends React.PureComponent {
   }
 
   render() {
-    return <Layout {...this.props}>{this.renderForm()}</Layout>;
+    const { sending } = this.props;
+    console.log(sending);
+    return(<Layout {...this.props}>
+            { sending ? 
+              <Loading />
+              :this.renderForm()}
+          </Layout>)
   }
 }
+const mapStateToProps = (state) => ({
+  sending: state.challenge.sending,
+  error: state.challenge.error,
+  result: state.challenge.result,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  sendSuggest: (data) => dispatch(ChallengeActions.suggestRequest(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SubmitFrom);
