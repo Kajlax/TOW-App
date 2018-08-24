@@ -41,11 +41,11 @@ export default class About extends React.PureComponent {
         bottom. The total upVote count is displayed.
         <br />
         <Header color="teal" as="h3">
-          Generate
+          Generate a workout
         </Header>
         The generate section creates instantly a workout by chosen preferences.
-        Choose your preferences from the filters pane and click generate. Can be
-        used as a WOD (workout of the day). Never run out of ideas.
+        Choose your preferences from the filters pane and click generate. This
+        can be used as a WOD (workout of the day). Never run out of ideas.
         <br />
         <br />
         Tip: Set the number of exercises to 4 and hit generate. Perform one
