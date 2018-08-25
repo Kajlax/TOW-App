@@ -1,6 +1,8 @@
 import apisauce from 'apisauce';
 
 const baseURL = 'https://api.tribeofwolvesapp.com';
+// const baseURL = 'https://evolve-fitness-staging.herokuapp.com';
+
 
 const create = () => {
   const api = apisauce.create({
@@ -16,7 +18,8 @@ const create = () => {
   const voteUp = (id) => api.post(`/challenge/${id}/voteup`);
   const voteDown = (id) => api.post(`/challenge/${id}/votedown`);
   const suggestWorkout = (data) => api.post('/challenge/suggest', data);
-
+  const saveGeneratedWorkout = (data) => api.post('/savedworkout', data);
+  const getGeneratedWorkout = (name) => api.get(`/savedworkout/${name}`);
 
   return {
     getChallenges,
@@ -26,6 +29,8 @@ const create = () => {
     getWorkouts,
     getFilteredWorkouts,
     suggestWorkout,
+    saveGeneratedWorkout,
+    getGeneratedWorkout,
   }
 };
 

@@ -8,6 +8,7 @@ import Challenge from "./components/Challenges/Challenge";
 import Generate from "./components/Generate/Generate";
 import Submit from "./components/Submit/Submit";
 import About from "./components/About";
+import SavedWorkout from "./components/Saved/SavedWorkout";
 
 export const routes = [
   {
@@ -50,7 +51,13 @@ export const routes = [
     Title: "Single Curated Workout",
     Path: "/workouts/:id",
     component: Workout,
-    showInMenu: false
+    showInMenu: false,
+  },
+  {
+    Title: 'Saved workout',
+    Path: "/savedworkout/:name",
+    component: SavedWorkout,
+    showInMenu: false,
   }
 ];
 

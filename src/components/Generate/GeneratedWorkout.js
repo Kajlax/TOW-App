@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Segment, Table } from "semantic-ui-react";
+import { Link } from 'react-router-dom';
 
 class GeneratedWorkout extends React.PureComponent {
   decreaseReps = index => {
@@ -33,6 +34,22 @@ class GeneratedWorkout extends React.PureComponent {
     });
   };
 
+  renderSaveButton = () => {
+    const { reps, saveWorkout, saving, workoutname } = this.props;
+    let { workouts } = this.props;
+    workouts = workouts.map(workout => workout.id);
+
+    if (saving) {
+      return <Button loading icon="save outline" content="Save Workout" /> 
+    }
+    if (workoutname) {
+      const route = `/savedworkout/${workoutname}`
+      return <Link to={route}><Button icon="check" content="Go to workout" /></Link>
+    }
+
+    return <Button onClick={() => saveWorkout({ workouts, reps })} icon="save outline" content="Save Workout" />                  
+  }
+
   render() {
     return (
       <Segment color="teal">
@@ -45,6 +62,15 @@ class GeneratedWorkout extends React.PureComponent {
             </Table.Row>
           </Table.Header>
           <Table.Body>{this.renderRows()}</Table.Body>
+          <Table.Footer>
+            <Table.Row textAlign="center">
+              <Table.Cell width={16}>
+                {
+                  this.renderSaveButton()
+                }
+              </Table.Cell>
+            </Table.Row>
+          </Table.Footer>
         </Table>
       </Segment>
     );
