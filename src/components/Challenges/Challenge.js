@@ -1,12 +1,12 @@
 import React from "react";
 import { Grid, Icon, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import ChallengeComponent from "./ChallengeComponent";
 import Layout from "../Layout";
-import ChallengeActions from '../../redux/reducers/challengeRedux';
-import VoteActions from '../../redux/reducers/voteRedux';
-import Loading from '../Loading';
+import ChallengeActions from "../../redux/reducers/challengeRedux";
+import VoteActions from "../../redux/reducers/voteRedux";
+import Loading from "../Loading";
 
 const difficulties = [
   {
@@ -43,7 +43,7 @@ class Challenge extends React.Component {
   componentDidMount() {
     const { challenges, getChallenges } = this.props;
     if (challenges.length === 0) {
-      getChallenges();      
+      getChallenges();
     }
   }
 
@@ -73,13 +73,15 @@ class Challenge extends React.Component {
     const id = parseInt(this.props.match.params.id, 10);
     const challenge = challenges.filter(c => c.id === id);
 
-    return(<ChallengeComponent
-      challenge={challenge[0]}
-      difficulty={difficulty}
-      vote={updateVotes}
-      myVotes={myVotes}
-    />);
-  }
+    return (
+      <ChallengeComponent
+        challenge={challenge[0]}
+        difficulty={difficulty}
+        vote={updateVotes}
+        myVotes={myVotes}
+      />
+    );
+  };
 
   render() {
     const { fetching, challenges } = this.props;
@@ -92,30 +94,33 @@ class Challenge extends React.Component {
         <br />
         <br />
         <Grid columns={1} stackable>
-          { !fetching &&  challenges.length > 0 ?
-            this.renderComponent()  
-           : <Loading />}
+          {!fetching && challenges.length > 0 ? (
+            this.renderComponent()
+          ) : (
+            <Loading />
+          )}
         </Grid>
-        <Grid columns={1} stackable>
-          <Link to="/challenges">
-            <Icon name="angle double left" circular inverted />
-          </Link>
-        </Grid>
+        <Link to="/challenges">
+          <Icon name="angle double left" circular inverted />
+        </Link>
       </Layout>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   challenges: state.challenge.challenges,
   fetching: state.challenge.fetching,
   error: state.challenge.error,
-  myVotes: state.vote.myVotes,
-}); 
-
-const mapDispatchToProps = (dispatch) => ({
-  getChallenges: () => dispatch(ChallengeActions.fetchChallenges()),
-  updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode)),
+  myVotes: state.vote.myVotes
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Challenge);
+const mapDispatchToProps = dispatch => ({
+  getChallenges: () => dispatch(ChallengeActions.fetchChallenges()),
+  updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Challenge);

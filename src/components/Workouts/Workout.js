@@ -1,13 +1,12 @@
 import React from "react";
 import { Grid, Icon, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import Layout from "../Layout";
-import Loading from '../Loading';
+import Loading from "../Loading";
 import WorkoutsetComponent from "./WorkoutsetComponent";
-import WorkoutsetActions from '../../redux/reducers/workoutsetRedux';
-import VoteActions from '../../redux/reducers/voteRedux';
-
+import WorkoutsetActions from "../../redux/reducers/workoutsetRedux";
+import VoteActions from "../../redux/reducers/voteRedux";
 
 const difficulties = [
   {
@@ -90,13 +89,13 @@ class Workout extends React.Component {
               vote={updateVotes}
               myVotes={myVotes}
             />
-          ) : <Loading />}
+          ) : (
+            <Loading />
+          )}
         </Grid>
-        <Grid columns={1} stackable>
-          <Link to="/workouts">
-            <Icon name="angle double left" circular inverted />
-          </Link>
-        </Grid>
+        <Link to="/workouts">
+          <Icon name="angle double left" circular inverted />
+        </Link>
         <br />
         <br />
       </Layout>
@@ -104,17 +103,19 @@ class Workout extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   workoutsets: state.workoutset.workoutsets,
   fetching: state.workoutset.fetching,
   error: state.workoutset.error,
-  myVotes: state.vote.myVotes,
+  myVotes: state.vote.myVotes
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   getWorkoutSets: () => dispatch(WorkoutsetActions.fetchWorkoutsets()),
-  updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode)),
+  updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode))
 });
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(Workout);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Workout);

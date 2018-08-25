@@ -1,16 +1,11 @@
 import React from "react";
-import {
-  Grid,
-  Table,
-  Header,
-  Segment,
-} from "semantic-ui-react";
+import { Grid, Icon, Table, Header, Segment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 export default class WorkoutCompnent extends React.PureComponent {
   renderChallengeRow = workouts => {
     let { reps } = this.props.workout;
-    reps = reps.split(',');
+    reps = reps.split(",");
 
     return workouts.map((item, i) => {
       return (
@@ -28,24 +23,19 @@ export default class WorkoutCompnent extends React.PureComponent {
 
     return (
       <Grid.Column>
-        <Segment color="olive" inverted>
+        <Segment color="teal">
           <Link to={url}>
-            <Header
-              as="h2"
-              to={url}
-              content={name}
-              textAlign="center"
-            />
+            <Header as="h2" to={url} content={name} textAlign="center" />
           </Link>
-          <Table color="olive" unstackable compact columns={2}>
-            <Table.Body>
-              {this.renderChallengeRow(workouts)}
-            </Table.Body>
+          <Table color="teal" inverted unstackable compact columns={2}>
+            <Table.Body>{this.renderChallengeRow(workouts)}</Table.Body>
           </Table>
           <br />
           <br />
         </Segment>
-        <br />
+        <Link to="/generate">
+          <Icon name="angle double left" circular inverted />
+        </Link>
       </Grid.Column>
     );
   }
