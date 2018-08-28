@@ -7,6 +7,7 @@ import Loading from "../Loading";
 import WorkoutsetComponent from "./WorkoutsetComponent";
 import WorkoutsetActions from "../../redux/reducers/workoutsetRedux";
 import VoteActions from "../../redux/reducers/voteRedux";
+import FavouriteActions from "../../redux/reducers/favouriteRedux";
 
 const difficulties = [
   {
@@ -107,12 +108,15 @@ const mapStateToProps = state => ({
   workoutsets: state.workoutset.workoutsets,
   fetching: state.workoutset.fetching,
   error: state.workoutset.error,
-  myVotes: state.vote.myVotes
+  myVotes: state.vote.myVotes,
+  myFavourites: state.favourite.myFavourites
 });
 
 const mapDispatchToProps = dispatch => ({
   getWorkoutSets: () => dispatch(WorkoutsetActions.fetchWorkoutsets()),
-  updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode))
+  updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode)),
+  updateFavourites: (id, defaultRating) =>
+    dispatch(FavouriteActions.updateFavourites(id, defaultRating))
 });
 
 export default connect(
