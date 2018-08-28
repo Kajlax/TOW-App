@@ -1,25 +1,39 @@
 import React from "react";
 import {
-  Grid,
-  Table,
-  Header,
-  Segment,
-  Icon,
   Container,
-  Label
+  Grid,
+  Header,
+  Icon,
+  Label,
+  Rating,
+  Segment,
+  Table
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
+const heartStyle = {
+  marginRight: "30px"
+};
+
 const checkVoteStatus = (myVotes, cId) => {
   return myVotes.find(id => id === cId);
+};
+
+const checkFavouriteStatus = (myFavourites, cId) => {
+  return myFavourites.find(id => id === cId);
 };
 
 export default class ChallengeCompnent extends React.PureComponent {
   handleVote = () => {
     const { vote, challenge, myVotes } = this.props;
     const idFound = checkVoteStatus(myVotes, challenge.id);
-
     vote(challenge.id, idFound ? "down" : "up");
+  };
+
+  handleFavourite = () => {
+    const { favourite, challenge, myFavourites } = this.props;
+    const idFound = checkFavouriteStatus(myFavourites, challenge.id);
+    favourite(challenge.id, idFound ? 1 : 0);
   };
 
   renderChallengeRow = challenges => {
@@ -40,6 +54,40 @@ export default class ChallengeCompnent extends React.PureComponent {
         </Table.Row>
       );
     });
+  };
+
+  renderHeartIcon = () => {
+    const { challenge, myFavourites } = this.props;
+    const idFound = checkFavouriteStatus(myFavourites, challenge.id);
+    let returnable = null;
+
+    if (idFound) {
+      returnable = [
+        <Rating
+          key={1}
+          icon="heart"
+          defaultRating={1}
+          maxRating={1}
+          size="large"
+          style={heartStyle}
+          onClick={this.handleFavourite}
+        />
+      ];
+    } else {
+      returnable = [
+        <Rating
+          key={2}
+          icon="heart"
+          defaultRating={0}
+          maxRating={1}
+          size="large"
+          style={heartStyle}
+          onClick={this.handleFavourite}
+        />
+      ];
+    }
+
+    return returnable;
   };
 
   renderVoteIcons = () => {
@@ -97,8 +145,10 @@ export default class ChallengeCompnent extends React.PureComponent {
           {challenge.description}
           <br />
           <br />
+          <br />
           <Container textAlign="center">
             <Label attached="bottom">
+              {this.renderHeartIcon()}
               {this.renderVoteIcons()}
               {score}
             </Label>

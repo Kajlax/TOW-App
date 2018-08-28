@@ -1,12 +1,33 @@
 import React from "react";
-import { Header } from "semantic-ui-react";
 import Layout from "../Layout";
+import Filters from "./FavouriteFilters";
+
+const filters = [
+  {
+    title: "Workouts",
+    selected: false
+  },
+  {
+    title: "Challenges",
+    selected: false
+  },
+  {
+    title: "Saved",
+    selected: false
+  }
+];
 
 export default class Favourites extends React.PureComponent {
+  constructor() {
+    super();
+    this.state = {
+      filters
+    };
+  }
   render() {
     return (
       <Layout {...this.props}>
-        <Header as="h2" content="Favourites" />
+        <Filters filters={filters} />
         <br />
       </Layout>
     );
