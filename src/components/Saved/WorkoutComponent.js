@@ -25,16 +25,20 @@ export default class WorkoutCompnent extends React.PureComponent {
       <Grid.Column>
         <Segment color="teal">
           <Link to={url}>
-            <Header as="h2" to={url} content={name} textAlign="center" />
+            <Header
+              as="h2"
+              to={url}
+              content="Generated workout"
+              textAlign="center"
+            />
           </Link>
           <Table color="teal" inverted unstackable compact columns={2}>
             <Table.Body>{this.renderChallengeRow(workouts)}</Table.Body>
           </Table>
           <br />
-          <br />
         </Segment>
         <Link to="/generate">
-          <Icon name="angle double left" circular inverted />
+          <Icon name="angle double left" circular inverted size="large" />
         </Link>
       </Grid.Column>
     );

@@ -5,6 +5,7 @@ import WorkoutSets from "./components/Workouts/Workouts";
 import Workout from "./components/Workouts/Workout";
 import Challenges from "./components/Challenges/Challenges";
 import Challenge from "./components/Challenges/Challenge";
+import Favourites from "./components/Favourites/Favourites";
 import Generate from "./components/Generate/Generate";
 import Submit from "./components/Submit/Submit";
 import About from "./components/About";
@@ -21,6 +22,12 @@ export const routes = [
     Title: "Challenges",
     Path: "/challenges",
     component: Challenges,
+    showInMenu: true
+  },
+  {
+    Title: "Favourites",
+    Path: "/favourites",
+    component: Favourites,
     showInMenu: true
   },
   {
@@ -51,13 +58,13 @@ export const routes = [
     Title: "Single Curated Workout",
     Path: "/workouts/:id",
     component: Workout,
-    showInMenu: false,
+    showInMenu: false
   },
   {
-    Title: 'Saved workout',
+    Title: "Saved workout",
     Path: "/savedworkout/:name",
     component: SavedWorkout,
-    showInMenu: false,
+    showInMenu: false
   }
 ];
 
