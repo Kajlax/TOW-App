@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "../Layout";
 import Filters from "./FavouriteFilters";
+import { Grid } from "semantic-ui-react";
 
 const filters = [
   {
@@ -29,6 +30,9 @@ export default class Favourites extends React.PureComponent {
       <Layout {...this.props}>
         <Filters filters={filters} />
         <br />
+        <Grid columns={3} stackable>
+          {this.renderFavourites()}
+        </Grid>
       </Layout>
     );
   }

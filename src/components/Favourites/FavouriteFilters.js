@@ -1,11 +1,7 @@
 import React, { PureComponent } from "react";
-import { Button } from "semantic-ui-react";
+import { Button, Grid, Header } from "semantic-ui-react";
 
 class Filters extends PureComponent {
-  favCategory = value => {
-    console.log(value);
-  };
-
   renderButtons = (buttons, firstIndex) => {
     return buttons.map((button, i) => {
       const buttonIndex = i + firstIndex;
@@ -15,10 +11,35 @@ class Filters extends PureComponent {
           active={button.selected}
           content={button.title}
           color="teal"
-          onClick={() => this.favCategory(button.title)}
+          onClick={() => this.renderFavourites(button.title)}
         />
       );
     });
+  };
+
+  renderFavourites = value => {
+    let returnable = null;
+
+    if (value === "Workouts") {
+      returnable = [
+        <Grid.Column>
+          <Header as="h3" content="Workouts" />
+        </Grid.Column>
+      ];
+    } else if (value === "Challenges") {
+      returnable = [
+        <Grid.Column>
+          <Header as="h3" content="Challenges" />
+        </Grid.Column>
+      ];
+    } else {
+      returnable = [
+        <Grid.Column>
+          <Header as="h3" content="Saved" />
+        </Grid.Column>
+      ];
+    }
+    return returnable;
   };
 
   render() {
