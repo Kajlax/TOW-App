@@ -68,7 +68,14 @@ class Workout extends React.Component {
   };
 
   render() {
-    const { workoutsets, updateVotes, myVotes, fetching } = this.props;
+    const {
+      workoutsets,
+      updateVotes,
+      myVotes,
+      updateFavourites,
+      myFavourites,
+      fetching
+    } = this.props;
     const { difficulty } = this.state;
     const id = parseInt(this.props.match.params.id, 10);
 
@@ -89,13 +96,15 @@ class Workout extends React.Component {
               difficulty={difficulty}
               vote={updateVotes}
               myVotes={myVotes}
+              favourite={updateFavourites}
+              myFavourites={myFavourites}
             />
           ) : (
             <Loading />
           )}
         </Grid>
         <Link to="/workouts">
-          <Icon name="angle double left" circular inverted />
+          <Icon name="angle double left" circular inverted size="large" />
         </Link>
         <br />
         <br />

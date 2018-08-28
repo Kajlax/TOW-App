@@ -79,7 +79,13 @@ class Workouts extends React.Component {
   };
 
   renderWorkoutSets = () => {
-    let { workoutsets, updateVotes, myVotes } = this.props;
+    let {
+      workoutsets,
+      updateVotes,
+      myVotes,
+      updateFavourites,
+      myFavourites
+    } = this.props;
     const { filters } = this.state;
     const active = activeFilters(filters);
 
@@ -104,6 +110,8 @@ class Workouts extends React.Component {
           key={item.id}
           vote={updateVotes}
           myVotes={myVotes}
+          favourite={updateFavourites}
+          myFavourites={myFavourites}
         />
       );
     });
