@@ -20,8 +20,8 @@ const checkVoteStatus = (myVotes, cId) => {
   return myVotes.find(id => id === cId);
 };
 
-const checkFavouriteStatus = (userFavourites, cId) => {
-  return userFavourites.find(id => id === cId);
+const checkFavouriteStatus = (myFavourites, cId) => {
+  return myFavourites.find(id => id === cId);
 };
 
 export default class WorkoutsetComponent extends React.PureComponent {
@@ -32,8 +32,8 @@ export default class WorkoutsetComponent extends React.PureComponent {
   };
 
   handleFavourite = () => {
-    const { favourite, workoutset, userFavourites } = this.props;
-    const idFound = checkFavouriteStatus(userFavourites, workoutset.id);
+    const { favourite, workoutset, myFavourites } = this.props;
+    const idFound = checkFavouriteStatus(myFavourites, workoutset.id);
     favourite(workoutset.id, idFound ? 1 : 0);
   };
 
@@ -58,28 +58,32 @@ export default class WorkoutsetComponent extends React.PureComponent {
   };
 
   renderHeartIcon = () => {
-    const { workoutset, userFavourites } = this.props;
-    const idFound = checkFavouriteStatus(userFavourites, workoutset.id);
+    const { workoutset, myFavourites } = this.props;
+    const idFound = checkFavouriteStatus(myFavourites, workoutset.id);
     let returnable = null;
 
     if (idFound) {
       returnable = [
         <Rating
+          key={1}
           icon="heart"
           defaultRating={1}
           maxRating={1}
           size="large"
           style={heartStyle}
+          onClick={this.handleFavourite}
         />
       ];
     } else {
       returnable = [
         <Rating
+          key={2}
           icon="heart"
           defaultRating={0}
           maxRating={1}
           size="large"
           style={heartStyle}
+          onClick={this.handleFavourite}
         />
       ];
     }

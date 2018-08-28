@@ -2,7 +2,7 @@ import { createReducer, createActions } from "reduxsauce";
 import produce from "immer";
 
 const getFavourites = () => {
-  const favourites = localStorage.getItem("userFavourites");
+  const favourites = localStorage.getItem("myFavourites");
   if (favourites) {
     return favourites;
   }
@@ -10,15 +10,15 @@ const getFavourites = () => {
 };
 
 const createFavouriteArray = favouriteString => {
-  const userFavourites = favouriteString.split(",");
-  userFavourites.forEach((element, index) => {
-    userFavourites[index] = parseInt(userFavourites[index], 10);
+  const myFavourites = favouriteString.split(",");
+  myFavourites.forEach((element, index) => {
+    myFavourites[index] = parseInt(myFavourites[index], 10);
   });
 
-  return userFavourites;
+  return myFavourites;
 };
 
-let userFavourites = getFavourites();
+let myFavourites = getFavourites();
 
 const { Types, Creators } = createActions({
   updateFavourites: ["id", "defaultRating"],
@@ -29,23 +29,23 @@ export const FavouriteTypes = Types;
 export default Creators;
 
 export const INITIAL_STATE = {
-  userFavourites: createFavouriteArray(userFavourites),
+  myFavourites: createFavouriteArray(myFavourites),
   updating: false
 };
 
 export const updateFavourites = (state, { id, defaultRating }) => {
   let newFavourites = null;
   if (defaultRating === 0) {
-    newFavourites = state.userFavourites.concat(id);
+    newFavourites = state.myFavourites.concat(id);
   } else {
-    newFavourites = state.userFavourites.filter(i => id !== i);
+    newFavourites = state.myFavourites.filter(i => id !== i);
   }
 
-  localStorage.setItem("userFavourites", newFavourites.toString());
+  localStorage.setItem("myFavourites", newFavourites.toString());
 
   return produce(state, draft => {
     draft.updating = true;
-    draft.userFavourites = newFavourites;
+    draft.myFavourites = newFavourites;
   });
 };
 
