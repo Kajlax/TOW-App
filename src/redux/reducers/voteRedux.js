@@ -1,23 +1,8 @@
 import { createReducer, createActions } from "reduxsauce";
 import produce from "immer";
+import { getStorageValue, createArray, setStorageValue } from '../../util';
 
-const getVotes = () => {
-  const votes = localStorage.getItem("myVotes");
-  if (votes) {
-    return votes;
-  }
-  return "0";
-};
-const createVoteArray = voteString => {
-  const myVotes = voteString.split(",");
-  myVotes.forEach((element, index) => {
-    myVotes[index] = parseInt(myVotes[index], 10);
-  });
-
-  return myVotes;
-};
-
-let myVotes = getVotes();
+let myVotes = getStorageValue('myVotes');
 
 const { Types, Creators } = createActions({
   updateVotes: ["id", "mode"],
@@ -28,7 +13,7 @@ export const VoteTypes = Types;
 export default Creators;
 
 export const INITIAL_STATE = {
-  myVotes: createVoteArray(myVotes),
+  myVotes: createArray(myVotes),
   updating: false
 };
 
@@ -40,8 +25,7 @@ export const updateVotes = (state, { id, mode }) => {
     newVotes = state.myVotes.filter(i => id !== i);
   }
 
-  localStorage.setItem("myVotes", newVotes.toString());
-
+  setStorageValue('myVotes', newVotes.toString());
   return produce(state, draft => {
     draft.updating = true;
     draft.myVotes = newVotes;
