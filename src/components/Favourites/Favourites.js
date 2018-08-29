@@ -13,7 +13,7 @@ const filters = [
     selected: false
   },
   {
-    title: "Saved",
+    title: "Generated",
     selected: false
   }
 ];

@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Button, Grid, Header } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 
 class Filters extends PureComponent {
   renderButtons = (buttons, firstIndex) => {
@@ -18,31 +18,28 @@ class Filters extends PureComponent {
   };
 
   renderFavourites = value => {
-    let returnable = null;
-
     if (value === "Workouts") {
-      console.log(value);
-      returnable = [
-        <Grid.Column key={1}>
-          <Header as="h3" content="Workouts" />
-        </Grid.Column>
-      ];
+      if (localStorage.getItem("favWorkouts") === null) {
+        console.log("You haven't added any workouts");
+      } else {
+        console.log("Favourite workouts list");
+      }
     } else if (value === "Challenges") {
-      returnable = [
-        <Grid.Column key={1}>
-          <Header as="h3" content="Challenges" />
-        </Grid.Column>
-      ];
-    } else if (value === "Saved") {
-      returnable = [
-        <Grid.Column key={1}>
-          <Header as="h3" content="Saved" />
-        </Grid.Column>
-      ];
+      if (localStorage.getItem("favWorkouts") === null) {
+        console.log("You haven't added any challenges");
+      } else {
+        console.log("Favourite workouts list");
+      }
+    } else if (value === "Generated") {
+      if (localStorage.getItem("favWorkouts") === null) {
+        console.log("You haven't added any generated workouts");
+      } else {
+        console.log("Favourite workouts list");
+      }
     } else {
       return null;
     }
-    return returnable;
+    return;
   };
 
   render() {
