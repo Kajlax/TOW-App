@@ -18,7 +18,7 @@ export default Creators;
 export const INITIAL_STATE = {
   workouts: createArray(workouts),
   challenges: createArray(challenges),
-  saved: createArray(saved),
+  saved: saved.split(","),
 };
 
 export const updateWorkouts = (state, { id, defaultRating }) => {

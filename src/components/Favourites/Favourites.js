@@ -1,16 +1,24 @@
 import React from "react";
+import { connect } from 'react-redux';
 import Layout from "../Layout";
 import Filters from "./FavouriteFilters";
-import { Grid } from "semantic-ui-react";
 
-export default class Favourites extends React.PureComponent {
+class Favourites extends React.PureComponent {
   render() {
     return (
       <Layout {...this.props}>
-        <Filters />
-        <br />
-        <Grid columns={3} stackable />
+        <Filters
+          saved={this.props.saved}
+        />
       </Layout>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  workouts: state.favourite.workouts,
+  challenges: state.favourite.challenges,
+  saved: state.favourite.saved,
+});
+
+export default connect(mapStateToProps)(Favourites);
