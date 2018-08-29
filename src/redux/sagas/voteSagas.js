@@ -12,13 +12,12 @@ export function* updateVote(api, action) {
     response = yield call(api.voteDown, action.id);
   }
 
-  // todo refresh state with result object
   if(response.ok) {
     if(response.data.workouttype === 'challenge') {
-      yield put(ChallengeActions.fetchChallenges());
+      yield put(ChallengeActions.updateScore(response.data.id, response.data.score));
     }
     if(response.data.workouttype === 'workout') {
-      yield put(WorkoutsetActions.fetchWorkoutsets());
+      yield put(WorkoutsetActions.updateScore2(response.data.id, response.data.score));
     }
   }
 

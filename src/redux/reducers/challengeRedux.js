@@ -8,7 +8,7 @@ const { Types, Creators } = createActions({
   suggestRequest: ['data'],
   suggestRequestSuccess: ['result'],
   suggestRequestError: ['error'],
-
+  updateScore: ['id', 'score'],
 });
 
 export const ChallengeTypes = Types;
@@ -65,6 +65,13 @@ export const suggestRequestError = (state, { error }) => {
   });
 }
 
+export const updateScore = (state, { id, score }) => {
+  const index = state.challenges.findIndex(c => c.id === id);
+
+  return produce(state, draft => {
+    draft.challenges[index].score = score;
+  });
+}
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_CHALLENGES]: fetchChallenges,
@@ -73,4 +80,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SUGGEST_REQUEST]: suggestRequest,
   [Types.SUGGEST_REQUEST_SUCCESS]: suggestRequestSuccess,
   [Types.SUGGEST_REQUEST_ERROR]: suggestRequestError,
+  [Types.UPDATE_SCORE]: updateScore,
 });

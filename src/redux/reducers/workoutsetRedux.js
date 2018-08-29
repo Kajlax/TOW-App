@@ -5,6 +5,7 @@ const { Types, Creators } = createActions({
   fetchWorkoutsets: null,
   fetchWorkoutsetsSuccess: ['result'],
   fetchWorkoutsetsError: ['error'],
+  updateScore2: ['id', 'score'],
 });
 
 export const WorkoutsetTypes = Types;
@@ -37,9 +38,18 @@ export const fetchWorkoutsetsError = (state, { error }) => {
   });
 }
 
+export const updateScore2 = (state, { id, score }) => {
+  const index = state.workoutsets.findIndex(c => c.id === id);
+
+  return produce(state, draft => {
+    draft.workoutsets[index].score = score;
+  });
+}
+
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_WORKOUTSETS]: fetchWorkoutsets,
   [Types.FETCH_WORKOUTSETS_SUCCESS]: fetchWorkoutsetsSuccess,
   [Types.FETCH_WORKOUTSETS_ERROR]: fetchWorkoutsetsError,
+  [Types.UPDATE_SCORE2]: updateScore2,
 });
