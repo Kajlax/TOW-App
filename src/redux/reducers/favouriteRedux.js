@@ -1,26 +1,10 @@
 import { createReducer, createActions } from "reduxsauce";
 import produce from "immer";
+import { getStorageValue, createArray, setStorageValue } from '../../util';
 
-const getFavourites = (key) => {
-  const favourites = localStorage.getItem(key);
-  if (favourites) {
-    return favourites;
-  }
-  return "0";
-};
-
-const createFavouriteArray = favouriteString => {
-  const myFavourites = favouriteString.split(",");
-  myFavourites.forEach((element, index) => {
-    myFavourites[index] = parseInt(myFavourites[index], 10);
-  });
-
-  return myFavourites;
-};
-
-let workouts = getFavourites('workoutsets');
-let challenges = getFavourites('challenges');
-let saved = getFavourites('saved');
+let workouts = getStorageValue('workoutsets');
+let challenges = getStorageValue('challenges');
+let saved = getStorageValue('saved');
 
 const { Types, Creators } = createActions({
   updateWorkouts: ["id", "defaultRating"],
@@ -32,9 +16,9 @@ export const FavouriteTypes = Types;
 export default Creators;
 
 export const INITIAL_STATE = {
-  workouts: createFavouriteArray(workouts),
-  challenges: createFavouriteArray(challenges),
-  saved: createFavouriteArray(saved),
+  workouts: createArray(workouts),
+  challenges: createArray(challenges),
+  saved: createArray(saved),
 };
 
 export const updateWorkouts = (state, { id, defaultRating }) => {
@@ -45,7 +29,7 @@ export const updateWorkouts = (state, { id, defaultRating }) => {
     newFavourites = state.workouts.filter(i => id !== i);
   }
 
-  localStorage.setItem("workoutsets", newFavourites.toString());
+  setStorageValue('workoutsets', newFavourites.toString());
 
   return produce(state, draft => {
     draft.workouts = newFavourites;
@@ -55,30 +39,30 @@ export const updateWorkouts = (state, { id, defaultRating }) => {
 export const updateChallenges = (state, { id, defaultRating }) => {
   let newFavourites = null;
   if (defaultRating === 0) {
-    newFavourites = state.workouts.concat(id);
+    newFavourites = state.challenges.concat(id);
   } else {
-    newFavourites = state.workouts.filter(i => id !== i);
+    newFavourites = state.challenges.filter(i => id !== i);
   }
 
-  localStorage.setItem("challenges", newFavourites.toString());
+  setStorageValue('challenges', newFavourites.toString());
 
   return produce(state, draft => {
-    draft.workouts = newFavourites;
+    draft.challenges = newFavourites;
   });
 };
 
 export const updateSaved = (state, { id, defaultRating }) => {
   let newFavourites = null;
   if (defaultRating === 0) {
-    newFavourites = state.workouts.concat(id);
+    newFavourites = state.saved.concat(id);
   } else {
-    newFavourites = state.workouts.filter(i => id !== i);
+    newFavourites = state.saved.filter(i => id !== i);
   }
 
-  localStorage.setItem("saved", newFavourites.toString());
+  setStorageValue('saved', newFavourites.toString());
 
   return produce(state, draft => {
-    draft.workouts = newFavourites;
+    draft.saved = newFavourites;
   });
 };
 
