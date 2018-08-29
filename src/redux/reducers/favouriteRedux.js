@@ -9,7 +9,7 @@ let saved = getStorageValue('saved');
 const { Types, Creators } = createActions({
   updateWorkouts: ["id", "defaultRating"],
   updateChallenges: ["id", "defaultRating"],
-  updateSaved: ["id", "defaultRating"],
+  updateSaved: ["name"],
 });
 
 export const FavouriteTypes = Types;
@@ -51,14 +51,8 @@ export const updateChallenges = (state, { id, defaultRating }) => {
   });
 };
 
-export const updateSaved = (state, { id, defaultRating }) => {
-  let newFavourites = null;
-  if (defaultRating === 0) {
-    newFavourites = state.saved.concat(id);
-  } else {
-    newFavourites = state.saved.filter(i => id !== i);
-  }
-
+export const updateSaved = (state, { name }) => {
+  let newFavourites = state.saved.concat(name);
   setStorageValue('saved', newFavourites.toString());
 
   return produce(state, draft => {
