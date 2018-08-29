@@ -7,7 +7,7 @@ import Layout from "../Layout";
 import Loading from "../Loading";
 import ChallengeActions from "../../redux/reducers/challengeRedux";
 import VoteActions from "../../redux/reducers/voteRedux";
-import FavouriteActions from "../../redux/reducers/favouriteChallengeRedux";
+import FavouriteActions from "../../redux/reducers/favouriteRedux";
 
 const difficulties = [
   {
@@ -122,14 +122,13 @@ const mapStateToProps = state => ({
   fetching: state.challenge.fetching,
   error: state.challenge.error,
   myVotes: state.vote.myVotes,
-  myFavourites: state.favourite.myFavourites
+  myFavourites: state.favourite.challenges
 });
 
 const mapDispatchToProps = dispatch => ({
   getChallenges: () => dispatch(ChallengeActions.fetchChallenges()),
   updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode)),
-  updateFavourites: (id, defaultRating) =>
-    dispatch(FavouriteActions.updateFavourites(id, defaultRating))
+  updateFavourites: (id, defaultRating) => dispatch(FavouriteActions.updateChallenges(id, defaultRating))
 });
 
 export default connect(
