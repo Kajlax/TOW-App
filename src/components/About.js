@@ -31,16 +31,16 @@ export default class About extends React.PureComponent {
         about the challenge, for example a time to beat.
         <br />
         <Header color="teal" as="h3">
-          Favourites
-        </Header>
-        Press the heart icon to add a routine to your favourites list.
-        <br />
-        <Header color="teal" as="h3">
           Adjust the difficulty
         </Header>
         Adjust the difficulty of each challenge and workout. Press the title to
         access the challenge/workout and adjust the difficulty with the
         difficulty bar. Difficulty range 25% - 100%.
+        <br />
+        <Header color="teal" as="h3">
+          Favourites
+        </Header>
+        Press the heart icon to add a routine to your favourites list.
         <br />
         <Header color="teal" as="h3">
           Voting

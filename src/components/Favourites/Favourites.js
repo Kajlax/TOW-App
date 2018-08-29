@@ -30,9 +30,7 @@ export default class Favourites extends React.PureComponent {
       <Layout {...this.props}>
         <Filters filters={filters} />
         <br />
-        <Grid columns={3} stackable>
-          {this.renderFavourites()}
-        </Grid>
+        <Grid columns={3} stackable />
       </Layout>
     );
   }

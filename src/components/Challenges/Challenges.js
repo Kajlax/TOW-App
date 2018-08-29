@@ -7,7 +7,7 @@ import Layout from "../Layout";
 import SearchActions from "../../redux/reducers/searchRedux";
 import ChallengeActions from "../../redux/reducers/challengeRedux";
 import VoteActions from "../../redux/reducers/voteRedux";
-import FavouriteActions from "../../redux/reducers/favouriteRedux";
+import FavouriteActions from "../../redux/reducers/favouriteChallengeRedux";
 
 class Challenges extends React.PureComponent {
   componentDidMount() {

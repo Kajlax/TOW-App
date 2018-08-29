@@ -21,23 +21,26 @@ class Filters extends PureComponent {
     let returnable = null;
 
     if (value === "Workouts") {
+      console.log(value);
       returnable = [
-        <Grid.Column>
+        <Grid.Column key={1}>
           <Header as="h3" content="Workouts" />
         </Grid.Column>
       ];
     } else if (value === "Challenges") {
       returnable = [
-        <Grid.Column>
+        <Grid.Column key={1}>
           <Header as="h3" content="Challenges" />
         </Grid.Column>
       ];
-    } else {
+    } else if (value === "Saved") {
       returnable = [
-        <Grid.Column>
+        <Grid.Column key={1}>
           <Header as="h3" content="Saved" />
         </Grid.Column>
       ];
+    } else {
+      return null;
     }
     return returnable;
   };

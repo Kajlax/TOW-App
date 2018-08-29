@@ -7,7 +7,7 @@ import Layout from "../Layout";
 import Loading from "../Loading";
 import ChallengeActions from "../../redux/reducers/challengeRedux";
 import VoteActions from "../../redux/reducers/voteRedux";
-import FavouriteActions from "../../redux/reducers/favouriteRedux";
+import FavouriteActions from "../../redux/reducers/favouriteChallengeRedux";
 
 const difficulties = [
   {

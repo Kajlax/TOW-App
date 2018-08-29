@@ -7,7 +7,7 @@ import Loading from "../Loading";
 import WorkoutsetComponent from "./WorkoutsetComponent";
 import WorkoutsetActions from "../../redux/reducers/workoutsetRedux";
 import VoteActions from "../../redux/reducers/voteRedux";
-import FavouriteActions from "../../redux/reducers/favouriteRedux";
+import FavouriteActions from "../../redux/reducers/favouriteWorkoutRedux";
 
 const difficulties = [
   {

@@ -1,5 +1,13 @@
 import React from "react";
-import { Grid, Icon, Table, Header, Segment } from "semantic-ui-react";
+import {
+  Container,
+  Grid,
+  Icon,
+  Label,
+  Table,
+  Header,
+  Segment
+} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 export default class WorkoutCompnent extends React.PureComponent {
@@ -31,6 +39,9 @@ export default class WorkoutCompnent extends React.PureComponent {
             <Table.Body>{this.renderChallengeRow(workouts)}</Table.Body>
           </Table>
           <br />
+          <Container textAlign="center">
+            <Label attached="bottom" />
+          </Container>
         </Segment>
         <Link to="/generate">
           <Icon name="angle double left" circular inverted size="large" />

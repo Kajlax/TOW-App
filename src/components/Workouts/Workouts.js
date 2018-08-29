@@ -8,7 +8,7 @@ import WorkoutsetComponent from "./WorkoutsetComponent";
 import Loading from "../Loading";
 import WorkoutsetActions from "../../redux/reducers/workoutsetRedux";
 import VoteActions from "../../redux/reducers/voteRedux";
-import FavouriteActions from "../../redux/reducers/favouriteRedux";
+import FavouriteActions from "../../redux/reducers/favouriteWorkoutRedux";
 import "../Animations.css";
 
 const filters = [
