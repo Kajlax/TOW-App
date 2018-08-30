@@ -35,7 +35,7 @@ class Filters extends PureComponent {
         menuItem: "Generated",
         render: () => [
           <Tab.Pane key={3}>
-            <Header as="h3" content="Favourite generated" />
+            <Header as="h3" content="Favourite generated workouts" />
             <Generated saved={saved} />
             <br />
           </Tab.Pane>
