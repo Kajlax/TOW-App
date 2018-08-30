@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default class Generated extends React.PureComponent {
+export default class Challenges extends React.PureComponent {
   renderRows = () => {
-    const { saved } = this.props;
-    return saved.map((row, i) => {
+    const { challenges } = this.props;
+    return challenges.map((row, i) => {
       if (i !== 0) {
         return (
           <div key={1}>
-            <Link to={`/savedworkout/${row}`}>{row}</Link>
+            <Link to={`/challenges/${row}`}>{row}</Link>
           </div>
         );
       }

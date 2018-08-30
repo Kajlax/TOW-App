@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default class Generated extends React.PureComponent {
+export default class Workouts extends React.PureComponent {
   renderRows = () => {
-    const { saved } = this.props;
-    return saved.map((row, i) => {
+    const { workouts } = this.props;
+    return workouts.map((row, i) => {
       if (i !== 0) {
         return (
           <div key={1}>
-            <Link to={`/savedworkout/${row}`}>{row}</Link>
+            <Link to={`/workouts/${row}`}>{row}</Link>
           </div>
         );
       }
