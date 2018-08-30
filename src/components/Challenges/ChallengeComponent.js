@@ -23,7 +23,7 @@ const checkFavouriteStatus = (myFavourites, cId) => {
   return myFavourites.find(id => id === cId);
 };
 
-export default class ChallengeCompnent extends React.PureComponent {
+export default class ChallengeComponent extends React.PureComponent {
   handleVote = () => {
     const { vote, challenge, myVotes } = this.props;
     const idFound = checkVoteStatus(myVotes, challenge.id);

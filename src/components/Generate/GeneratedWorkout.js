@@ -50,13 +50,7 @@ class GeneratedWorkout extends React.PureComponent {
 
     if (saving) {
       return (
-        <Rating
-          loading
-          icon="heart"
-          defaultRating={1}
-          maxRating={1}
-          size="large"
-        />
+        <Rating icon="heart" defaultRating={1} maxRating={1} size="large" />
       );
     }
     if (workoutname) {

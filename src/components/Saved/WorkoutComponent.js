@@ -6,11 +6,12 @@ import {
   Label,
   Table,
   Header,
+  Rating,
   Segment
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
-export default class WorkoutCompnent extends React.PureComponent {
+export default class WorkoutComponent extends React.PureComponent {
   renderChallengeRow = workouts => {
     let { reps } = this.props.workout;
     reps = reps.split(",");
@@ -23,6 +24,18 @@ export default class WorkoutCompnent extends React.PureComponent {
         </Table.Row>
       );
     });
+  };
+
+  renderHeartIcon = () => {
+    return (
+      <Rating
+        key={1}
+        icon="heart"
+        defaultRating={1}
+        maxRating={1}
+        size="large"
+      />
+    );
   };
 
   render() {
@@ -40,7 +53,7 @@ export default class WorkoutCompnent extends React.PureComponent {
           </Table>
           <br />
           <Container textAlign="center">
-            <Label attached="bottom" />
+            <Label attached="bottom">{this.renderHeartIcon()}</Label>
           </Container>
         </Segment>
         <Link to="/generate">
