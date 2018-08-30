@@ -14,12 +14,18 @@ class Challenges extends React.Component {
 
   renderComponent = () => {
     const { challenges } = this.props;
-
-    return (
-      <div>
-        <Link to={`/challenges/${challenges.id}`}>{challenges[0].name}</Link>
-      </div>
-    );
+    let favFromStorage = localStorage.getItem("challenges").split(",");
+    let favChalArray = favFromStorage.map(function(idNumber) {
+      return (
+        <div key={idNumber}>
+          <Link to={`/challenges/${challenges[idNumber].id}`}>
+            {challenges[idNumber].name}
+          </Link>
+          <br />
+        </div>
+      );
+    });
+    return <div>{favChalArray}</div>;
   };
 
   render() {
