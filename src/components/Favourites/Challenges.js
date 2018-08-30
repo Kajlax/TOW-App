@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { List } from "semantic-ui-react";
 import ChallengeActions from "../../redux/reducers/challengeRedux";
 import Loading from "../Loading";
 
@@ -12,17 +13,30 @@ class Challenges extends React.Component {
     }
   }
 
-  renderComponent = () => {
+  renderRows = () => {
     const { challenges } = this.props;
     let favFromStorage = localStorage.getItem("challenges").split(",");
     let favChalArray = favFromStorage.map(function(idNumber) {
       return (
-        <div key={idNumber}>
-          <Link to={`/challenges/${challenges[idNumber].id}`}>
-            {challenges[idNumber].name}
-          </Link>
-          <br />
-        </div>
+        <List divided relaxed celled key={idNumber}>
+          <List.Item>
+            <List.Icon
+              name="heart outline"
+              size="large"
+              verticalAlign="middle"
+            />
+            <List.Content>
+              <List.Header>
+                <Link to={`/challenges/${challenges[idNumber].id}`}>
+                  {challenges[idNumber].name}
+                </Link>
+              </List.Header>
+              <List.Description>
+                {challenges[idNumber].submitter}
+              </List.Description>
+            </List.Content>
+          </List.Item>
+        </List>
       );
     });
     return <div>{favChalArray}</div>;
@@ -31,13 +45,9 @@ class Challenges extends React.Component {
   render() {
     const { fetching, challenges } = this.props;
     return (
-      <div>
-        {!fetching && challenges.length > 0 ? (
-          this.renderComponent()
-        ) : (
-          <Loading />
-        )}
-      </div>
+      <List divided relaxed celled>
+        {!fetching && challenges.length > 0 ? this.renderRows() : <Loading />}
+      </List>
     );
   }
 }
