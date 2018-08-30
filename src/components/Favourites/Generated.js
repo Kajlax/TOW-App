@@ -7,7 +7,7 @@ export default class Generated extends React.PureComponent {
     return saved.map((row, i) => {
       if (i !== 0) {
         return (
-          <div key={1}>
+          <div key={row}>
             <Link to={`/savedworkout/${row}`}>{row}</Link>
           </div>
         );

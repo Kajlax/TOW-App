@@ -7,7 +7,7 @@ export default class Challenges extends React.PureComponent {
     return challenges.map((row, i) => {
       if (i !== 0) {
         return (
-          <div key={1}>
+          <div key={row}>
             <Link to={`/challenges/${row}`}>{row}</Link>
           </div>
         );

@@ -7,7 +7,7 @@ export default class Workouts extends React.PureComponent {
     return workouts.map((row, i) => {
       if (i !== 0) {
         return (
-          <div key={1}>
+          <div key={row}>
             <Link to={`/workouts/${row}`}>{row}</Link>
           </div>
         );
