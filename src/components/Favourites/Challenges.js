@@ -15,31 +15,20 @@ class Challenges extends React.Component {
 
   renderRows = () => {
     const { challenges } = this.props;
-    let favFromStorage = localStorage.getItem("challenges").split(",");
-    let favChalArray = favFromStorage.map(function(idNumber) {
+    return challenges.map(item => {
+      console.log(item);
       return (
-        <List divided relaxed celled key={idNumber}>
-          <List.Item>
-            <List.Icon
-              name="heart outline"
-              size="large"
-              verticalAlign="middle"
-            />
-            <List.Content>
-              <List.Header>
-                <Link to={`/challenges/${challenges[idNumber].id}`}>
-                  {challenges[idNumber].name}
-                </Link>
-              </List.Header>
-              <List.Description>
-                {challenges[idNumber].submitter}
-              </List.Description>
-            </List.Content>
-          </List.Item>
-        </List>
+        <List.Item key={item.id}>
+          <List.Icon name="heart outline" size="large" verticalAlign="middle" />
+          <List.Content>
+            <List.Header>
+              <Link to={`/challenges/${item.id}`}>{item.name}</Link>
+            </List.Header>
+            <List.Description>{item.submitter}</List.Description>
+          </List.Content>
+        </List.Item>
       );
     });
-    return <div>{favChalArray}</div>;
   };
 
   render() {

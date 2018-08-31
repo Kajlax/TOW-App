@@ -15,7 +15,7 @@ class Filters extends PureComponent {
         menuItem: "Workouts",
         render: () => [
           <Tab.Pane key={1}>
-            <Header as="h3" content="Favourite workouts" />
+            <Header as="h2" content="Favourite workouts" />
             <Workouts workouts={workouts} />
             <br />
           </Tab.Pane>
@@ -25,7 +25,7 @@ class Filters extends PureComponent {
         menuItem: "Challenges",
         render: () => [
           <Tab.Pane key={2}>
-            <Header as="h3" content="Favourite challenges" />
+            <Header as="h2" content="Favourite challenges" />
             <Challenges challenges={challenges} />
             <br />
           </Tab.Pane>
@@ -35,7 +35,7 @@ class Filters extends PureComponent {
         menuItem: "Generated",
         render: () => [
           <Tab.Pane key={3}>
-            <Header as="h3" content="Favourite generated workouts" />
+            <Header as="h2" content="Favourite generated workouts" />
             <Generated saved={saved} />
             <br />
           </Tab.Pane>
@@ -54,7 +54,6 @@ class Filters extends PureComponent {
           }}
           panes={panes}
         />
-        <br />
       </div>
     );
   }

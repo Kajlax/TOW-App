@@ -8,23 +8,19 @@ export default class Generated extends React.PureComponent {
     return saved.map((row, i) => {
       if (i !== 0) {
         return (
-          <div key={row}>
-            <List divided relaxed celled key={row}>
-              <List.Item key={row}>
-                <List.Icon
-                  name="heart outline"
-                  size="large"
-                  verticalAlign="middle"
-                />
-                <List.Content>
-                  <List.Header>
-                    <Link to={`/savedworkout/${row}`}>{row}</Link>
-                  </List.Header>
-                  <List.Description>Generated workout</List.Description>
-                </List.Content>
-              </List.Item>
-            </List>
-          </div>
+          <List.Item key={row}>
+            <List.Icon
+              name="heart outline"
+              size="large"
+              verticalAlign="middle"
+            />
+            <List.Content>
+              <List.Header>
+                <Link to={`/savedworkout/${row}`}>{row}</Link>
+              </List.Header>
+              <List.Description>Generated workout</List.Description>
+            </List.Content>
+          </List.Item>
         );
       }
       return null;
