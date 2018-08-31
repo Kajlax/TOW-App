@@ -9,6 +9,7 @@ class Filters extends PureComponent {
     const { saved } = this.props;
     const { challenges } = this.props;
     const { workouts } = this.props;
+    console.log("favouritefil vastaanottaa", challenges);
 
     const panes = [
       {
@@ -35,7 +36,7 @@ class Filters extends PureComponent {
         menuItem: "Generated",
         render: () => [
           <Tab.Pane key={3}>
-            <Header as="h2" content="Favourite generated workouts" />
+            <Header as="h2" content="Favourite generated" />
             <Generated saved={saved} />
             <br />
           </Tab.Pane>

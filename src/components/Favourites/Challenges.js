@@ -15,8 +15,8 @@ class Challenges extends React.Component {
 
   renderRows = () => {
     const { challenges } = this.props;
+    console.log("Challenges-sivun, renderRows", challenges);
     return challenges.map(item => {
-      console.log(item);
       return (
         <List.Item key={item.id}>
           <List.Icon name="heart outline" size="large" verticalAlign="middle" />
