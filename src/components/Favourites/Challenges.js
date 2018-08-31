@@ -14,20 +14,27 @@ class Challenges extends React.Component {
   }
 
   renderRows = () => {
-    const { challenges } = this.props;
-    console.log("Challenges-sivun, renderRows", challenges);
-    return challenges.map(item => {
-      return (
-        <List.Item key={item.id}>
-          <List.Icon name="heart outline" size="large" verticalAlign="middle" />
-          <List.Content>
-            <List.Header>
-              <Link to={`/challenges/${item.id}`}>{item.name}</Link>
-            </List.Header>
-            <List.Description>{item.submitter}</List.Description>
-          </List.Content>
-        </List.Item>
-      );
+    const { challenges, savedChallenges } = this.props;
+    return savedChallenges.map((row, i) => {
+      if (i !== 0) {
+        console.log("row:", row);
+        return (
+          <List.Item key={row}>
+            <List.Icon
+              name="heart outline"
+              size="large"
+              verticalAlign="middle"
+            />
+            <List.Content>
+              <List.Header>
+                <Link to={`/challenges/${row}`}>{challenges[i].name}</Link>
+              </List.Header>
+              <List.Description>{challenges[i].submitter}</List.Description>
+            </List.Content>
+          </List.Item>
+        );
+      }
+      return null;
     });
   };
 
