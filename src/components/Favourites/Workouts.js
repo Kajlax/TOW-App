@@ -16,12 +16,12 @@ class Workouts extends React.Component {
   renderRows = () => {
     const { workoutsets, savedWorkouts } = this.props;
     let savedModified = [];
-    console.log(workoutsets);
 
     savedWorkouts.map(i => {
       if (i !== 0) {
         savedModified.push(i);
       }
+      return savedModified;
     });
 
     return workoutsets.map(row => {
@@ -35,7 +35,7 @@ class Workouts extends React.Component {
             />
             <List.Content>
               <List.Header>
-                <Link to={`/challenges/${row.id}`}>{row.name}</Link>
+                <Link to={`/workouts/${row.id}`}>{row.name}</Link>
               </List.Header>
               <List.Description>{row.submitter}</List.Description>
             </List.Content>
@@ -47,10 +47,10 @@ class Workouts extends React.Component {
   };
 
   render() {
-    const { fetching, workouts } = this.props;
+    const { fetching, workoutsets } = this.props;
     return (
       <List divided relaxed celled>
-        {!fetching && workouts.length > 0 ? this.renderRows() : <Loading />}
+        {!fetching && workoutsets.length > 0 ? this.renderRows() : <Loading />}
       </List>
     );
   }

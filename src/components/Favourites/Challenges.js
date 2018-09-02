@@ -21,6 +21,7 @@ class Challenges extends React.Component {
       if (i !== 0) {
         savedModified.push(i);
       }
+      return savedModified;
     });
 
     return challenges.map(row => {
