@@ -11,7 +11,7 @@ const shuffle = (arr) => {
 
 const { Types, Creators } = createActions({
   updateFilters: ['value'],
-  fetchWorkouts: ['filters'],
+  fetchWorkouts: ['filters', 'difficulty'],
   fetchWorkoutsSuccess: ['result'],
   fetchWorkoutsError: ['error'],
 });
@@ -40,7 +40,7 @@ export const updateFilters = (state, { value }) => {
   }
 };
 
-export const fetchWorkouts = (state, { filters }) => {
+export const fetchWorkouts = (state, { filters, difficulty }) => {
   return produce(state, draft => {
       draft.fetching = true;
       draft.error = null;
