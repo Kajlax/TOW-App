@@ -15,11 +15,18 @@ class Challenges extends React.Component {
 
   renderRows = () => {
     const { challenges, savedChallenges } = this.props;
-    return savedChallenges.map((row, i) => {
+    let savedModified = [];
+
+    savedChallenges.map(i => {
       if (i !== 0) {
-        console.log("row:", row);
+        savedModified.push(i);
+      }
+    });
+
+    return challenges.map(row => {
+      if (savedModified.includes(row.id)) {
         return (
-          <List.Item key={row}>
+          <List.Item key={row.id}>
             <List.Icon
               name="heart outline"
               size="large"
@@ -27,9 +34,9 @@ class Challenges extends React.Component {
             />
             <List.Content>
               <List.Header>
-                <Link to={`/challenges/${row}`}>{challenges[i].name}</Link>
+                <Link to={`/challenges/${row.id}`}>{row.name}</Link>
               </List.Header>
-              <List.Description>{challenges[i].submitter}</List.Description>
+              <List.Description>{row.submitter}</List.Description>
             </List.Content>
           </List.Item>
         );

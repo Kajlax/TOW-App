@@ -9,7 +9,6 @@ class Filters extends PureComponent {
     const { saved } = this.props;
     const { challenges } = this.props;
     const { workouts } = this.props;
-    console.log("favouritefil vastaanottaa", challenges);
 
     const panes = [
       {
@@ -17,7 +16,7 @@ class Filters extends PureComponent {
         render: () => [
           <Tab.Pane key={1}>
             <Header as="h2" content="Favourite workouts" />
-            <Workouts workouts={workouts} />
+            <Workouts savedWorkouts={workouts} />
             <br />
           </Tab.Pane>
         ]
@@ -27,7 +26,7 @@ class Filters extends PureComponent {
         render: () => [
           <Tab.Pane key={2}>
             <Header as="h2" content="Favourite challenges" />
-            <Challenges challenges={challenges} />
+            <Challenges savedChallenges={challenges} />
             <br />
           </Tab.Pane>
         ]
