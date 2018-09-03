@@ -22,6 +22,7 @@ class Generate extends React.Component {
       filterIcon: "caret up",
       hideGeneratedWorkout: true,
       numberOfExercises: 5,
+      difficulty: 1,
       reps: fillArrayWithRandomNumbers(5)
     };
   }
@@ -42,8 +43,9 @@ class Generate extends React.Component {
 
   toggleGenerateWorkout = () => {
     const { getWorkouts, filters } = this.props;
-
-    getWorkouts(filters);
+    const { difficulty } = this.state;
+    
+    getWorkouts(filters.length > 0 ? filters : null, difficulty);
 
     this.setState({
       hideFilters: true,
@@ -71,6 +73,12 @@ class Generate extends React.Component {
       });
     }
   };
+
+  updateDifficulty = (difficulty) => {
+    this.setState({
+      difficulty
+    });
+  }
 
   render() {
     const {
@@ -112,6 +120,8 @@ class Generate extends React.Component {
               numberOfExercises={this.state.numberOfExercises}
               filters={filters}
               updateFilters={updateFilters}
+              difficulty={this.state.difficulty}
+              updateDifficulty={this.updateDifficulty}
             />
           ) : null}
         </CSSTransitionGroup>
@@ -153,7 +163,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   updateFilters: value => dispatch(WorkoutActions.updateFilters(value)),
-  getWorkouts: filters => dispatch(WorkoutActions.fetchWorkouts(filters)),
+  getWorkouts: (filters, difficulty) => dispatch(WorkoutActions.fetchWorkouts(filters, difficulty)),
   createSavedWorkout: data => dispatch(SaveWorkoutActions.createSavedWorkout(data)),
   resetCreated: () => dispatch(SaveWorkoutActions.resetSavedWorkout()),
 });
