@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { List } from "semantic-ui-react";
 import WorkoutsetActions from "../../redux/reducers/workoutsetRedux";
-import Loading from "../Loading";
 
 class Workouts extends React.Component {
   componentDidMount() {
@@ -47,10 +46,9 @@ class Workouts extends React.Component {
   };
 
   render() {
-    const { fetching, workoutsets } = this.props;
     return (
       <List divided relaxed celled>
-        {!fetching && workoutsets.length > 0 ? this.renderRows() : <Loading />}
+        {this.renderRows()}
       </List>
     );
   }

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { List } from "semantic-ui-react";
 import ChallengeActions from "../../redux/reducers/challengeRedux";
-import Loading from "../Loading";
 
 class Challenges extends React.Component {
   componentDidMount() {
@@ -47,10 +46,9 @@ class Challenges extends React.Component {
   };
 
   render() {
-    const { fetching, challenges } = this.props;
     return (
       <List divided relaxed celled>
-        {!fetching && challenges.length > 0 ? this.renderRows() : <Loading />}
+        {this.renderRows()}
       </List>
     );
   }
