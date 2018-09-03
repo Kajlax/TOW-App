@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { List } from "semantic-ui-react";
+import { Header, List } from "semantic-ui-react";
 import ChallengeActions from "../../redux/reducers/challengeRedux";
 
 class Challenges extends React.Component {
@@ -23,26 +23,30 @@ class Challenges extends React.Component {
       return savedModified;
     });
 
-    return challenges.map(row => {
-      if (savedModified.includes(row.id)) {
-        return (
-          <List.Item key={row.id}>
-            <List.Icon
-              name="heart outline"
-              size="large"
-              verticalAlign="middle"
-            />
-            <List.Content>
-              <List.Header>
-                <Link to={`/challenges/${row.id}`}>{row.name}</Link>
-              </List.Header>
-              <List.Description>{row.submitter}</List.Description>
-            </List.Content>
-          </List.Item>
-        );
-      }
-      return null;
-    });
+    if (savedModified.length > 0) {
+      return challenges.map(row => {
+        if (savedModified.includes(row.id)) {
+          return (
+            <List.Item key={row.id}>
+              <List.Icon
+                name="heart outline"
+                size="large"
+                verticalAlign="middle"
+              />
+              <List.Content>
+                <List.Header>
+                  <Link to={`/challenges/${row.id}`}>{row.name}</Link>
+                </List.Header>
+                <List.Description>{row.submitter}</List.Description>
+              </List.Content>
+            </List.Item>
+          );
+        }
+        return null;
+      });
+    } else {
+      return <Header as="h2" subheader="You haven't added any favourites" />;
+    }
   };
 
   render() {
