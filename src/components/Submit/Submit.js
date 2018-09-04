@@ -1,22 +1,10 @@
 import React from "react";
 import { connect } from 'react-redux';
 import Layout from "../Layout";
-import {
-  Button,
-  Form,
-  Segment,
-  Header,
-  Input,
-  Select,
-  TextArea
-} from "semantic-ui-react";
 import ChallengeActions from '../../redux/reducers/challengeRedux';
 import Loading from '../Loading';
-
-const typeOptions = [
-  { key: "challenge", text: "Challenge", value: "challenge" },
-  { key: "workout", text: "Workout", value: "workout" }
-];
+import ThankYou from "./ThankYou";
+import Form from './Form';
 
 class SubmitFrom extends React.PureComponent {
   constructor() {
@@ -27,7 +15,6 @@ class SubmitFrom extends React.PureComponent {
       submitType: "",
       submitDescription: "",
       formValid: false,
-      isSubmitted: false
     };
   }
 
@@ -52,7 +39,6 @@ class SubmitFrom extends React.PureComponent {
       submitter: submitter,
       submitType: submitType,
       submitDescription: submitDescription,
-      isSubmitted: true
     });
     const suggestData = {
       type: submitType,
@@ -66,12 +52,14 @@ class SubmitFrom extends React.PureComponent {
 
   resetForm = () => {
     this.setState({
-      isSubmitted: false,
       formValid: false,
       title: "",
       submitType: "",
-      submitDescription: ""
+      submitDescription: "",
+      submitter: "",
     });
+
+    this.props.resetFormRedux();
   };
 
   renderForm() {
@@ -80,90 +68,32 @@ class SubmitFrom extends React.PureComponent {
       submitter,
       submitType,
       submitDescription,
+      formValid,
     } = this.state;
     const { result, error } = this.props;
 
-    let form;
-
     if (!result) {
-      form = (
-        <React.Fragment>
-          <Header
-            as="h2"
-            content="Submit a challenge or workout"
-            textAlign="center"
-            color="teal"
-          />
-          {error}
-          <Form onSubmit={this.handleSubmit}>
-            <Form.Group widths="equal">
-              <Form.Field
-                control={Input}
-                label="Title"
-                placeholder="Title"
-                name="title"
-                value={title}
-                onChange={this.handleChange}
-              />
-              <Form.Field
-                control={Input}
-                label="Submitter"
-                placeholder="Submitter"
-                name="submitter"
-                value={submitter}
-                onChange={this.handleChange}
-              />
-              <Form.Field
-                control={Select}
-                label="Type"
-                options={typeOptions}
-                placeholder="Type of submit"
-                name="submitType"
-                value={submitType}
-                onChange={this.handleChange}
-              />
-            </Form.Group>
-            <Form.Field
-              control={TextArea}
-              label="Description"
-              placeholder="Describe the challenge/workout. Exercises, reps, rounds and a short description..."
-              name="submitDescription"
-              value={submitDescription}
-              onChange={this.handleChange}
-            />
-            <Form.Button
-              color="teal"
-              content="Submit"
-              disabled={!this.state.formValid}
-            />
-          </Form>
-        </React.Fragment>
+      return(
+        <Form
+          error={error}
+          title={title}
+          submitter={submitter}
+          submitType={submitType}
+          submitDescription={submitDescription}
+          handleSubmit={this.handleSubmit}
+          handleChange={this.handleChange}
+          formValid={formValid}
+        />
       );
     } else {
-      form = (
-        <React.Fragment>
-          <Header as="h2" content="Thank you" textAlign="center" color="teal" />
-          <Segment basic textAlign="center">
-            <Header
-              as="h2"
-              subheader="Submit sent successfully. Your submit will go through a moderating process before publishing."
-            />
-            <br />
-            <Button
-              onClick={() => this.resetForm()}
-              content="Submit new"
-              color="teal"
-            />
-          </Segment>
-        </React.Fragment>
+      return(
+        <ThankYou resetForm={this.resetForm} />
       );
     }
-    return form;
   }
 
   render() {
     const { sending } = this.props;
-    console.log(sending);
     return(<Layout {...this.props}>
             { sending ? 
               <Loading />
@@ -179,6 +109,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   sendSuggest: (data) => dispatch(ChallengeActions.suggestRequest(data)),
+  resetFormRedux: () => dispatch(ChallengeActions.suggestFormReset()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubmitFrom);
