@@ -9,7 +9,7 @@ import {
   Rating,
   Segment
 } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 
 export default class WorkoutComponent extends React.PureComponent {
   renderChallengeRow = workouts => {
@@ -27,13 +27,27 @@ export default class WorkoutComponent extends React.PureComponent {
   };
 
   renderHeartIcon = () => {
+    const { name } = this.props.workout;
+    let savedStorage = localStorage.saved.split(",");
+    let cleanedStorage = savedStorage.filter(function(e) {
+      return e !== name;
+    });
+
     return (
-      <Rating
-        key={1}
-        icon="heart"
-        defaultRating={1}
-        maxRating={1}
-        size="large"
+      <Route
+        render={({ history }) => (
+          <Rating
+            key={1}
+            icon="heart"
+            defaultRating={1}
+            maxRating={1}
+            size="large"
+            onClick={() => {
+              localStorage.setItem("saved", JSON.stringify(cleanedStorage));
+              history.push("/favourites");
+            }}
+          />
+        )}
       />
     );
   };
@@ -41,7 +55,6 @@ export default class WorkoutComponent extends React.PureComponent {
   render() {
     const { name, workouts } = this.props.workout;
     const url = `/savedworkout/${name}`;
-
     return (
       <Grid.Column>
         <Segment color="teal">
