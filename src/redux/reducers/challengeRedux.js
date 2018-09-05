@@ -8,7 +8,7 @@ const { Types, Creators } = createActions({
   suggestRequest: ['data'],
   suggestRequestSuccess: ['result'],
   suggestRequestError: ['error'],
-
+  suggestFormReset: null,
 });
 
 export const ChallengeTypes = Types;
@@ -65,6 +65,14 @@ export const suggestRequestError = (state, { error }) => {
   });
 }
 
+export const suggestFormReset = state => {
+  return produce(state, draft => {
+    draft.sending = false;
+    draft.error = null;
+    draft.result = null;
+  });
+}
+
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_CHALLENGES]: fetchChallenges,
@@ -73,4 +81,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SUGGEST_REQUEST]: suggestRequest,
   [Types.SUGGEST_REQUEST_SUCCESS]: suggestRequestSuccess,
   [Types.SUGGEST_REQUEST_ERROR]: suggestRequestError,
+  [Types.SUGGEST_FORM_RESET]: suggestFormReset,
 });
