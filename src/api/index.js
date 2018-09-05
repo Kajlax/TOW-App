@@ -12,7 +12,7 @@ const create = () => {
 
 
   const getWorkouts = () => api.get('/workout/');
-  const getFilteredWorkouts = (tags) => api.post('/workout/filter', { tags });
+  const getFilteredWorkouts = (tags, difficulty) => api.post('/workout/filter', { tags, difficulty });
   const getChallenges = () => api.get('/challenge/');
   const getWorkoutsets = () => api.get('/workoutset/');
   const voteUp = (id) => api.post(`/challenge/${id}/voteup`);

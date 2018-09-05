@@ -4,11 +4,7 @@ import WorkoutActions from '../../redux/reducers/workoutRedux';
 export function* getWorkouts(api, action) {
   let response = null;
   
-  if(action.filters.length === 0) {
-    response = yield call(api.getWorkouts);
-  } else {
-    response = yield call(api.getFilteredWorkouts, action.filters);
-  }
+  response = yield call(api.getFilteredWorkouts, action.filters, action.difficulty);
 
   if(response.ok) {
     yield put(WorkoutActions.fetchWorkoutsSuccess(response.data));

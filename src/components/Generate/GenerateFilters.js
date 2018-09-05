@@ -30,6 +30,16 @@ class Filters extends PureComponent {
     );
   };
 
+  renderDifficulty = (text, value) => {
+    return (
+      <Button
+        active={this.props.difficulty === value }
+        onClick={() => this.props.updateDifficulty(value)}
+        content={text}
+      />
+    );
+  };
+
   render() {
     const { handleDropdownChange } = this.props;
     let { numberOfExercises } = this.props;
@@ -52,9 +62,9 @@ class Filters extends PureComponent {
         </Button.Group>
         <br /> <br />
         <Button.Group widths="3" size="small">
-          {this.renderButton("Beginner")}
-          {this.renderButton("Intermediate")}
-          {this.renderButton("Advanced")}
+          {this.renderDifficulty("Beginner", 1)}
+          {this.renderDifficulty("Intermediate", 2)}
+          {this.renderDifficulty("Advanced", 3)}
         </Button.Group>
         <br />
         <br />
