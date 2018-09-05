@@ -9,6 +9,7 @@ import Generate from "./components/Generate/Generate";
 import Submit from "./components/Submit/Submit";
 import About from "./components/About";
 import SavedWorkout from "./components/Saved/SavedWorkout";
+import withTracker from './withTracker';
 
 export const routes = [
   {
@@ -68,7 +69,7 @@ export default class Routes extends React.PureComponent {
         <Route
           key={route.Path}
           path={route.Path}
-          component={route.component}
+          component={withTracker(route.component, {})}
           exact
         />
       );
