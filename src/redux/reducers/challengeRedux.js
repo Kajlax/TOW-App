@@ -1,14 +1,15 @@
-import { createReducer, createActions } from 'reduxsauce';
-import produce from 'immer';
+import { createReducer, createActions } from "reduxsauce";
+import produce from "immer";
 
-const { Types, Creators } = createActions({
+const { Types, Creators } = createActions({
   fetchChallenges: null,
-  fetchChallengesSuccess: ['result'],
-  fetchChallengesError: ['error'],
-  suggestRequest: ['data'],
-  suggestRequestSuccess: ['result'],
-  suggestRequestError: ['error'],
-  updateScore: ['id', 'score'],
+  fetchChallengesSuccess: ["result"],
+  fetchChallengesError: ["error"],
+  suggestRequest: ["data"],
+  suggestRequestSuccess: ["result"],
+  suggestRequestError: ["error"],
+  updateScore: ["id", "score"],
+  suggestFormReset: null
 });
 
 export const ChallengeTypes = Types;
@@ -19,36 +20,36 @@ export const INITIAL_STATE = {
   fetching: false,
   sending: false,
   result: null,
-  error: null,
-}
+  error: null
+};
 
-export const fetchChallenges = (state) => {
+export const fetchChallenges = state => {
   return produce(state, draft => {
     draft.fetching = true;
     draft.error = null;
   });
-}
+};
 
 export const fetchChallengesSuccess = (state, { result }) => {
   return produce(state, draft => {
     draft.fetching = false;
     draft.challenges = result;
   });
-}
+};
 
 export const fetchChallengesError = (state, { error }) => {
   return produce(state, draft => {
     draft.fetching = false;
     draft.error = error;
   });
-}
+};
 
 export const suggestRequest = (state, { data }) => {
   return produce(state, draft => {
     draft.sending = true;
     draft.error = null;
   });
-}
+};
 
 export const suggestRequestSuccess = (state, { result }) => {
   return produce(state, draft => {
@@ -56,22 +57,29 @@ export const suggestRequestSuccess = (state, { result }) => {
     draft.error = null;
     draft.result = result;
   });
-}
+};
 
 export const suggestRequestError = (state, { error }) => {
   return produce(state, draft => {
     draft.sending = false;
     draft.error = error;
   });
-}
+};
 
 export const updateScore = (state, { id, score }) => {
   const index = state.challenges.findIndex(c => c.id === id);
-
   return produce(state, draft => {
     draft.challenges[index].score = score;
   });
-}
+};
+
+export const suggestFormReset = state => {
+  return produce(state, draft => {
+    draft.sending = false;
+    draft.error = null;
+    draft.result = null;
+  });
+};
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_CHALLENGES]: fetchChallenges,
@@ -81,4 +89,5 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SUGGEST_REQUEST_SUCCESS]: suggestRequestSuccess,
   [Types.SUGGEST_REQUEST_ERROR]: suggestRequestError,
   [Types.UPDATE_SCORE]: updateScore,
+  [Types.SUGGEST_FORM_RESET]: suggestFormReset
 });
