@@ -7,6 +7,7 @@ import Layout from "../Layout";
 import SearchActions from "../../redux/reducers/searchRedux";
 import ChallengeActions from "../../redux/reducers/challengeRedux";
 import VoteActions from "../../redux/reducers/voteRedux";
+import FavouriteActions from "../../redux/reducers/favouriteRedux";
 
 class Challenges extends React.PureComponent {
   componentDidMount() {
@@ -22,7 +23,14 @@ class Challenges extends React.PureComponent {
   };
 
   renderChallenges = () => {
-    let { searchQuery, challenges, updateVotes, myVotes } = this.props;
+    let {
+      searchQuery,
+      challenges,
+      updateVotes,
+      myVotes,
+      updateFavourites,
+      myFavourites
+    } = this.props;
     searchQuery = searchQuery.toUpperCase();
 
     if (searchQuery !== "") {
@@ -53,6 +61,8 @@ class Challenges extends React.PureComponent {
           key={item.id}
           vote={updateVotes}
           myVotes={myVotes}
+          favourite={updateFavourites}
+          myFavourites={myFavourites}
         />
       );
     });
@@ -86,13 +96,15 @@ const mapStateToProps = state => ({
   challenges: state.challenge.challenges,
   fetching: state.challenge.fetching,
   error: state.challenge.error,
-  myVotes: state.vote.myVotes
+  myVotes: state.vote.myVotes,
+  myFavourites: state.favourite.challenges
 });
 
 const mapDispatchToProps = dispatch => ({
   updateSearchQuery: query => dispatch(SearchActions.updateQuery(query)),
   getChallenges: () => dispatch(ChallengeActions.fetchChallenges()),
-  updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode))
+  updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode)),
+  updateFavourites: (id, defaultRating) => dispatch(FavouriteActions.updateChallenges(id, defaultRating))
 });
 
 export default connect(

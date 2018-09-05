@@ -4,10 +4,10 @@ import {
   Container,
   Header,
   Label,
+  Rating,
   Segment,
   Table
 } from "semantic-ui-react";
-import { Link } from "react-router-dom";
 
 class GeneratedWorkout extends React.PureComponent {
   decreaseReps = index => {
@@ -50,38 +50,21 @@ class GeneratedWorkout extends React.PureComponent {
 
     if (saving) {
       return (
-        <Button
-          loading
-          icon="save outline"
-          content="Save"
-          color="teal"
-          size="small"
-          compact
-        />
+        <Rating icon="heart" defaultRating={1} maxRating={1} size="large" />
       );
     }
     if (workoutname) {
-      const route = `/savedworkout/${workoutname}`;
       return (
-        <Link to={route}>
-          <Button
-            content="Go to workout"
-            icon="check"
-            labelPosition="left"
-            color="teal"
-            size="small"
-            compact
-          />
-        </Link>
+        <Rating icon="heart" defaultRating={1} maxRating={1} size="large" />
       );
     }
 
     return (
-      <Button
-        content="Save"
-        color="teal"
-        size="small"
-        compact
+      <Rating
+        icon="heart"
+        defaultRating={0}
+        maxRating={1}
+        size="large"
         onClick={() => saveWorkout({ workouts, reps })}
       />
     );
@@ -95,7 +78,7 @@ class GeneratedWorkout extends React.PureComponent {
           <Table.Body>{this.renderRows()}</Table.Body>
         </Table>
         <br /> <br />
-        <Container textAlign="right">
+        <Container textAlign="center">
           <Label attached="bottom">{this.renderSaveButton()}</Label>
         </Container>
       </Segment>

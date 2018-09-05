@@ -5,22 +5,36 @@ import {
   Header,
   Icon,
   Label,
+  Rating,
   Segment,
   Table,
   Progress
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
+const heartStyle = {
+  marginRight: "30px"
+};
+
 const checkVoteStatus = (myVotes, cId) => {
   return myVotes.find(id => id === cId);
+};
+
+const checkFavouriteStatus = (myFavourites, cId) => {
+  return myFavourites.find(id => id === cId);
 };
 
 export default class WorkoutsetComponent extends React.PureComponent {
   handleVote = () => {
     const { vote, workoutset, myVotes } = this.props;
     const idFound = checkVoteStatus(myVotes, workoutset.id);
-
     vote(workoutset.id, idFound ? "down" : "up");
+  };
+
+  handleFavourite = () => {
+    const { favourite, workoutset, myFavourites } = this.props;
+    const idFound = checkFavouriteStatus(myFavourites, workoutset.id);
+    favourite(workoutset.id, idFound ? 1 : 0);
   };
 
   renderWorkoutSetRow = workoutsets => {
@@ -43,11 +57,45 @@ export default class WorkoutsetComponent extends React.PureComponent {
     });
   };
 
+  renderHeartIcon = () => {
+    const { workoutset, myFavourites } = this.props;
+    const idFound = checkFavouriteStatus(myFavourites, workoutset.id);
+    let returnable = null;
+
+    if (idFound) {
+      returnable = [
+        <Rating
+          key={1}
+          icon="heart"
+          defaultRating={1}
+          maxRating={1}
+          size="large"
+          style={heartStyle}
+          onClick={this.handleFavourite}
+        />
+      ];
+    } else {
+      returnable = [
+        <Rating
+          key={2}
+          icon="heart"
+          defaultRating={0}
+          maxRating={1}
+          size="large"
+          style={heartStyle}
+          onClick={this.handleFavourite}
+        />
+      ];
+    }
+
+    return returnable;
+  };
+
   renderVoteIcons = () => {
     const { workoutset, myVotes } = this.props;
-
     const idFound = checkVoteStatus(myVotes, workoutset.id);
     let returnable = null;
+
     if (idFound) {
       returnable = [
         <Icon key={1} color="black" disabled name="arrow up" />,
@@ -114,6 +162,7 @@ export default class WorkoutsetComponent extends React.PureComponent {
           <br />
           <Container textAlign="center">
             <Label attached="bottom">
+              {this.renderHeartIcon()}
               {this.renderVoteIcons()}
               {score}
             </Label>

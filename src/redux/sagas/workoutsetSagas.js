@@ -10,7 +10,7 @@ export function* getWorkoutsets(api, action) {
     let error = {
       error: true,
     };
-    if(response.data.message) {
+    if(response.data && response.data.message) {
       error.message = response.data.message;
     }
 
