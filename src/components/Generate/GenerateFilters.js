@@ -11,20 +11,21 @@ const dropdownvalues = [
 ];
 
 class Filters extends PureComponent {
-  toggleButton = value => {
-    this.props.updateFilters(value);
-  };
-
-  checkActive = value => {
-    const { filters } = this.props;
-    return filters.includes(value);
-  };
-
-  renderButton = text => {
+  renderWorkoutType = (text, value) => {
     return (
       <Button
-        active={this.checkActive(text)}
-        onClick={() => this.toggleButton(text)}
+        active={this.props.workoutType === value}
+        onClick={() => this.props.updateWorkoutType(value)}
+        content={text}
+      />
+    );
+  };
+
+  renderBodypart = (text, value) => {
+    return (
+      <Button
+        active={this.props.bodypart === value}
+        onClick={() => this.props.updateBodypart(value)}
         content={text}
       />
     );
@@ -33,7 +34,7 @@ class Filters extends PureComponent {
   renderDifficulty = (text, value) => {
     return (
       <Button
-        active={this.props.difficulty === value }
+        active={this.props.difficulty === value}
         onClick={() => this.props.updateDifficulty(value)}
         content={text}
       />
@@ -49,16 +50,16 @@ class Filters extends PureComponent {
       <div>
         <br />
         <Button.Group widths="3" size="small">
-          {this.renderButton("Calisthenics")}
-          {this.renderButton("Gym")}
-          {this.renderButton("Mixed")}
+          {this.renderWorkoutType("Calisthenics", "Calisthenics")}
+          {this.renderWorkoutType("Gym", "Gym")}
+          {this.renderWorkoutType("Mixed", "Mixed")}
         </Button.Group>
         <br /> <br />
         <Button.Group widths="4" size="small">
-          {this.renderButton("Upper body")}
-          {this.renderButton("Lower body")}
-          {this.renderButton("Full body")}
-          {this.renderButton("Core")}
+          {this.renderBodypart("Upper body", "Upper body")}
+          {this.renderBodypart("Lower body", "Lower body")}
+          {this.renderBodypart("Full body", "Full body")}
+          {this.renderBodypart("Core", "Core")}
         </Button.Group>
         <br /> <br />
         <Button.Group widths="3" size="small">
