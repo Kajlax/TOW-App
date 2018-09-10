@@ -31,6 +31,8 @@ class Generate extends React.Component {
 
   componentDidMount() {
     this.props.resetCreated();
+    this.props.updateFilters(this.state.workoutType);
+    this.props.updateFilters(this.state.bodypart);
   }
 
   toggleFilters = () => {
@@ -78,6 +80,7 @@ class Generate extends React.Component {
   };
 
   updateWorkoutType = workoutType => {
+    this.props.updateFilters(this.state.workoutType);
     this.props.updateFilters(workoutType);
     this.setState({
       workoutType
@@ -85,6 +88,7 @@ class Generate extends React.Component {
   };
 
   updateBodypart = bodypart => {
+    this.props.updateFilters(this.state.bodypart);
     this.props.updateFilters(bodypart);
     this.setState({
       bodypart
