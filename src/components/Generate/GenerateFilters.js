@@ -15,7 +15,7 @@ class Filters extends PureComponent {
     return (
       <Button
         active={this.props.workoutType === value}
-        onClick={() => this.props.updateFilters(value)}
+        onClick={() => this.props.updateWorkoutType(value)}
         content={text}
       />
     );
@@ -25,7 +25,7 @@ class Filters extends PureComponent {
     return (
       <Button
         active={this.props.bodypart === value}
-        onClick={() => this.props.updateFilters(value)}
+        onClick={() => this.props.updateBodypart(value)}
         content={text}
       />
     );
