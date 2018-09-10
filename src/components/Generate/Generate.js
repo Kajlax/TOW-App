@@ -23,10 +23,12 @@ class Generate extends React.Component {
       hideGeneratedWorkout: true,
       numberOfExercises: 5,
       difficulty: 1,
+      workoutType: "Calisthenics",
+      bodypart: "Upper body",
       reps: fillArrayWithRandomNumbers(5)
     };
   }
-  
+
   componentDidMount() {
     this.props.resetCreated();
   }
@@ -44,7 +46,7 @@ class Generate extends React.Component {
   toggleGenerateWorkout = () => {
     const { getWorkouts, filters } = this.props;
     const { difficulty } = this.state;
-    
+
     getWorkouts(filters.length > 0 ? filters : null, difficulty);
 
     this.setState({
@@ -74,11 +76,11 @@ class Generate extends React.Component {
     }
   };
 
-  updateDifficulty = (difficulty) => {
+  updateDifficulty = difficulty => {
     this.setState({
       difficulty
     });
-  }
+  };
 
   render() {
     const {
@@ -88,7 +90,15 @@ class Generate extends React.Component {
       numberOfExercises,
       reps
     } = this.state;
-    let { fetching, workouts, filters, updateFilters, createSavedWorkout, saving, newWorkout } = this.props;
+    let {
+      fetching,
+      workouts,
+      filters,
+      updateFilters,
+      createSavedWorkout,
+      saving,
+      newWorkout
+    } = this.props;
 
     workouts = workouts.slice(0, numberOfExercises);
 
@@ -158,14 +168,16 @@ const mapStateToProps = state => ({
   filters: state.workout.filters,
   fetching: state.workout.fetching,
   saving: state.savedworkout.saving,
-  newWorkout: state.savedworkout.newWorkout,
+  newWorkout: state.savedworkout.newWorkout
 });
 
 const mapDispatchToProps = dispatch => ({
   updateFilters: value => dispatch(WorkoutActions.updateFilters(value)),
-  getWorkouts: (filters, difficulty) => dispatch(WorkoutActions.fetchWorkouts(filters, difficulty)),
-  createSavedWorkout: data => dispatch(SaveWorkoutActions.createSavedWorkout(data)),
-  resetCreated: () => dispatch(SaveWorkoutActions.resetSavedWorkout()),
+  getWorkouts: (filters, difficulty) =>
+    dispatch(WorkoutActions.fetchWorkouts(filters, difficulty)),
+  createSavedWorkout: data =>
+    dispatch(SaveWorkoutActions.createSavedWorkout(data)),
+  resetCreated: () => dispatch(SaveWorkoutActions.resetSavedWorkout())
 });
 
 export default connect(
