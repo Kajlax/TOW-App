@@ -78,14 +78,14 @@ class Generate extends React.Component {
   };
 
   updateWorkoutType = workoutType => {
-    this.props.updateFilters(this.state.workoutType);
+    this.props.updateFilters(workoutType);
     this.setState({
       workoutType
     });
   };
 
   updateBodypart = bodypart => {
-    this.props.updateFilters(this.state.bodypart);
+    this.props.updateFilters(bodypart);
     this.setState({
       bodypart
     });
