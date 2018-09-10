@@ -45,6 +45,7 @@ class Generate extends React.Component {
 
   toggleGenerateWorkout = () => {
     const { getWorkouts, filters } = this.props;
+    console.log(filters);
     const { difficulty } = this.state;
 
     getWorkouts(filters.length > 0 ? filters : null, difficulty);
@@ -80,12 +81,14 @@ class Generate extends React.Component {
     this.setState({
       workoutType
     });
+    this.props.updateFilters(workoutType);
   };
 
   updateBodypart = bodypart => {
     this.setState({
       bodypart
     });
+    this.props.updateFilters(bodypart);
   };
 
   updateDifficulty = difficulty => {
