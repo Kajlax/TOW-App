@@ -143,7 +143,9 @@ class Generate extends React.Component {
               filters={filters}
               updateFilters={updateFilters}
               workoutType={this.state.workoutType}
+              updateWorkoutType={this.updateWorkoutType}
               bodypart={this.state.bodypart}
+              updateBodypart={this.updateBodypart}
               difficulty={this.state.difficulty}
               updateDifficulty={this.updateDifficulty}
             />
