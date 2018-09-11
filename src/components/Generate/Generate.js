@@ -22,7 +22,7 @@ class Generate extends React.Component {
       filterIcon: "caret up",
       hideGeneratedWorkout: true,
       numberOfExercises: 5,
-      difficulty: 1,
+      difficulty: 2,
       workoutType: "Calisthenics",
       bodypart: "Upper body",
       reps: fillArrayWithRandomNumbers(5)
@@ -47,7 +47,6 @@ class Generate extends React.Component {
 
   toggleGenerateWorkout = () => {
     const { getWorkouts, filters } = this.props;
-    console.log(filters);
     const { difficulty } = this.state;
 
     getWorkouts(filters.length > 0 ? filters : null, difficulty);
