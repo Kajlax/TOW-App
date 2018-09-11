@@ -51,7 +51,7 @@ export default class WorkoutsetComponent extends React.PureComponent {
       return (
         <Table.Row key={item.id}>
           <Table.Cell width={9}>{item.name}</Table.Cell>
-          <Table.Cell width={7}>{calculatedReps}</Table.Cell>
+          <Table.Cell width={7}>{ item.rounds !== 1 ? `${item.rounds} x ` : null } {calculatedReps}</Table.Cell>
         </Table.Row>
       );
     });
