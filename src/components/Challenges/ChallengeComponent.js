@@ -46,6 +46,7 @@ export default class ChallengeComponent extends React.PureComponent {
     return challenges.map(item => {
       let calculatedReps = item.reps * difficulty;
       calculatedReps = Math.floor(calculatedReps);
+      calculatedReps = calculatedReps < 1 ? 1 : calculatedReps;
 
       return (
         <Table.Row key={item.id}>
