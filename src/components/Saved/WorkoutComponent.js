@@ -26,13 +26,17 @@ export default class WorkoutComponent extends React.PureComponent {
     });
   };
 
-  renderHeartIcon = () => {
+  handleRemove = () => {
     const { name } = this.props.workout;
     let savedStorage = localStorage.saved.split(",");
     let cleanedStorage = savedStorage.filter(function(e) {
       return e !== name;
     });
+    localStorage.setItem("saved", cleanedStorage.toString());
+    // history.push("/favourites")
+  };
 
+  renderHeartIcon = () => {
     return (
       <Route
         render={({ history }) => (
@@ -42,10 +46,7 @@ export default class WorkoutComponent extends React.PureComponent {
             defaultRating={1}
             maxRating={1}
             size="large"
-            onClick={() => {
-              localStorage.setItem("saved", JSON.stringify(cleanedStorage));
-              history.push("/favourites");
-            }}
+            onClick={this.handleRemove}
           />
         )}
       />
