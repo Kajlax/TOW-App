@@ -28,12 +28,13 @@ export default class WorkoutComponent extends React.PureComponent {
 
   handleRemoveFavourite = history => {
     const { name } = this.props.workout;
-    let savedStorage = localStorage.saved.split(",");
-    let cleanedStorage = savedStorage.filter(function(e) {
-      return e !== name;
-    });
-    let saved = cleanedStorage.toString();
-    localStorage.setItem("saved", saved);
+    let savedStorage = localStorage.saved
+      .split(",")
+      .filter(function(e) {
+        return e !== name;
+      })
+      .toString();
+    localStorage.setItem("saved", savedStorage);
     history.push("/favourites");
   };
 
