@@ -9,9 +9,9 @@ import {
   Rating,
   Segment
 } from "semantic-ui-react";
-import { Link, Route } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
-export default class WorkoutComponent extends React.PureComponent {
+class WorkoutComponent extends React.PureComponent {
   renderChallengeRow = workouts => {
     let { reps } = this.props.workout;
     reps = reps.split(",");
@@ -26,29 +26,25 @@ export default class WorkoutComponent extends React.PureComponent {
     });
   };
 
-  handleRemove = () => {
+  handleRemoveFavourite = () => {
     const { name } = this.props.workout;
     let savedStorage = localStorage.saved.split(",");
     let cleanedStorage = savedStorage.filter(function(e) {
       return e !== name;
     });
     localStorage.setItem("saved", cleanedStorage.toString());
-    // history.push("/favourites")
+    this.props.history.push("/favourites");
   };
 
   renderHeartIcon = () => {
     return (
-      <Route
-        render={({ history }) => (
-          <Rating
-            key={1}
-            icon="heart"
-            defaultRating={1}
-            maxRating={1}
-            size="large"
-            onClick={this.handleRemove}
-          />
-        )}
+      <Rating
+        key={1}
+        icon="heart"
+        defaultRating={1}
+        maxRating={1}
+        size="large"
+        onClick={this.handleRemoveFavourite}
       />
     );
   };
@@ -77,3 +73,5 @@ export default class WorkoutComponent extends React.PureComponent {
     );
   }
 }
+
+export default withRouter(WorkoutComponent);
