@@ -9,9 +9,9 @@ import {
   Rating,
   Segment
 } from "semantic-ui-react";
-import { Link, withRouter } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 
-class WorkoutComponent extends React.PureComponent {
+export default class WorkoutComponent extends React.PureComponent {
   renderChallengeRow = workouts => {
     let { reps } = this.props.workout;
     reps = reps.split(",");
@@ -26,25 +26,30 @@ class WorkoutComponent extends React.PureComponent {
     });
   };
 
-  handleRemoveFavourite = () => {
+  handleRemoveFavourite = history => {
     const { name } = this.props.workout;
     let savedStorage = localStorage.saved.split(",");
     let cleanedStorage = savedStorage.filter(function(e) {
       return e !== name;
     });
-    localStorage.setItem("saved", cleanedStorage.toString());
-    this.props.history.push("/favourites");
+    let saved = cleanedStorage.toString();
+    localStorage.setItem("saved", saved);
+    history.push("/favourites");
   };
 
   renderHeartIcon = () => {
     return (
-      <Rating
-        key={1}
-        icon="heart"
-        defaultRating={1}
-        maxRating={1}
-        size="large"
-        onClick={this.handleRemoveFavourite}
+      <Route
+        render={({ history }) => (
+          <Rating
+            key={1}
+            icon="heart"
+            defaultRating={1}
+            maxRating={1}
+            size="large"
+            onClick={() => this.handleRemoveFavourite(history)}
+          />
+        )}
       />
     );
   };
@@ -73,5 +78,3 @@ class WorkoutComponent extends React.PureComponent {
     );
   }
 }
-
-export default withRouter(WorkoutComponent);
