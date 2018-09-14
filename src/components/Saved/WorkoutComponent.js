@@ -28,15 +28,21 @@ class WorkoutComponent extends React.PureComponent {
     });
   };
 
-  handleRemoveFavourite = history => {
+  handleFavourite = history => {
     const { name } = this.props.workout;
-    let saved = localStorage.saved
-      .split(",")
-      .filter(function(e) {
-        return e !== name;
-      })
-      .toString();
-    localStorage.setItem("saved", saved);
+    let saved = localStorage.saved.split(",");
+
+    if (saved.includes(name)) {
+      let filtered = saved
+        .filter(function(e) {
+          return e !== name;
+        })
+        .toString();
+      localStorage.setItem("saved", filtered);
+    } else {
+      saved.push(name);
+      localStorage.setItem("saved", saved);
+    }
     history.push("/favourites");
   };
 
@@ -50,7 +56,7 @@ class WorkoutComponent extends React.PureComponent {
             defaultRating={1}
             maxRating={1}
             size="large"
-            onClick={() => this.handleRemoveFavourite(history)}
+            onClick={() => this.handleFavourite(history)}
           />
         )}
       />
