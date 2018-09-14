@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import FavouriteActions from "../../redux/reducers/favouriteRedux";
 import {
   Container,
   Grid,
@@ -11,7 +13,7 @@ import {
 } from "semantic-ui-react";
 import { Link, Route } from "react-router-dom";
 
-export default class WorkoutComponent extends React.PureComponent {
+class WorkoutComponent extends React.PureComponent {
   renderChallengeRow = workouts => {
     let { reps } = this.props.workout;
     reps = reps.split(",");
@@ -28,13 +30,13 @@ export default class WorkoutComponent extends React.PureComponent {
 
   handleRemoveFavourite = history => {
     const { name } = this.props.workout;
-    let savedStorage = localStorage.saved
+    let saved = localStorage.saved
       .split(",")
       .filter(function(e) {
         return e !== name;
       })
       .toString();
-    localStorage.setItem("saved", savedStorage);
+    localStorage.setItem("saved", saved);
     history.push("/favourites");
   };
 
@@ -79,3 +81,16 @@ export default class WorkoutComponent extends React.PureComponent {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  saved: state.favourite.saved
+});
+
+const mapDispatchToProps = dispatch => ({
+  updateFavourites: name => dispatch(FavouriteActions.updateSaved(name))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WorkoutComponent);
