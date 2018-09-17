@@ -46,13 +46,15 @@ class Generate extends React.Component {
   };
 
   toggleGenerateWorkout = () => {
-    const { getWorkouts, filters } = this.props;
+    const { getWorkouts, filters, filterIcon } = this.props;
     const { difficulty } = this.state;
+    const icon = filterIcon === "caret down" ? "caret up" : "caret down";
 
     getWorkouts(filters.length > 0 ? filters : null, difficulty);
 
     this.setState({
       hideFilters: true,
+      filterIcon: icon,
       hideGeneratedWorkout: false,
       loading: false,
       reps: fillArrayWithRandomNumbers(this.state.numberOfExercises)
