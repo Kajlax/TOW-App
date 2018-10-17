@@ -32,3 +32,7 @@
 
 - The user can submit a workout through the submit form.
 - Submits will go through a approval process and then published.
+
+### Google Analytics
+
+- Statistics about usage via Google Analytics
