@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import FavouriteActions from "../../redux/reducers/favouriteRedux";
 import {
   Container,
   Grid,
@@ -9,9 +11,9 @@ import {
   Rating,
   Segment
 } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 
-export default class WorkoutComponent extends React.PureComponent {
+class WorkoutComponent extends React.PureComponent {
   renderChallengeRow = workouts => {
     let { reps } = this.props.workout;
     reps = reps.split(",");
@@ -26,14 +28,37 @@ export default class WorkoutComponent extends React.PureComponent {
     });
   };
 
+  handleFavourite = history => {
+    const { name } = this.props.workout;
+    let saved = localStorage.saved.split(",");
+
+    if (saved.includes(name)) {
+      let filtered = saved
+        .filter(function(e) {
+          return e !== name;
+        })
+        .toString();
+      localStorage.setItem("saved", filtered);
+    } else {
+      saved.push(name);
+      localStorage.setItem("saved", saved);
+    }
+    history.push("/favourites");
+  };
+
   renderHeartIcon = () => {
     return (
-      <Rating
-        key={1}
-        icon="heart"
-        defaultRating={1}
-        maxRating={1}
-        size="large"
+      <Route
+        render={({ history }) => (
+          <Rating
+            key={1}
+            icon="heart"
+            defaultRating={1}
+            maxRating={1}
+            size="large"
+            onClick={() => this.handleFavourite(history)}
+          />
+        )}
       />
     );
   };
@@ -41,7 +66,6 @@ export default class WorkoutComponent extends React.PureComponent {
   render() {
     const { name, workouts } = this.props.workout;
     const url = `/savedworkout/${name}`;
-
     return (
       <Grid.Column>
         <Segment color="teal">
@@ -63,3 +87,16 @@ export default class WorkoutComponent extends React.PureComponent {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  saved: state.favourite.saved
+});
+
+const mapDispatchToProps = dispatch => ({
+  updateFavourites: name => dispatch(FavouriteActions.updateSaved(name))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WorkoutComponent);
