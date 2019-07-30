@@ -1,19 +1,9 @@
 import React from "react";
-import {
-  Container,
-  Grid,
-  Header,
-  Icon,
-  Label,
-  Rating,
-  Segment,
-  Table,
-  Progress
-} from "semantic-ui-react";
+import { Container, Grid, Header, Icon, Label, Rating, Segment, Table, Progress } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 const heartStyle = {
-  marginRight: "30px"
+  marginRight: "30px",
 };
 
 const checkVoteStatus = (myVotes, cId) => {
@@ -24,22 +14,15 @@ const checkFavouriteStatus = (myFavourites, cId) => {
   return myFavourites.find(id => id === cId);
 };
 
-export default class WorkoutsetComponent extends React.PureComponent {
-  handleVote = () => {
-    const { vote, workoutset, myVotes } = this.props;
-    const idFound = checkVoteStatus(myVotes, workoutset.id);
-    vote(workoutset.id, idFound ? "down" : "up");
-  };
+const WorkoutsetComponent = props => {
+  const { workoutset, favourite, myFavourites, vote, myVotes } = props;
+  let { difficulty } = props;
+  const { score, id, name, submitter, challenge, description, rating1, rating2 } = workoutset;
+  const isFavourite = checkFavouriteStatus(myFavourites, id);
+  const isVotedOn = checkVoteStatus(myVotes, id);
+  const setUrl = `/workouts/${id}`;
 
-  handleFavourite = () => {
-    const { favourite, workoutset, myFavourites } = this.props;
-    const idFound = checkFavouriteStatus(myFavourites, workoutset.id);
-    favourite(workoutset.id, idFound ? 1 : 0);
-  };
-
-  renderWorkoutSetRow = workoutsets => {
-    let { difficulty } = this.props;
-
+  const WorkoutSetRows = ({ workoutsets }) => {
     if (!difficulty) {
       difficulty = 1;
     }
@@ -60,119 +43,53 @@ export default class WorkoutsetComponent extends React.PureComponent {
     });
   };
 
-  renderHeartIcon = () => {
-    const { workoutset, myFavourites } = this.props;
-    const idFound = checkFavouriteStatus(myFavourites, workoutset.id);
-    let returnable = null;
-
-    if (idFound) {
-      returnable = [
-        <Rating
-          key={1}
-          icon="heart"
-          defaultRating={1}
-          maxRating={1}
-          size="large"
-          style={heartStyle}
-          onClick={this.handleFavourite}
-        />
-      ];
-    } else {
-      returnable = [
-        <Rating
-          key={2}
-          icon="heart"
-          defaultRating={0}
-          maxRating={1}
-          size="large"
-          style={heartStyle}
-          onClick={this.handleFavourite}
-        />
-      ];
-    }
-
-    return returnable;
+  const handleFavourite = () => {
+    favourite(id, isFavourite ? 1 : 0);
   };
 
-  renderVoteIcons = () => {
-    const { workoutset, myVotes } = this.props;
-    const idFound = checkVoteStatus(myVotes, workoutset.id);
-    let returnable = null;
-
-    if (idFound) {
-      returnable = [
-        <Icon key={1} color="black" disabled name="arrow up" />,
-        <Icon
-          key={2}
-          color="black"
-          onClick={this.handleVote}
-          name="arrow down"
-        />
-      ];
-    } else {
-      returnable = [
-        <Icon
-          key={1}
-          color="black"
-          onClick={this.handleVote}
-          name="arrow up"
-        />,
-        <Icon key={2} color="black" disabled name="arrow down" />
-      ];
-    }
-
-    return returnable;
+  const handleVote = () => {
+    vote(id, isVotedOn ? "down" : "up");
   };
 
-  render() {
-    const { workoutset } = this.props;
-    const setUrl = `/workouts/${workoutset.id}`;
-    let score = workoutset.score;
-
-    return (
-      <Grid.Column>
-        <Segment color="purple">
-          <Link to={setUrl}>
-            <Header
-              as="h2"
-              content={workoutset.name}
-              subheader={workoutset.submitter}
-              textAlign="center"
-            />
-          </Link>
-          <Table color="purple" inverted unstackable compact columns={2}>
-            <Table.Body>
-              {this.renderWorkoutSetRow(workoutset.challenge)}
-            </Table.Body>
-          </Table>
-          {workoutset.description}
-          <br />
-          <br />
-          <Progress
-            value={workoutset.rating1}
-            total="5"
-            label="Endurance"
-            progress="ratio"
-            color="orange"
-          />
-          <Progress
-            value={workoutset.rating2}
-            total="5"
-            label="Strength"
-            progress="ratio"
-            color="yellow"
-          />
-          <br />
-          <Container textAlign="center">
-            <Label attached="bottom">
-              {this.renderHeartIcon()}
-              {this.renderVoteIcons()}
-              {score}
-            </Label>
-          </Container>
-        </Segment>
+  return (
+    <Grid.Column>
+      <Segment color="purple">
+        <Link to={setUrl}>
+          <Header as="h2" content={name} subheader={submitter} textAlign="center" />
+        </Link>
+        <Table color="purple" inverted unstackable compact columns={2}>
+          <Table.Body>
+            <WorkoutSetRows workoutsets={challenge} />
+          </Table.Body>
+        </Table>
+        {description}
         <br />
-      </Grid.Column>
-    );
-  }
-}
+        <br />
+        <Progress value={rating1} total="5" label="Endurance" progress="ratio" color="orange" />
+        <Progress value={rating2} total="5" label="Strength" progress="ratio" color="yellow" />
+        <br />
+        <Container textAlign="center">
+          <Label attached="bottom">
+            <HeartIcon onClick={handleFavourite} isFavourite={isFavourite} />
+            <ArrowIcons onClick={handleVote} votingDone={isVotedOn} />
+            {score}
+          </Label>
+        </Container>
+      </Segment>
+      <br />
+    </Grid.Column>
+  );
+};
+
+const HeartIcon = ({ onClick, isFavourite }) => {
+  return <Rating icon="heart" defaultRating={isFavourite ? 1 : 0} maxRating={1} size="large" style={heartStyle} onClick={onClick} />;
+};
+
+const ArrowIcons = ({ onClick, votingDone }) => {
+  return [
+    <Icon key={1} color="black" disabled={votingDone ? true : false} onClick={votingDone ? null : onClick} name="arrow up" />,
+    <Icon key={2} color="black" disabled={votingDone ? false : true} onClick={votingDone ? onClick : null} name="arrow down" />,
+  ];
+};
+
+export default WorkoutsetComponent;

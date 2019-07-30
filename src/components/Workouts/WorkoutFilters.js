@@ -1,40 +1,34 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import { Button } from "semantic-ui-react";
 
-class Filters extends PureComponent {
-  renderButtons = (buttons, firstIndex) => {
+const ButtonGroup = ({ widths, buttons, index, toggleFilter }) => {
+  const Buttons = () => {
     return buttons.map((button, i) => {
-      const buttonIndex = i + firstIndex;
-      return (
-        <Button
-          key={buttonIndex}
-          active={button.selected}
-          content={button.title}
-          onClick={() => this.props.toggleFilter(buttonIndex)}
-        />
-      );
+      const buttonIndex = i + index;
+      return <Button key={buttonIndex} active={button.selected} content={button.title} onClick={() => toggleFilter(buttonIndex)} />;
     });
   };
 
-  render() {
-    const { filters } = this.props;
-    const firstButtons = filters.slice(0, 3);
-    const secondButtons = filters.slice(3, 7);
+  return (
+    <Button.Group widths={widths} size="small">
+      <Buttons />
+    </Button.Group>
+  );
+};
 
-    return (
-      <div>
-        <br />
-        <Button.Group widths="3" size="small">
-          {this.renderButtons(firstButtons, 0)}
-        </Button.Group>
-        <br />
-        <br />
-        <Button.Group widths="4" size="small">
-          {this.renderButtons(secondButtons, 3)}
-        </Button.Group>
-      </div>
-    );
-  }
-}
+const Filters = ({ filters, toggleFilter }) => {
+  const firstButtons = filters.slice(0, 3);
+  const secondButtons = filters.slice(3, 7);
+
+  return (
+    <>
+      <br />
+      <ButtonGroup widths={3} buttons={firstButtons} index={0} toggleFilter={toggleFilter} />
+      <br />
+      <br />
+      <ButtonGroup widths={4} buttons={secondButtons} index={3} toggleFilter={toggleFilter} />
+    </>
+  );
+};
 
 export default Filters;
