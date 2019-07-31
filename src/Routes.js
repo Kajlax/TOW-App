@@ -10,86 +10,80 @@ import Generate from "./components/Generate/Generate";
 import Submit from "./components/Submit/Submit";
 import About from "./components/About";
 import SavedWorkout from "./components/Saved/SavedWorkout";
-import withTracker from './withTracker';
+import withTracker from "./withTracker";
 
 export const routes = [
   {
     Title: "Workouts",
     Path: "/workouts",
     component: WorkoutSets,
-    showInMenu: true
+    showInMenu: true,
   },
   {
     Title: "Challenges",
     Path: "/challenges",
     component: Challenges,
-    showInMenu: true
+    showInMenu: true,
   },
   {
     Title: "Favourites",
     Path: "/favourites",
     component: Favourites,
-    showInMenu: true
+    showInMenu: true,
   },
   {
     Title: "Generate",
     Path: "/generate",
     component: Generate,
-    showInMenu: true
+    showInMenu: true,
   },
   {
     Title: "About",
     Path: "/about",
     component: About,
-    showInMenu: true
+    showInMenu: true,
   },
   {
     Title: "Submit",
     Path: "/submit",
     component: Submit,
-    showInMenu: false
+    showInMenu: false,
   },
   {
     Title: "Single Challenge",
     Path: "/challenges/:id",
     component: Challenge,
-    showInMenu: false
+    showInMenu: false,
   },
   {
     Title: "Single Curated Workout",
     Path: "/workouts/:id",
     component: Workout,
-    showInMenu: false
+    showInMenu: false,
   },
   {
     Title: "Saved workout",
     Path: "/savedworkout/:name",
     component: SavedWorkout,
-    showInMenu: false
-  }
+    showInMenu: false,
+  },
 ];
 
-export default class Routes extends React.PureComponent {
-  renderRoutes = () => {
-    return routes.map(route => {
-      return (
-        <Route
-          key={route.Path}
-          path={route.Path}
-          component={withTracker(route.component, {})}
-          exact
-        />
-      );
-    });
-  };
-  render() {
-    return (
-      <Router>
-        <Switch>
-          <Route path="/" component={Frontpage} exact />
-          {this.renderRoutes()}
-        </Switch>
-      </Router>
-    );
-  }
+const AllRoutes = () => {
+  return routes.map(route => {
+    return <Route key={route.Path} path={route.Path} component={withTracker(route.component, {})} exact />;
+  });
+};
+
+function Routes() {
+  return (
+    <Router>
+      <Switch>
+        <Route path="/" component={Frontpage} exact />
+        <AllRoutes />
+      </Switch>
+    </Router>
+  );
 }
+
+export default Routes;

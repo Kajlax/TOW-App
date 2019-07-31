@@ -5,12 +5,12 @@ GoogleAnalytics.initialize("UA-125131425-1");
 
 const withTracker = (WrappedComponent, options = {}) => {
   const trackPage = page => {
-    if(process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === "production") {
       GoogleAnalytics.set({
         page,
-        ...options,
+        ...options
       });
-      GoogleAnalytics.pageview(page);  
+      GoogleAnalytics.pageview(page);
     }
   };
 
