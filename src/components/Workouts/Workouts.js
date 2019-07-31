@@ -8,37 +8,6 @@ import Loading from "../Loading";
 import "../Animations.css";
 import useWorkoutState from "./useWorkoutState";
 
-const initialFilters = [
-  {
-    title: "Calisthenics",
-    selected: false,
-  },
-  {
-    title: "Gym",
-    selected: false,
-  },
-  {
-    title: "Mixed",
-    selected: false,
-  },
-  {
-    title: "Upper body",
-    selected: false,
-  },
-  {
-    title: "Lower body",
-    selected: false,
-  },
-  {
-    title: "Full body",
-    selected: false,
-  },
-  {
-    title: "Core",
-    selected: false,
-  },
-];
-
 const activeFilters = fs => {
   // find selected filters and show only title
   return fs.filter(filter => filter.selected).map(filter => filter.title);
@@ -46,6 +15,36 @@ const activeFilters = fs => {
 
 const Workouts = props => {
   const [hideFilters, setHideFilters] = useState(true);
+  const initialFilters = [
+    {
+      title: "Calisthenics",
+      selected: false,
+    },
+    {
+      title: "Gym",
+      selected: false,
+    },
+    {
+      title: "Mixed",
+      selected: false,
+    },
+    {
+      title: "Upper body",
+      selected: false,
+    },
+    {
+      title: "Lower body",
+      selected: false,
+    },
+    {
+      title: "Full body",
+      selected: false,
+    },
+    {
+      title: "Core",
+      selected: false,
+    },
+  ];
   const [filters, setFilters] = useState(initialFilters);
   const getFilterIcon = () => (hideFilters ? "caret down" : "caret up");
 
