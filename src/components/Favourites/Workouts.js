@@ -1,38 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 import { Header, List } from "semantic-ui-react";
-import WorkoutsetActions from "../../redux/reducers/workoutsetRedux";
+import useWorkoutState from "../Workouts/useWorkoutState";
 
-class Workouts extends React.Component {
-  componentDidMount() {
-    const { getWorkoutSets, workoutsets } = this.props;
+const Workouts = props => {
+  const [data, actions] = useWorkoutState();
+  const { workoutsets } = data;
+  const { getWorkoutSets } = actions;
+  const { savedWorkouts } = props;
+
+  useEffect(() => {
     if (workoutsets.length === 0) {
       getWorkoutSets();
     }
-  }
+  }, [getWorkoutSets, workoutsets]);
 
-  renderRows = () => {
-    const { workoutsets, savedWorkouts } = this.props;
-    let savedModified = [];
-
-    savedWorkouts.map(i => {
-      if (i !== 0) {
-        savedModified.push(i);
-      }
-      return savedModified;
-    });
-
-    if (savedModified.length > 0) {
+  const renderRows = () => {
+    if (savedWorkouts.length > 0) {
       return workoutsets.map(row => {
-        if (savedModified.includes(row.id)) {
+        if (savedWorkouts.includes(row.id)) {
           return (
             <List.Item key={row.id}>
-              <List.Icon
-                name="heart outline"
-                size="large"
-                verticalAlign="middle"
-              />
+              <List.Icon name="heart outline" size="large" verticalAlign="middle" />
               <List.Content>
                 <List.Header>
                   <Link to={`/workouts/${row.id}`}>{row.name}</Link>
@@ -49,26 +38,11 @@ class Workouts extends React.Component {
     }
   };
 
-  render() {
-    return (
-      <List divided relaxed celled>
-        {this.renderRows()}
-      </List>
-    );
-  }
-}
+  return (
+    <List divided relaxed celled>
+      {renderRows()}
+    </List>
+  );
+};
 
-const mapStateToProps = state => ({
-  workoutsets: state.workoutset.workoutsets,
-  fetching: state.workoutset.fetching,
-  error: state.workoutset.error
-});
-
-const mapDispatchToProps = dispatch => ({
-  getWorkoutSets: () => dispatch(WorkoutsetActions.fetchWorkoutsets())
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Workouts);
+export default Workouts;

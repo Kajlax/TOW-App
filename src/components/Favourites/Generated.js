@@ -2,18 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { List } from "semantic-ui-react";
 
-export default class Generated extends React.PureComponent {
-  renderRows = () => {
-    const { saved } = this.props;
+const Generated = ({ saved }) => {
+  const renderRows = () => {
     return saved.map((row, i) => {
       if (i !== 0) {
         return (
           <List.Item key={row}>
-            <List.Icon
-              name="heart outline"
-              size="large"
-              verticalAlign="middle"
-            />
+            <List.Icon name="heart outline" size="large" verticalAlign="middle" />
             <List.Content>
               <List.Header>
                 <Link to={`/savedworkout/${row}`}>{row}</Link>
@@ -27,11 +22,11 @@ export default class Generated extends React.PureComponent {
     });
   };
 
-  render() {
-    return (
-      <List divided relaxed celled>
-        {this.renderRows()}
-      </List>
-    );
-  }
-}
+  return (
+    <List divided relaxed celled>
+      {renderRows()}
+    </List>
+  );
+};
+
+export default Generated;
