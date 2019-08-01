@@ -1,115 +1,99 @@
-import React from "react";
-import { connect } from 'react-redux';
+import React, { useReducer } from "react";
+import { connect } from "react-redux";
 import Layout from "../Layout";
-import ChallengeActions from '../../redux/reducers/challengeRedux';
-import Loading from '../Loading';
+import ChallengeActions from "../../redux/reducers/challengeRedux";
+import Loading from "../Loading";
 import ThankYou from "./ThankYou";
-import Form from './Form';
+import Form from "./Form";
 
-class SubmitFrom extends React.PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      title: "",
-      submitter: "",
-      submitType: "",
-      submitDescription: "",
-      formValid: false,
+/**
+ * Function that receives current state and action. Returns new state.
+ * @param {*} state
+ * @param {*} action
+ */
+function formReducer(state, action) {
+  // reset form to initial state
+  if (action.type === "reset") {
+    return initialFormState;
+  }
+  // set given form value to state
+  let newState = {
+    ...state,
+    [action.name]: action.value,
+  };
+
+  // check if all fields are filled and set formValid to true
+  if (newState.title !== "" && newState.submitter !== "" && newState.submitType !== "" && newState.submitDescription !== "") {
+    newState = {
+      ...newState,
+      formValid: true,
     };
   }
 
-  handleChange = (e, { name, value }) => {
-    this.setState({ [name]: value });
-    if (
-      this.state.title !== "" &&
-      this.state.submitter !== "" &&
-      this.state.submitType !== "" &&
-      this.state.submitDescription !== ""
-    )
-      this.setState({ formValid: true });
-  };
+  return newState;
+}
 
-  handleSubmit = () => {
-    const { title, submitter, submitType, submitDescription } = this.state;
-    const { sendSuggest } = this.props;
-    
+const initialFormState = {
+  title: "",
+  submitter: "",
+  submitType: "",
+  submitDescription: "",
+  formValid: false,
+};
 
-    this.setState({
-      title: title,
-      submitter: submitter,
-      submitType: submitType,
-      submitDescription: submitDescription,
-    });
-    const suggestData = {
+const SubmitFrom = props => {
+  const { sending, result, error, sendSuggest, resetFormRedux } = props;
+  const [state, dispatch] = useReducer(formReducer, initialFormState);
+  const { title, submitter, submitType, submitDescription, formValid } = state;
+
+  const handleSubmit = () => {
+    sendSuggest({
       type: submitType,
       message: submitDescription,
       submitter,
       title,
-    }
-
-    sendSuggest(suggestData);
-  };
-
-  resetForm = () => {
-    this.setState({
-      formValid: false,
-      title: "",
-      submitType: "",
-      submitDescription: "",
-      submitter: "",
     });
-
-    this.props.resetFormRedux();
   };
 
-  renderForm() {
-    const {
-      title,
-      submitter,
-      submitType,
-      submitDescription,
-      formValid,
-    } = this.state;
-    const { result, error } = this.props;
+  const resetForm = () => {
+    dispatch({ type: "reset" });
+    resetFormRedux();
+  };
 
+  const renderFormComponent = () => {
     if (!result) {
-      return(
+      return (
         <Form
           error={error}
           title={title}
           submitter={submitter}
           submitType={submitType}
           submitDescription={submitDescription}
-          handleSubmit={this.handleSubmit}
-          handleChange={this.handleChange}
+          handleSubmit={handleSubmit}
+          handleChange={(e, { value, name }) => dispatch({ value, name })}
           formValid={formValid}
         />
       );
     } else {
-      return(
-        <ThankYou resetForm={this.resetForm} />
-      );
+      return <ThankYou resetForm={resetForm} />;
     }
-  }
+  };
 
-  render() {
-    const { sending } = this.props;
-    return(<Layout {...this.props}>
-            { sending ? 
-              <Loading />
-              :this.renderForm()}
-          </Layout>)
-  }
-}
-const mapStateToProps = (state) => ({
+  return <Layout {...props}>{sending ? <Loading /> : renderFormComponent()}</Layout>;
+};
+
+const mapStateToProps = state => ({
   sending: state.challenge.sending,
   error: state.challenge.error,
   result: state.challenge.result,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  sendSuggest: (data) => dispatch(ChallengeActions.suggestRequest(data)),
+const mapDispatchToProps = dispatch => ({
+  sendSuggest: data => dispatch(ChallengeActions.suggestRequest(data)),
   resetFormRedux: () => dispatch(ChallengeActions.suggestFormReset()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SubmitFrom);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SubmitFrom);
