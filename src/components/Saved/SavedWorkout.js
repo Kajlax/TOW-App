@@ -1,40 +1,37 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Grid } from 'semantic-ui-react';
+import React, { useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Grid, Message } from "semantic-ui-react";
 import Layout from "../Layout";
-import WorkoutComponent from "./WorkoutComponent"; 
-import SavedWorkoutTypes from '../../redux/reducers/savedworkoutRedux';
-import Loading from '../Loading';
+import WorkoutComponent from "./WorkoutComponent";
+import SavedWorkoutTypes from "../../redux/reducers/savedworkoutRedux";
+import Loading from "../Loading";
 
-class SavedWorkout extends React.PureComponent {
-  componentDidMount() {
-    this.props.fetchSavedWorkout(this.props.match.params.name);
-  }
+const SavedWorkout = props => {
+  const workout = useSelector(state => state.savedworkout.workout);
+  const fetching = useSelector(state => state.savedworkout.fetching);
+  const error = useSelector(state => state.savedworkout.error);
 
-  render() {
-    const { fetching, workout } = this.props;
+  const dispatch = useDispatch();
+  const fetchSavedWorkout = useCallback(name => dispatch(SavedWorkoutTypes.fetchSavedWorkout(name)), [dispatch]);
 
-    return(
-      <Layout {...this.props}>
-        <Grid columns={1} stackable>
-          { !fetching &&  workout.name ?
-              <WorkoutComponent workout={workout} /> 
-            : <Loading />
-          }
-        </Grid>
-      </Layout>
-    );
-  }
-}
+  const { name } = props.match.params;
 
-const mapStateToProps = state => ({
-  workout: state.savedworkout.workout,
-  error: state.savedworkout.workout,
-  fetching: state.savedworkout.fetching,
-});
+  useEffect(() => {
+    fetchSavedWorkout(name);
+  }, [fetchSavedWorkout, name]);
 
-const mapDispatchToProps = dispatch => ({
-  fetchSavedWorkout: (name) => dispatch(SavedWorkoutTypes.fetchSavedWorkout(name)),
-});
+  return (
+    <Layout {...props}>
+      {error ? (
+        <Message negative>
+          <Message.Header>{error}</Message.Header>
+        </Message>
+      ) : null}
+      <Grid columns={1} stackable>
+        {!error && !fetching && workout.name ? <WorkoutComponent workout={workout} /> : <Loading />}
+      </Grid>
+    </Layout>
+  );
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(SavedWorkout);
+export default SavedWorkout;
