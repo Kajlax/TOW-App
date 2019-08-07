@@ -1,44 +1,18 @@
 import React from "react";
-import {
-  Container,
-  Grid,
-  Header,
-  Icon,
-  Label,
-  Rating,
-  Segment,
-  Table
-} from "semantic-ui-react";
+import { Container, Grid, Header, Label, Segment, Table } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { checkIfIdExists } from "../../util";
+import { HeartIcon } from "../Common/HeartIcon";
 
-const heartStyle = {
-  marginRight: "30px"
-};
+const ChallengeComponent = props => {
+  const { id, name, submitter, challenge, description } = props.challenge;
+  const { favourite, myFavourites } = props;
 
-const checkVoteStatus = (myVotes, cId) => {
-  return myVotes.find(id => id === cId);
-};
+  let { difficulty } = props;
+  const challengeRoute = `/challenges/${id}`;
+  const isFavorite = checkIfIdExists(myFavourites, id);
 
-const checkFavouriteStatus = (myFavourites, cId) => {
-  return myFavourites.find(id => id === cId);
-};
-
-export default class ChallengeComponent extends React.PureComponent {
-  handleVote = () => {
-    const { vote, challenge, myVotes } = this.props;
-    const idFound = checkVoteStatus(myVotes, challenge.id);
-    vote(challenge.id, idFound ? "down" : "up");
-  };
-
-  handleFavourite = () => {
-    const { favourite, challenge, myFavourites } = this.props;
-    const idFound = checkFavouriteStatus(myFavourites, challenge.id);
-    favourite(challenge.id, idFound ? 1 : 0);
-  };
-
-  renderChallengeRow = challenges => {
-    let { difficulty } = this.props;
-
+  const renderChallengeRow = challenges => {
     if (!difficulty) {
       difficulty = 1;
     }
@@ -57,106 +31,32 @@ export default class ChallengeComponent extends React.PureComponent {
     });
   };
 
-  renderHeartIcon = () => {
-    const { challenge, myFavourites } = this.props;
-    const idFound = checkFavouriteStatus(myFavourites, challenge.id);
-    let returnable = null;
-
-    if (idFound) {
-      returnable = [
-        <Rating
-          key={1}
-          icon="heart"
-          defaultRating={1}
-          maxRating={1}
-          size="large"
-          style={heartStyle}
-          onClick={this.handleFavourite}
-        />
-      ];
-    } else {
-      returnable = [
-        <Rating
-          key={2}
-          icon="heart"
-          defaultRating={0}
-          maxRating={1}
-          size="large"
-          style={heartStyle}
-          onClick={this.handleFavourite}
-        />
-      ];
-    }
-
-    return returnable;
+  const handleFavourite = () => {
+    favourite(id, isFavorite ? 1 : 0);
   };
 
-  renderVoteIcons = () => {
-    const { challenge, myVotes } = this.props;
-
-    const idFound = checkVoteStatus(myVotes, challenge.id);
-    let returnable = null;
-    if (idFound) {
-      returnable = [
-        <Icon key={1} color="black" disabled name="arrow up" />,
-        <Icon
-          key={2}
-          color="black"
-          onClick={this.handleVote}
-          name="arrow down"
-        />
-      ];
-    } else {
-      returnable = [
-        <Icon
-          key={1}
-          color="black"
-          onClick={this.handleVote}
-          name="arrow up"
-        />,
-        <Icon key={2} color="black" disabled name="arrow down" />
-      ];
-    }
-
-    return returnable;
-  };
-
-  render() {
-    const { challenge } = this.props;
-    const challengeRoute = `/challenges/${challenge.id}`;
-    let score = challenge.score;
-
-    return (
-      <Grid.Column>
-        <Segment color="pink">
-          <Link to={challengeRoute}>
-            <Header
-              as="h2"
-              to={challengeRoute}
-              content={challenge.name}
-              subheader={challenge.submitter}
-              textAlign="center"
-            />
-          </Link>
-          <Table color="pink" inverted unstackable compact columns={2}>
-            <Table.Body>
-              {this.renderChallengeRow(challenge.challenge)}
-            </Table.Body>
-          </Table>
-          {challenge.description}
-          <br />
-          <br />
-          <br />
-          <Container textAlign="center">
-            <Label attached="bottom">
-              {this.renderHeartIcon()}
-              {this.renderVoteIcons()}
-              {score}
-            </Label>
-          </Container>
-        </Segment>
+  return (
+    <Grid.Column>
+      <Segment color="pink">
+        <Link to={challengeRoute}>
+          <Header as="h2" to={challengeRoute} content={name} subheader={submitter} textAlign="center" />
+        </Link>
+        <Table color="pink" inverted unstackable compact columns={2}>
+          <Table.Body>{renderChallengeRow(challenge)}</Table.Body>
+        </Table>
+        {description}
         <br />
-      </Grid.Column>
-    );
-  }
-}
+        <br />
+        <br />
+        <Container textAlign="center">
+          <Label attached="bottom">
+            <HeartIcon onClick={handleFavourite} isFavourite={isFavorite} />
+          </Label>
+        </Container>
+      </Segment>
+      <br />
+    </Grid.Column>
+  );
+};
+
+export default ChallengeComponent;

@@ -1,50 +1,38 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useState } from "react";
 import { Grid, Header, Input, Segment } from "semantic-ui-react";
 import ChallengeComponent from "./ChallengeComponent";
 import Loading from "../Loading";
 import Layout from "../Layout";
-import SearchActions from "../../redux/reducers/searchRedux";
-import ChallengeActions from "../../redux/reducers/challengeRedux";
-import VoteActions from "../../redux/reducers/voteRedux";
-import FavouriteActions from "../../redux/reducers/favouriteRedux";
+import useChallengeState from "./useChallengeState";
 
-class Challenges extends React.PureComponent {
-  componentDidMount() {
-    const { challenges, getChallenges } = this.props;
+const Challenges = props => {
+  const [reduxState, reduxActions] = useChallengeState();
+  const { challenges, fetching, myVotes, myFavourites } = reduxState;
+  const { updateVotes, updateFavourites, getChallenges } = reduxActions;
+
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
     if (challenges.length === 0) {
       getChallenges();
     }
-  }
+  }, [getChallenges, challenges]);
 
-  handleTextChange = e => {
-    const { value } = e.target;
-    this.props.updateSearchQuery(value);
-  };
-
-  renderChallenges = () => {
-    let {
-      searchQuery,
-      challenges,
-      updateVotes,
-      myVotes,
-      updateFavourites,
-      myFavourites
-    } = this.props;
-    searchQuery = searchQuery.toUpperCase();
-
+  const ChallengesList = () => {
+    const searchQueryText = searchQuery.toUpperCase();
+    let filteredChallenges = challenges;
     if (searchQuery !== "") {
-      challenges = this.props.challenges.filter(singlechallenge => {
+      filteredChallenges = challenges.filter(singlechallenge => {
         const upperCaseName = singlechallenge.name.toUpperCase();
 
-        if (upperCaseName.indexOf(searchQuery) > -1) {
+        if (upperCaseName.indexOf(searchQueryText) > -1) {
           return singlechallenge;
         }
         return null;
       });
     }
 
-    if (challenges.length === 0) {
+    if (filteredChallenges.length === 0) {
       return (
         <Segment basic>
           <Grid.Column>
@@ -54,7 +42,7 @@ class Challenges extends React.PureComponent {
       );
     }
 
-    return challenges.map(item => {
+    return filteredChallenges.map(item => {
       return (
         <ChallengeComponent
           challenge={item}
@@ -68,46 +56,17 @@ class Challenges extends React.PureComponent {
     });
   };
 
-  render() {
-    const { searchQuery, fetching } = this.props;
-    return (
-      <Layout {...this.props}>
-        <Input
-          value={searchQuery}
-          onChange={this.handleTextChange}
-          size="small"
-          icon="search"
-          placeholder="Search challenges..."
-          fluid
-        />
-        <br />
-        <br />
-        <Grid columns={3} stackable>
-          {!fetching ? this.renderChallenges() : <Loading />}
-        </Grid>
-        <br />
-      </Layout>
-    );
-  }
-}
+  return (
+    <Layout {...props}>
+      <Input value={searchQuery} onChange={e => setSearchQuery(e.target.value)} size="small" icon="search" placeholder="Search challenges..." fluid />
+      <br />
+      <br />
+      <Grid columns={3} stackable>
+        {!fetching ? <ChallengesList /> : <Loading />}
+      </Grid>
+      <br />
+    </Layout>
+  );
+};
 
-const mapStateToProps = state => ({
-  searchQuery: state.search.searchQuery,
-  challenges: state.challenge.challenges,
-  fetching: state.challenge.fetching,
-  error: state.challenge.error,
-  myVotes: state.vote.myVotes,
-  myFavourites: state.favourite.challenges
-});
-
-const mapDispatchToProps = dispatch => ({
-  updateSearchQuery: query => dispatch(SearchActions.updateQuery(query)),
-  getChallenges: () => dispatch(ChallengeActions.fetchChallenges()),
-  updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode)),
-  updateFavourites: (id, defaultRating) => dispatch(FavouriteActions.updateChallenges(id, defaultRating))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Challenges);
+export default Challenges;

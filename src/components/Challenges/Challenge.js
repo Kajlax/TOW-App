@@ -1,43 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Grid } from "semantic-ui-react";
-import { connect } from "react-redux";
 import ChallengeComponent from "./ChallengeComponent";
 import Layout from "../Layout";
 import Loading from "../Loading";
-import ChallengeActions from "../../redux/reducers/challengeRedux";
-import VoteActions from "../../redux/reducers/voteRedux";
-import FavouriteActions from "../../redux/reducers/favouriteRedux";
 import { DifficultyChanger, BackButton } from "../Common";
+import useChallengeState from "./useChallengeState";
 
-class Challenge extends React.Component {
-  constructor(p) {
-    super(p);
+const Challenge = props => {
+  const [reduxState, reduxActions] = useChallengeState();
+  const { challenges, fetching, myVotes, myFavourites } = reduxState;
+  const { updateVotes, updateFavourites, getChallenges } = reduxActions;
 
-    this.state = {
-      difficulty: 1,
-    };
-  }
+  const [difficulty, setDifficulty] = useState(1);
+  const id = parseInt(props.match.params.id, 10);
+  const challenge = challenges.find(c => c.id === id);
 
-  componentDidMount() {
-    const { challenges, getChallenges } = this.props;
+  useEffect(() => {
     if (challenges.length === 0) {
       getChallenges();
     }
-  }
+  }, [getChallenges, challenges]);
 
-  selectDifficulty = value => {
-    this.setState({
-      difficulty: value,
-    });
-  };
-
-  renderComponent = () => {
-    const { challenges, updateVotes, myVotes, updateFavourites, myFavourites } = this.props;
-    const { difficulty } = this.state;
-
-    const id = parseInt(this.props.match.params.id, 10);
-    const challenge = challenges.find(c => c.id === id);
-
+  const SelectedComponent = () => {
     return (
       <ChallengeComponent
         challenge={challenge}
@@ -50,38 +34,18 @@ class Challenge extends React.Component {
     );
   };
 
-  render() {
-    const { fetching, challenges } = this.props;
-    return (
-      <Layout {...this.props}>
-        <DifficultyChanger setDifficulty={this.selectDifficulty} />
-        <br />
-        <br />
-        <br />
-        <Grid columns={1} stackable>
-          {!fetching && challenges.length > 0 ? this.renderComponent() : <Loading />}
-        </Grid>
-        <BackButton to="/challenges" />
-      </Layout>
-    );
-  }
-}
+  return (
+    <Layout {...props}>
+      <DifficultyChanger setDifficulty={setDifficulty} />
+      <br />
+      <br />
+      <br />
+      <Grid columns={1} stackable>
+        {!fetching && challenges.length > 0 ? <SelectedComponent /> : <Loading />}
+      </Grid>
+      <BackButton to="/challenges" />
+    </Layout>
+  );
+};
 
-const mapStateToProps = state => ({
-  challenges: state.challenge.challenges,
-  fetching: state.challenge.fetching,
-  error: state.challenge.error,
-  myVotes: state.vote.myVotes,
-  myFavourites: state.favourite.challenges,
-});
-
-const mapDispatchToProps = dispatch => ({
-  getChallenges: () => dispatch(ChallengeActions.fetchChallenges()),
-  updateVotes: (id, mode) => dispatch(VoteActions.updateVotes(id, mode)),
-  updateFavourites: (id, defaultRating) => dispatch(FavouriteActions.updateChallenges(id, defaultRating)),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Challenge);
+export default Challenge;
