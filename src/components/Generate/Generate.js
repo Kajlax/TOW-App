@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Grid } from "semantic-ui-react";
 import { CSSTransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
@@ -14,194 +14,118 @@ const fillArrayWithRandomNumbers = count => {
   return new Array(count).fill().map(() => Math.floor(Math.random() * 11) + 5);
 };
 
-class Generate extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      hideFilters: false,
-      filterIcon: "caret up",
-      hideGeneratedWorkout: true,
-      numberOfExercises: 5,
-      difficulty: 2,
-      workoutType: "Calisthenics",
-      bodypart: "Upper body",
-      reps: fillArrayWithRandomNumbers(5)
-    };
-  }
+const Generate = props => {
+  const [hideFilters, setHideFilters] = useState(true);
+  const [hideGeneratedWorkout, setHideGeneratedWorkout] = useState(true);
+  const [numberOfExercises, setNumberOfExercises] = useState(5);
+  const [reps, setReps] = useState(fillArrayWithRandomNumbers(5));
+  const [difficulty, setDifficulty] = useState(2);
+  const [workoutType, setWorkoutType] = useState("Calisthenics");
+  const [bodypart, setBodypart] = useState("Upper body");
+  let { fetching, workouts, filters, updateFilters, createSavedWorkout, saving, newWorkout, resetCreated, getWorkouts } = props;
 
-  componentDidMount() {
-    this.props.resetCreated();
-    this.props.updateFilters(this.state.workoutType);
-    this.props.updateFilters(this.state.bodypart);
-  }
+  useEffect(() => {
+    resetCreated();
+  }, [resetCreated]);
 
-  toggleFilters = () => {
-    const { hideFilters, filterIcon } = this.state;
-    const icon = filterIcon === "caret up" ? "caret down" : "caret up";
+  useEffect(() => {
+    updateFilters(bodypart);
+  }, [updateFilters, bodypart]);
 
-    this.setState({
-      hideFilters: !hideFilters,
-      filterIcon: icon
-    });
-  };
+  useEffect(() => {
+    updateFilters(workoutType);
+  }, [updateFilters, workoutType]);
 
-  toggleGenerateWorkout = () => {
-    const { getWorkouts, filters, filterIcon } = this.props;
-    const { difficulty } = this.state;
-    const icon = filterIcon === "caret down" ? "caret up" : "caret down";
-
+  const toggleGenerateWorkout = () => {
     getWorkouts(filters.length > 0 ? filters : null, difficulty);
 
-    this.setState({
-      hideFilters: true,
-      filterIcon: icon,
-      hideGeneratedWorkout: false,
-      loading: false,
-      reps: fillArrayWithRandomNumbers(this.state.numberOfExercises)
-    });
+    setHideFilters(true);
+    setHideGeneratedWorkout(false);
   };
 
-  handleDropdownChange = (e, { value }) => {
-    const number = parseInt(value, 10);
-    this.setState({
-      numberOfExercises: parseInt(number, 10),
-      reps: fillArrayWithRandomNumbers(number)
-    });
-  };
-
-  updateRep = (index, value) => {
-    const { reps } = this.state;
+  const updateRep = (index, value) => {
     const newReps = reps.map((v, i) => (i === index ? value : v));
-
-    if (value > 0) {
-      this.setState({
-        reps: newReps
-      });
-    }
+    setReps(newReps);
   };
 
-  updateWorkoutType = workoutType => {
-    this.props.updateFilters(this.state.workoutType);
-    this.props.updateFilters(workoutType);
-    this.setState({
-      workoutType
-    });
+  const getIcon = () => (hideFilters ? "caret up" : "caret down");
+
+  const handleDropdownChange = (e, { value }) => {
+    const newRepCount = parseInt(value, 10);
+    setNumberOfExercises(newRepCount);
+    setReps(fillArrayWithRandomNumbers(newRepCount));
   };
 
-  updateBodypart = bodypart => {
-    this.props.updateFilters(this.state.bodypart);
-    this.props.updateFilters(bodypart);
-    this.setState({
-      bodypart
-    });
+  const updateWorkoutType = newType => {
+    updateFilters(workoutType);
+    setWorkoutType(newType);
   };
 
-  updateDifficulty = difficulty => {
-    this.setState({
-      difficulty
-    });
+  const updateBodypart = newBodypart => {
+    updateFilters(bodypart);
+    setBodypart(newBodypart);
   };
 
-  render() {
-    const {
-      hideFilters,
-      hideGeneratedWorkout,
-      filterIcon,
-      numberOfExercises,
-      reps
-    } = this.state;
-    let {
-      fetching,
-      workouts,
-      filters,
-      updateFilters,
-      createSavedWorkout,
-      saving,
-      newWorkout
-    } = this.props;
+  const shownWorkouts = workouts.slice(0, numberOfExercises);
 
-    workouts = workouts.slice(0, numberOfExercises);
+  console.info(reps);
 
-    return (
-      <Layout {...this.props}>
-        <Button
-          content="Filters"
-          icon={filterIcon}
-          labelPosition="right"
-          color="teal"
-          size="small"
-          onClick={this.toggleFilters}
-        />
-        <Button
-          content="Generate"
-          color="pink"
-          size="small"
-          onClick={this.toggleGenerateWorkout}
-        />
-        <br />
-        <CSSTransitionGroup
-          transitionName="example"
-          transitionEnterTimeout={200}
-          transitionLeaveTimeout={200}
-        >
-          {!hideFilters ? (
-            <Filters
-              handleDropdownChange={this.handleDropdownChange}
-              numberOfExercises={this.state.numberOfExercises}
-              filters={filters}
-              updateFilters={updateFilters}
-              workoutType={this.state.workoutType}
-              updateWorkoutType={this.updateWorkoutType}
-              bodypart={this.state.bodypart}
-              updateBodypart={this.updateBodypart}
-              difficulty={this.state.difficulty}
-              updateDifficulty={this.updateDifficulty}
+  return (
+    <Layout {...props}>
+      <Button content="Filters" icon={getIcon()} labelPosition="right" color="teal" size="small" onClick={() => setHideFilters(!hideFilters)} />
+      <Button content="Generate" color="pink" size="small" onClick={toggleGenerateWorkout} />
+      <br />
+      <CSSTransitionGroup transitionName="example" transitionEnterTimeout={200} transitionLeaveTimeout={200}>
+        {!hideFilters ? (
+          <Filters
+            handleDropdownChange={handleDropdownChange}
+            numberOfExercises={numberOfExercises}
+            filters={filters}
+            workoutType={workoutType}
+            updateWorkoutType={updateWorkoutType}
+            bodypart={bodypart}
+            updateBodypart={updateBodypart}
+            difficulty={difficulty}
+            updateDifficulty={value => setDifficulty(value)}
+          />
+        ) : null}
+      </CSSTransitionGroup>
+      <br /> <br />
+      <CSSTransitionGroup transitionName="generated" transitionEnterTimeout={400} transitionLeaveTimeout={400}>
+        {!hideGeneratedWorkout ? (
+          fetching ? (
+            <Grid columns={3} stackable>
+              <Loading />
+            </Grid>
+          ) : (
+            <GeneratedWorkout
+              workouts={shownWorkouts}
+              reps={reps}
+              updateRep={updateRep}
+              saveWorkout={createSavedWorkout}
+              saving={saving}
+              workoutname={newWorkout.name}
             />
-          ) : null}
-        </CSSTransitionGroup>
-        <br /> <br />
-        <CSSTransitionGroup
-          transitionName="generated"
-          transitionEnterTimeout={400}
-          transitionLeaveTimeout={400}
-        >
-          {!hideGeneratedWorkout ? (
-            fetching ? (
-              <Grid columns={3} stackable>
-                <Loading />
-              </Grid>
-            ) : (
-              <GeneratedWorkout
-                workouts={workouts}
-                reps={reps}
-                updateRep={this.updateRep}
-                saveWorkout={createSavedWorkout}
-                saving={saving}
-                workoutname={newWorkout.name}
-              />
-            )
-          ) : null}
-        </CSSTransitionGroup>
-      </Layout>
-    );
-  }
-}
+          )
+        ) : null}
+      </CSSTransitionGroup>
+    </Layout>
+  );
+};
 
 const mapStateToProps = state => ({
   workouts: state.workout.workouts,
   filters: state.workout.filters,
   fetching: state.workout.fetching,
   saving: state.savedworkout.saving,
-  newWorkout: state.savedworkout.newWorkout
+  newWorkout: state.savedworkout.newWorkout,
 });
 
 const mapDispatchToProps = dispatch => ({
   updateFilters: value => dispatch(WorkoutActions.updateFilters(value)),
-  getWorkouts: (filters, difficulty) =>
-    dispatch(WorkoutActions.fetchWorkouts(filters, difficulty)),
-  createSavedWorkout: data =>
-    dispatch(SaveWorkoutActions.createSavedWorkout(data)),
-  resetCreated: () => dispatch(SaveWorkoutActions.resetSavedWorkout())
+  getWorkouts: (filters, difficulty) => dispatch(WorkoutActions.fetchWorkouts(filters, difficulty)),
+  createSavedWorkout: data => dispatch(SaveWorkoutActions.createSavedWorkout(data)),
+  resetCreated: () => dispatch(SaveWorkoutActions.resetSavedWorkout()),
 });
 
 export default connect(

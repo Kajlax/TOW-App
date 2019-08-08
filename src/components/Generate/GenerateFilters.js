@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import { Button, Dropdown } from "semantic-ui-react";
 
 const dropdownvalues = [
@@ -7,82 +7,49 @@ const dropdownvalues = [
   { key: "5", text: "5", value: "5" },
   { key: "6", text: "6", value: "6" },
   { key: "7", text: "7", value: "7" },
-  { key: "8", text: "8", value: "8" }
+  { key: "8", text: "8", value: "8" },
 ];
 
-class Filters extends PureComponent {
-  renderWorkoutType = (text, value) => {
-    return (
-      <Button
-        active={this.props.workoutType === value}
-        onClick={() => this.props.updateWorkoutType(value)}
-        content={text}
-      />
-    );
-  };
-
-  renderBodypart = (text, value) => {
-    return (
-      <Button
-        active={this.props.bodypart === value}
-        onClick={() => this.props.updateBodypart(value)}
-        content={text}
-      />
-    );
-  };
-
-  renderDifficulty = (text, value) => {
-    return (
-      <Button
-        active={this.props.difficulty === value}
-        onClick={() => this.props.updateDifficulty(value)}
-        content={text}
-      />
-    );
-  };
-
-  render() {
-    const { handleDropdownChange } = this.props;
-    let { numberOfExercises } = this.props;
-    numberOfExercises = `${numberOfExercises}`;
-
-    return (
-      <div>
-        <br />
-        <Button.Group widths="3" size="small">
-          {this.renderWorkoutType("Calisthenics", "Calisthenics")}
-          {this.renderWorkoutType("Gym", "Gym")}
-          {this.renderWorkoutType("Mixed", "Mixed")}
-        </Button.Group>
-        <br /> <br />
-        <Button.Group widths="4" size="small">
-          {this.renderBodypart("Upper body", "Upper body")}
-          {this.renderBodypart("Lower body", "Lower body")}
-          {this.renderBodypart("Full body", "Full body")}
-          {this.renderBodypart("Core", "Core")}
-        </Button.Group>
-        <br /> <br />
-        <Button.Group widths="3" size="small">
-          {this.renderDifficulty("Beginner", 1)}
-          {this.renderDifficulty("Intermediate", 2)}
-          {this.renderDifficulty("Advanced", 3)}
-        </Button.Group>
-        <br />
-        <br />
-        <Button.Group fluid>
-          <Button>Number of exercises</Button>
-          <Dropdown
-            options={dropdownvalues}
-            default
-            text={numberOfExercises}
-            button
-            onChange={handleDropdownChange}
-          />
-        </Button.Group>
-        <br />
-      </div>
-    );
-  }
-}
+const Filters = ({
+  handleDropdownChange,
+  numberOfExercises,
+  difficulty,
+  updateDifficulty,
+  bodypart,
+  updateBodypart,
+  workoutType,
+  updateWorkoutType,
+}) => {
+  return (
+    <>
+      <br />
+      <Button.Group widths="3" size="small">
+        <Button active={workoutType === "Calisthenics"} onClick={() => updateWorkoutType("Calisthenics")} content="Calisthenics" />;
+        <Button active={workoutType === "Gym"} onClick={() => updateWorkoutType("Gym")} content="Gym" />;
+        <Button active={workoutType === "Mixed"} onClick={() => updateWorkoutType("Mixed")} content="Mixed" />;
+      </Button.Group>
+      <br /> <br />
+      <Button.Group widths="4" size="small">
+        <Button active={bodypart === "Upper body"} onClick={() => updateBodypart("Upper body")} content="Upper body" />
+        <Button active={bodypart === "Lower body"} onClick={() => updateBodypart("Lower body")} content="Lower body" />
+        <Button active={bodypart === "Full body"} onClick={() => updateBodypart("Full body")} content="Full body" />
+        <Button active={bodypart === "Core"} onClick={() => updateBodypart("Core")} content="Core" />
+      </Button.Group>
+      <br /> <br />
+      <Button.Group widths="3" size="small">
+        <Button active={difficulty === 1} onClick={() => updateDifficulty(1)} content="Beginner" />
+        <Button active={difficulty === 2} onClick={() => updateDifficulty(2)} content="Intermediate" />
+        <Button active={difficulty === 3} onClick={() => updateDifficulty(3)} content="Advanced" />
+      </Button.Group>
+      <br />
+      <br />
+      <Button.Group fluid>
+        <Button>Number of exercises</Button>
+        <Dropdown options={dropdownvalues} default text={`${numberOfExercises}`} button onChange={handleDropdownChange} />
+      </Button.Group>
+      <br />
+    </>
+  );
+};
 
 export default Filters;

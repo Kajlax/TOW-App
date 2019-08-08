@@ -1,30 +1,28 @@
 import React from "react";
-import {
-  Button,
-  Container,
-  Header,
-  Label,
-  Rating,
-  Segment,
-  Table
-} from "semantic-ui-react";
+import { Button, Container, Header, Label, Rating, Segment, Table } from "semantic-ui-react";
 
-class GeneratedWorkout extends React.PureComponent {
-  decreaseReps = index => {
-    const { updateRep, reps } = this.props;
+const GeneratedWorkout = ({ workouts, reps, updateRep, saveWorkout, saving, workoutname }) => {
+  const decreaseReps = index => {
     const value = reps[index] - 1;
     updateRep(index, value);
   };
 
-  increaseReps = index => {
-    const { updateRep, reps } = this.props;
+  const increaseReps = index => {
     const value = reps[index] + 1;
     updateRep(index, value);
   };
 
-  renderRows = () => {
-    const { workouts, reps } = this.props;
+  const renderSaveButton = () => {
+    const workoutIds = workouts.map(workout => workout.id);
 
+    if (saving || workoutname) {
+      return <Rating icon="heart" defaultRating={1} maxRating={1} size="large" />;
+    }
+
+    return <Rating icon="heart" defaultRating={0} maxRating={1} size="large" onClick={() => saveWorkout({ workouts: workoutIds, reps })} />;
+  };
+
+  const renderRows = () => {
     return workouts.map((item, index) => {
       return (
         <Table.Row key={item.name}>
@@ -34,8 +32,8 @@ class GeneratedWorkout extends React.PureComponent {
           </Table.Cell>
           <Table.Cell width={4} textAlign="center">
             <Button.Group compact size="mini">
-              <Button onClick={() => this.decreaseReps(index)} icon="minus" />;
-              <Button onClick={() => this.increaseReps(index)} icon="plus" />;
+              <Button onClick={() => decreaseReps(index)} icon="minus" />;
+              <Button onClick={() => increaseReps(index)} icon="plus" />;
             </Button.Group>
           </Table.Cell>
         </Table.Row>
@@ -43,47 +41,18 @@ class GeneratedWorkout extends React.PureComponent {
     });
   };
 
-  renderSaveButton = () => {
-    const { reps, saveWorkout, saving, workoutname } = this.props;
-    let { workouts } = this.props;
-    workouts = workouts.map(workout => workout.id);
-
-    if (saving) {
-      return (
-        <Rating icon="heart" defaultRating={1} maxRating={1} size="large" />
-      );
-    }
-    if (workoutname) {
-      return (
-        <Rating icon="heart" defaultRating={1} maxRating={1} size="large" />
-      );
-    }
-
-    return (
-      <Rating
-        icon="heart"
-        defaultRating={0}
-        maxRating={1}
-        size="large"
-        onClick={() => saveWorkout({ workouts, reps })}
-      />
-    );
-  };
-
-  render() {
-    return (
-      <Segment color="teal">
-        <Header as="h2" content="The workout" textAlign="center" />
-        <Table basic="very" unstackable selectable celled fixed compact>
-          <Table.Body>{this.renderRows()}</Table.Body>
-        </Table>
-        <br /> <br />
-        <Container textAlign="center">
-          <Label attached="bottom">{this.renderSaveButton()}</Label>
-        </Container>
-      </Segment>
-    );
-  }
-}
+  return (
+    <Segment color="teal">
+      <Header as="h2" content="The workout" textAlign="center" />
+      <Table basic="very" unstackable selectable celled fixed compact>
+        <Table.Body>{renderRows()}</Table.Body>
+      </Table>
+      <br /> <br />
+      <Container textAlign="center">
+        <Label attached="bottom">{renderSaveButton()}</Label>
+      </Container>
+    </Segment>
+  );
+};
 
 export default GeneratedWorkout;
