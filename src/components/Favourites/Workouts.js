@@ -16,7 +16,7 @@ const Workouts = props => {
   }, [getWorkoutSets, workoutsets]);
 
   const renderRows = () => {
-    if (savedWorkouts.length > 0) {
+    if (savedWorkouts.length > 1) {
       return workoutsets.map(row => {
         if (savedWorkouts.includes(row.id)) {
           return (
